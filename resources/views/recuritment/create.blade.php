@@ -55,7 +55,7 @@
                             <div class="form-group">
                                     <b>Domicile Districts </b>
                               <select class="form-control"  name="dom_district">
-                                <option value="0">Select Districts</option>
+                                <option value="">Select Districts</option>
                                 @foreach($districts as $dist)
                                 <option value="{{$dist->id}}">{{$dist->name}}</option>
                                 @endforeach

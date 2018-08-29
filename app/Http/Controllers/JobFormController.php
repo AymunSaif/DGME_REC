@@ -29,7 +29,15 @@ class JobFormController extends Controller
      */
     public function index()
     {
-        //
+        $person=Applicant::all();
+        $person_detail= ApplicantDetail::all();
+        $person_secondaryEdu = ApplicantSecondaryEducation::all();
+        $person_higherEdu =ApplicantHigherEducation::all();
+        $person_certificate=ApplicantCertification::all();
+        $person_exp=ApplicantExperience::all();
+        return view('recuritment.index');
+      
+
     }
 
     /**
@@ -209,8 +217,9 @@ class JobFormController extends Controller
        $person_exp->end_date=$request->end_dob;
        $person_exp->role=$request->role_name;
        $person_exp->save();
-       return redirect()->back();
-    }
+       return redirect()->back()->with('success','New Recuritment Has Been Added!!'); 
+    // return redirect()->route('job_form.index')->with('success','New Recuritment Has Been Added!!');    
+}
 
     /**
      * Display the specified resource.
