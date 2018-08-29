@@ -20,15 +20,22 @@
 
 <body style="background-color:white;">
     <div id="app">
-         @include('inc.navbar')
+        
         <div class="container-fluid">
+            @include('inc.msgs')
             @yield('content')
+           
         </div>
     </div>
 
 <!-- Scripts -->
 <script src="../../assets/js/ie-emulation-modes-warning.js"></script>
     <script src="{{ asset('js/app.js') }}"></script>
+    <script>
+        $(document).ready(function(){
+            $(".alert").delay(500).slideUp(500);
+        });
+    </script>
     @yield('scriptTags')
 
 </body>

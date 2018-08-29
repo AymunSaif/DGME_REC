@@ -17,4 +17,4 @@ Route::get('/', function () {
 Route::resource('job_form','JobFormController');
 // job_form.store
 // job_form.create
-Route::get('/form', 'JobFormController@create')->name('apply');
+Route::get('/form', 'JobFormController@index')->name('index');
