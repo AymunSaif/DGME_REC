@@ -10,7 +10,8 @@
 
     <title>{{ config('app.name', 'DGME_RECURITMENT') }}</title>
 
-
+    <link rel="stylesheet" href="{{asset('css/intlTelInput.css')}}">
+    <link rel="stylesheet" href="{{asset('css/demo.css')}}">
      <link href="../../dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="../../assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
     <link href="navbar-fixed-top.css" rel="stylesheet">
