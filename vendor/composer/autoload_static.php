@@ -348,6 +348,7 @@ class ComposerStaticInit240f0babe76c56c7db0e0178e03ff1fa
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
         'App\\Http\\Controllers\\DistrictController' => __DIR__ . '/../..' . '/app/Http/Controllers/DistrictController.php',
         'App\\Http\\Controllers\\HigherSubjectController' => __DIR__ . '/../..' . '/app/Http/Controllers/HigherSubjectController.php',
+        'App\\Http\\Controllers\\HomeController' => __DIR__ . '/../..' . '/app/Http/Controllers/HomeController.php',
         'App\\Http\\Controllers\\JobFormController' => __DIR__ . '/../..' . '/app/Http/Controllers/JobFormController.php',
         'App\\Http\\Controllers\\ProvinceController' => __DIR__ . '/../..' . '/app/Http/Controllers/ProvinceController.php',
         'App\\Http\\Controllers\\SecondarySubjectController' => __DIR__ . '/../..' . '/app/Http/Controllers/SecondarySubjectController.php',

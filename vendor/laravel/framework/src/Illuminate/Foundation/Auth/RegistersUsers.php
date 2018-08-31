@@ -17,7 +17,13 @@ trait RegistersUsers
      */
     public function showRegistrationForm()
     {
+      // dd(Auth::user());
+      if(Auth::user()->email == "admin@dgme.gov.pk"){
         return view('auth.register');
+      }
+      else{
+      return redirect("/");
+    }
     }
 
     /**
@@ -32,7 +38,7 @@ trait RegistersUsers
 
         event(new Registered($user = $this->create($request->all())));
 
-        $this->guard()->login($user);
+        // $this->guard()->login($user);
 
         return $this->registered($request, $user)
                         ?: redirect($this->redirectPath());
