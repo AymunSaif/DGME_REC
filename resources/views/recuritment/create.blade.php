@@ -2,9 +2,8 @@
 @section('content')
 <form id="form" action="{{route('job_form.store')}}" name="form" method="post" enctype="multipart/form-data" >
     {{csrf_field()}}
-<section id="demographics" >
-       
-      <div class="row" style="background-color::blanchedalmond; font-size: 15px;margin-top:15px; margin-bottom: -2px;text-align: center;">
+    <div class="smallbox">
+    <div class="row" style="background-color::blanchedalmond; font-size: 15px;margin-top:15px; margin-bottom: -2px;text-align: center;">
             <div class=" col-md-12 form-group" >
                     <b>Apply For Specific Designation  </b></br>
                     <select class="form-control" name="afor">
@@ -17,6 +16,11 @@
                 </div>
               
       </div>
+    </div>
+      <button id="cloneButton1">clone()</button>
+    <section id="demographics" >
+       
+   
      
         <div class="row" >
                 <h3 align=center style="color:gray; font-weight:bold"><b>Demographics Info</b> </h3><hr/>
@@ -443,6 +447,15 @@
 @endsection
 @section('scriptTags')
 <script>
+ 
+	
+   
+	
+    $("#cloneButton1").click(function () {
+		
+	  $('.smallBox').clone().insertAfter(".smallBox");
+	  
+    });
 
      $('.school_level').on('change',function(){ 
       if($('.school_level').val()=='Matric')
