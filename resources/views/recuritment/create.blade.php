@@ -2,8 +2,28 @@
 @section('content')
 <form id="form" action="{{route('job_form.store')}}" name="form" method="post" enctype="multipart/form-data" >
     {{csrf_field()}}
+<<<<<<< HEAD
     <div class="smallbox">
     <div class="row" style="background-color::blanchedalmond; font-size: 15px;margin-top:15px; margin-bottom: -2px;text-align: center;">
+=======
+
+<section id="cnicSection" > 
+    <div class="col-md-3"></div>
+    <div class="col-md-6" style="margin-top:20%;">
+        <div class="form-group ">
+                <b style="font-size:20px;">Enter CNIC Number <span style="color:red;font-size:12px;">   (required)</span> </b></br>
+                <input type="text" id="cnic" maxlength="15" name="cnic" placeholder="xxxxx-xxxxxxx-x" class="form-control" required>
+                
+            </div>
+        </div>
+    <div class="col-md-3"></div>
+            <button type="button" class="btn btn-sm btn-success " style=" margin-left: 43%;
+            width: 200px;font-size:1.5em;" id="basic_info"> Next</button>  
+</section>   
+<section id="demographics" style="display:none">
+       
+      {{-- <div class="row" style="background-color::blanchedalmond; font-size: 15px;margin-top:15px; margin-bottom: -2px;text-align: center;">
+>>>>>>> a1cb0432b7feb4d3b331dad90855e24701f785d4
             <div class=" col-md-12 form-group" >
                     <b>Apply For Specific Designation  </b></br>
                     <select class="form-control" name="afor">
@@ -15,31 +35,43 @@
                         </select>
                 </div>
               
+<<<<<<< HEAD
       </div>
     </div>
       <button id="cloneButton1">clone()</button>
     <section id="demographics" >
        
    
+=======
+      </div> --}}
+>>>>>>> a1cb0432b7feb4d3b331dad90855e24701f785d4
      
         <div class="row" >
                 <h3 align=center style="color:gray; font-weight:bold"><b>Demographics Info</b> </h3><hr/>
+                <div class="row">
+                        <div class="col-md-3"></div>
+                    <div class="col-md-6">
+                    <div class="form-group " style="text-align: center;font-size: 15px;font-weight: bold;">
+                            <b>Serial Number :</b> HIS_2018_000</br>
+                        </div>
+                    </div>
+                </div>
                 <div class="col-md-6">
-                        <div class="form-group">
-                                <b>Name<span style="color:red;font-size:8px;">   (required)</span>  </b></br>
+                    <div class="form-group">
+                                <b>Name<span style="color:red;font-size:12px;">   (required)</span>  </b></br>
                                 <input type="text" name="name" id="name"  placeholder="Enter Your Full Name" class="form-control" required>   
                             </div>
                             <div class="form-group">
-                                    <b>Father / Spouse Name(Male)  </b></br>
+                                    <b>Father / Husband Name  </b></br>
                                     <input type="text" name="f_name" id="f_name"  placeholder="Father / Spouse Name(Male)" class="form-control" >   
                                 </div>
-                            <div class="input-group mb-3 form-group">    
+                            <div class="form-group">    
                                     <b>Gender </b> </br>
-                                <div class="input-group-append" id="button-addon4">
+                                
                                 Male<input style="margin-left:6px;margin-right:5px;" type="radio" value="Male" name="gender">
                                 Female<input  style="margin-left:6px;margin-right:5px;"  type="radio" value="Female" name="gender">
                                 Transgender<input   style="margin-left:6px;margin-right:5px;" type="radio" value="Transgender" name="gender">
-                                </div>
+                               
                             </div>
                           
                             <div class="form-group">
@@ -72,45 +104,73 @@
                            
                       
                         <div class="col-md-6">
-                                <div class="form-group ">
-                                        <b>CNIC NO <span style="color:red;font-size:8px;">   (required)</span> </b></br>
-                                        <input type="text" id="cnic" maxlength="15" name="cnic" class="form-control" required>
-                                        
-                                    </div>
-                                    <div class="form-group">
-                                            <b>Phone Number  </b></br>
-                                            <input type="text" name="phone" id="phone" class="form-control" >   
-                                    </div>
-                                    <div class="form-group">
-                                            <b>Cell Number  </b></br>
-                                            <input type="text" name="cell_num" id="cell_num" class="form-control" >   
+                                <div class="form-group">
+                                        <b>City </b> 
+                                  <select class="form-control" name="dom_city">
+                                    <option value="">Select City:</option>
+                                    @foreach($cities as $city)
+                                    <option value="{{$city->id}}">{{$city->name}}</option>
+                                    @endforeach
+                                   
+                                </select>
+                                </div>
+                                <div class="form-group">
+                                        <b>Postal Address </b></br>
+                                        <textarea type="text" name="address" class="form-control"></textarea>   
                                     </div>
                                     <div class="form-group">
                                             <b>Email Address  : </b></br>
                                             <input type="email" name="emailaddress" id="email" class="form-control" >   
                                     </div>
+                                    
+                                <div class="form-group"> 
+                                    <b>Phone Number  </b></br>
+                                    <input id="phone" name="phone" type="tel" class="form-control">
+                                  </div>
+                                    {{-- <div class="form-group">
+                                            <select name="countryCode" id="phonenum" >
+                                                    <option data-countryCode="GB" value="44" Selected>UK (+44)</option>
+                                                    <option data-countryCode="US" value="1">USA (+1)</option>
+                                                    <optgroup label="Other countries">
+                                                        <option data-countryCode="DZ" value="213">Algeria (+213)</option>
+                                                        <option data-countryCode="AD" value="376">Andorra (+376)</option>
+                                                        <option data-countryCode="AO" value="244">Angola (+244)</option>
+                                                        <option data-countryCode="AI" value="1264">Anguilla (+1264)</option>
+                                                        <option data-countryCode="AG" value="1268">Antigua &amp; Barbuda (+1268)</option>
+                                                        <option data-countryCode="AR" value="54">Argentina (+54)</option>
+                                                    </optgroup>
+                                            </select>
+                                            
+                                    
+                                        </div> --}}
                                     <div class="form-group">
-                                        <b>Postal Address </b></br>
-                                        <textarea type="text" name="address" class="form-control"></textarea>   
-                                    </div>
+                                            <b>Cell Number  </b></br>
+                                            <input id="mobile-number" name="mobile-number" type="tel" class="form-control">                              
+                                              </div>
                                     <div class="form-group">
-                                            <b>City </b> 
-                                      <select class="form-control" name="dom_city">
-                                        <option value="">Select City:</option>
-                                        @foreach($cities as $city)
-                                        <option value="{{$city->id}}">{{$city->name}}</option>
-                                        @endforeach
-                                       
-                                    </select>
+                                            <b>Email Address  : </b></br>
+                                            <input type="email" name="emailaddress" id="email" class="form-control" >   
                                     </div>
+                                  
                                    
                                 </div>
                                    
                               
                         </div>
-                
-                <button type="button" class="btn btn-md btn-success" style=" margin-left: 40%;
-                width: 252px;" id="education"> Next</button>                
+                        <div class="row">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-3">
+                                <button type="button" class="btn btn-md btn-danger " style=" width: 252px;" id="go_cnic"> Back</button>                
+                            </div>
+                            <div class="col-md-4"></div>
+                            <div class="col-md-3">
+                                <button type="button" class="btn btn-md btn-success pull-right" style="
+                                width: 252px;" id="education"> Next</button> 
+                            </div>  
+                                <div class="col-md-1"></div>
+                        </div>
+                           
+
 
 </section>
 <section id="educationSection" style="display:none">
@@ -211,9 +271,9 @@
         </select>
         </div></span></td>
         </tr>
-
+        
         <tr><td> <div >
-                <b><span style="color:red; font-size:2em;">*</span>UnderGraduate Level </b>
+                <b><span style="color:red; font-size:2em;">*</span>Graduate Level </b>
             <select class="form-control educationYear"  name="bch_year">
             <option value="">Select year:</option>
             <option >2 years</option>
@@ -268,8 +328,8 @@
                 </select>
                 </div></span></td>
                 <td></td>
-            </tr>
-          
+            
+      
             <tr> 
                 <input type="hidden" name="qualification_postuniv" value="postuniv">                
 
@@ -391,7 +451,18 @@
             
             </tbody>
         </table>
-<button type="button" class="btn btn-md btn-success " style=" margin-left: 40%;width: 252px;" id="experience"> Next</button>                
+        <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-3">
+                    <button type="button" class="btn btn-md btn-danger " style=" width: 252px;" id="go_demo"> Back</button>                
+                </div>
+                <div class="col-md-4"></div>
+                <div class="col-md-3">
+                    <button type="button" class="btn btn-md btn-success pull-right" style="
+                    width: 252px;" id="experience"> Next</button> 
+                </div>  
+                    <div class="col-md-1"></div>
+            </div>
 
 </section>
 
@@ -446,6 +517,57 @@
 </form> 
 @endsection
 @section('scriptTags')
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="{{asset('js/intlTelInput.js')}}"></script>
+  <script>
+    $("#phone").intlTelInput({
+       //allowDropdown: false,
+       //autoHideDialCode: false,
+      // autoPlaceholder: "off",
+      // dropdownContainer: "body",
+      // excludeCountries: ["us"],
+      // formatOnDisplay: true,
+      // geoIpLookup: function(callback) {
+      //   $.get("http://ipinfo.io", function() {}, "jsonp").always(function(resp) {
+      //     var countryCode = (resp && resp.country) ? resp.country : "";
+      //     callback(countryCode);
+      //   });
+      // },
+      // hiddenInput: "full_number",
+       //initialCountry: "auto",
+      // localizedCountries: { 'de': 'Deutschland' },
+     // nationalMode: true,
+      // onlyCountries: ['us', 'gb', 'ch', 'ca', 'do'],
+      // placeholderNumberType: "MOBILE",
+      // preferredCountries: ['cn', 'jp'],
+      //separateDialCode: false,
+      utilsScript: "public/js/utils.js"
+    });
+    $("#mobile-number").intlTelInput({
+        //allowDropdown: false,
+        //autoHideDialCode: false,
+       // autoPlaceholder: "off",
+       // dropdownContainer: "body",
+       // excludeCountries: ["us"],
+       // formatOnDisplay: true,
+       // geoIpLookup: function(callback) {
+       //   $.get("http://ipinfo.io", function() {}, "jsonp").always(function(resp) {
+       //     var countryCode = (resp && resp.country) ? resp.country : "";
+       //     callback(countryCode);
+       //   });
+       // },
+       // hiddenInput: "full_number",
+        //initialCountry: "auto",
+       // localizedCountries: { 'de': 'Deutschland' },
+      // nationalMode: true,
+       // onlyCountries: ['us', 'gb', 'ch', 'ca', 'do'],
+       // placeholderNumberType: "MOBILE",
+       // preferredCountries: ['cn', 'jp'],
+       //separateDialCode: false,
+       utilsScript: "public/js/utils.js"
+     });
+     
+</script>
 <script>
  
 	
@@ -539,17 +661,43 @@ $('.college_level').on('change',function(){
             }
     });
     
+    $('button#basic_info').on('click',function(){
+       
+        $('section#cnicSection').hide(1000); 
+        $('section#demographics').show(1000); 
+       
+    });
+   
+    
     $('button#education').on('click',function(){
         if ($("input:invalid").length) {
             alert('Please Fill out Name or CNIC.');
           }       
         else{
         $('section#demographics').hide(1000); 
+        $('section#cnicSection').hide(1000); 
         $('section#educationSection').show(1000); 
+
         }
     });
+    $('button#go_demo').on('click',function(){
+       
+        $('section#cnicSection').hide(1000); 
+        $('section#educationSection').hide  (1000);
+        $('section#demographics').show(1000); 
+       
+    });
+    $('button#go_cnic').on('click',function(){
+       
+        
+        $('section#educationSection').hide(1000);
+        $('section#demographics').hide(1000); 
+        $('section#cnicSection').show(1000); 
+    });
+    
     $('button#experience').on('click',function(){
         $('section#demographics').hide(1000); 
+        $('section#cnicSection').hide(1000); 
         $('section#educationSection').hide(1000); 
         $('section#experienceSection').show(1000); 
     });

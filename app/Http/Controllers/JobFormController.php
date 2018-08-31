@@ -67,7 +67,8 @@ class JobFormController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
+        
+        dd($request->all());
        $person= new Applicant();
        $person->diary_num= '1';
        $person->name= $request->name;
