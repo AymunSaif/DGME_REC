@@ -9,7 +9,7 @@ use App\ApplicantAppliedFor;
 use App\ApplicantCertification;
 use App\City;
 use App\District;
-
+use Auth;
 use App\ApplicantExperience;
 use App\ApplicantHigherEducation;
 use App\ApplicantSecondaryEducation;
@@ -29,6 +29,7 @@ class JobFormController extends Controller
      */
     public function index()
     {
+      if(Auth::user()->email == "admin@dgme.gov.pk"){
         $person=Applicant::all();
         $person_detail= ApplicantDetail::all();
         $person_secondaryEdu = ApplicantSecondaryEducation::all();
@@ -36,7 +37,10 @@ class JobFormController extends Controller
         $person_certificate=ApplicantCertification::all();
         $person_exp=ApplicantExperience::all();
         return view('recuritment.index');
-      
+      }
+      else{
+        return redirect("/");
+      }
 
     }
 
@@ -129,7 +133,7 @@ class JobFormController extends Controller
       }
       elseif($request->college_level=="A-Level")
       {
-        
+
         $person_secondaryEdu_college->applicant_id=$person->id;
         $person_secondaryEdu_college->name_of_school=$request->c_Name;
         $person_secondaryEdu_college->qualification_type=$request->college;
@@ -137,10 +141,10 @@ class JobFormController extends Controller
         $person_secondaryEdu_college->secondarysubject_id=$request->c_subjects;
         $person_secondaryEdu_college->alevel_grades=$request->c_grades;
         $person_secondaryEdu_college->division=$request->c_div;
-        $person_secondaryEdu_college->distinction=$request->c_dist; 
+        $person_secondaryEdu_college->distinction=$request->c_dist;
       }
        $person_secondaryEdu_college->save();
-      
+
        if($request->bch_year=="2 years")
        {
        $person_higherEdu_2yr = new ApplicantHigherEducation();
@@ -169,7 +173,7 @@ class JobFormController extends Controller
         $person_higherEdu_univ->distinction=$request->u_position;
         $person_higherEdu_univ->save();
        }
-     
+
        $person_higherEdu_grad = new ApplicantHigherEducation();
        $person_higherEdu_grad->applicant_id=$person->id;
        $person_higherEdu_grad->name_of_institute=$request->pg_Name;
@@ -200,14 +204,14 @@ class JobFormController extends Controller
        $person_higherEdu_postdoc->date_of_grad=$request->postdoc_date;
        $person_higherEdu_postdoc->final_dmc_date=$request->postdoc_dmc_date;
        $person_higherEdu_postdoc->save();
-       
+
        $person_certificate= new ApplicantCertification();
        $person_certificate->applicant_id=$person->id;
        $person_certificate->certification_id=$request->app_cer;
        $person_certificate->issued_by=$request->certificate_i;
        $person_certificate->date_of_issuance=$request->i_date;
        $person_certificate->save();
-     
+
 
        $person_exp= new ApplicantExperience();
        $person_exp->applicant_id=$person->id;
@@ -217,8 +221,8 @@ class JobFormController extends Controller
        $person_exp->end_date=$request->end_dob;
        $person_exp->role=$request->role_name;
        $person_exp->save();
-       return redirect()->back()->with('success','New Recuritment Has Been Added!!'); 
-    // return redirect()->route('job_form.index')->with('success','New Recuritment Has Been Added!!');    
+       return redirect()->back()->with('success','New Recuritment Has Been Added!!');
+    // return redirect()->route('job_form.index')->with('success','New Recuritment Has Been Added!!');
 }
 
     /**

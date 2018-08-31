@@ -14,7 +14,9 @@
 Route::get('/', function () {
     return view('welcome');
 });
-Route::resource('job_form','JobFormController');
+
+Route::resource('job_form','JobFormController')->middleware('auth');
 // job_form.store
 // job_form.create
-Route::get('/form', 'JobFormController@index')->name('index');
+Route::get('/form', 'JobFormController@index')->name('index')->middleware('auth');
+Auth::routes();
