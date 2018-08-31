@@ -1,0 +1,70 @@
+<div id="multiple">
+    <button class="pull-right add-more btn btn-default">+</button>
+<tr>
+    <td>
+        <div>
+            <b><span style="color:red; font-size:2em;">*</span>Graduate Level </b>
+            <select class="form-control educationYear" name="bch_year">
+                <option value="">Select year:</option>
+                <option>2 years</option>
+                <option>4 years</option>
+            </select>
+        </div>
+    </td>
+</tr>
+
+<tr>
+    <input type="hidden" name="qualification_univ" value="univ">
+    <td><span class="univ_name" style="display:none;"> Institution Name<br><input type="text" name="u_Name" id="u_Name"
+                class="form-control">
+        </span>
+    </td>
+    <td> <span class="univ_subjects" style="display:none;">
+            <div>
+                <b> Degree </b>
+                <select class="form-control" name="u_subjects">
+                    <option value="">Select degree:</option>
+                    @foreach($high_edu as $he)
+                    @if($he->type=="university")
+                    <option value="{{$he->id}}">{{$he->subject_name}}</option>
+                    @endif
+                    @endforeach
+
+                </select>
+            </div>
+        </span></td>
+    <td>
+        <span class="foury_cgpa " style="display:none"> CGPA <br>
+            <input type="number" step="0.01" name="cgpa" id="cgpa" class="form-control"></span>
+
+        <span class="twoy_totalmarks" style="display:none"> Total Marks <br>
+            <input type="number" name="twoy_t_marks" id="twoy_t_marks" class="form-control">
+        </span>
+    </td>
+    <td>
+        <span class="grad_d" style="display:none">Date Of Graduation<br> <input type="date" name="grad_date" id="date"
+                class="form-control"></span>
+        <span class="twoy_achievedmarks" style="display:none"> Achieved Marks <br>
+            <input type="number" name="twoy_a_marks" id="twoy_a_marks" class="form-control">
+        </span>
+    </td>
+    <td>
+        <span class="twoy_divi" style="display:none"> Division<br>
+            <input type="text" name="twoy_div" id="twoy_div" class="form-control">
+        </span>
+        <span class="dmc" style="display:none">Final DMC Date<br>
+            <input type="date" name="dmc_date" id="dmc_date" class="form-control"></span></td>
+    <td> <span class="univ_dist" style="display:none;">
+            <div>
+                <b>Distinction</b>
+                <select class="form-control" name="u_position">
+                    <option value=""></option>
+                    <option value="1">1st</option>
+                    <option value="2">2nd</option>
+                    <option value="3">3rd</option>
+                </select>
+            </div>
+        </span></td>
+    <td></td>
+</tr>
+</div>

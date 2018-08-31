@@ -23,8 +23,10 @@ class CreateApplicantHigherEducationTable extends Migration
             $table->string('degree')->nullable();
             $table->integer('highersubject_id')->unsigned()->index()->nullable();
             $table->foreign('highersubject_id')->references('id')->on('highersubjects')->onDelete('cascade');            
-            $table->double('total_marks',5,2)->nullable();
-            $table->double('achieved_marks',5,2)->nullable();
+            $table->double('cgpa',5,2)->nullable();
+            $table->integer('total_marks')->nullable();
+            $table->integer('achieved_marks')->nullable();
+            $table->string('alevel_grades')->nullable();
             $table->string('division')->nullable();
             $table->string('distinction')->nullable();
           

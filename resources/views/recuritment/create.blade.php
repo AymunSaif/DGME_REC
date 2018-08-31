@@ -1,11 +1,10 @@
 @extends('layouts.app')
 @section('content')
-<form id="form" action="{{route('job_form.store')}}" name="form" method="post" enctype="multipart/form-data" >
-    {{csrf_field()}}
+<section id="cnicSection" style="color:black; "> 
+        <h1  style="font-size: 50px; text-align:Center;font-weight:bold;">Hiring Form </h1>
 
-<section id="cnicSection" > 
     <div class="col-md-3"></div>
-    <div class="col-md-6" style="margin-top:20%;">
+    <div class="col-md-6" style="margin-top:10%;">
         <div class="form-group ">
                 <b style="font-size:20px;">Enter CNIC Number <span style="color:red;font-size:12px;">   (required)</span> </b></br>
                 <input type="text" id="cnic" maxlength="15" name="cnic" placeholder="xxxxx-xxxxxxx-x" class="form-control" required>
@@ -13,27 +12,15 @@
             </div>
         </div>
     <div class="col-md-3"></div>
-            <button type="button" class="btn btn-sm btn-success " style=" margin-left: 43%;
+    <button type="submit" class="btn btn-sm btn-success " style=" margin-left: 43%;
             width: 200px;font-size:1.5em;" id="basic_info"> Next</button>  
-</section>   
-<section id="demographics" style="display:none">
-       
-      {{-- <div class="row" style="background-color::blanchedalmond; font-size: 15px;margin-top:15px; margin-bottom: -2px;text-align: center;">
-            <div class=" col-md-12 form-group" >
-                    <b>Apply For Specific Designation  </b></br>
-                    <select class="form-control" name="afor">
-                            <option value="">Select Designation</option>
-                            @foreach($appliedposition as $afor)
-                            <option value="{{$afor->id}}">{{$afor->name}}</option>
-                            @endforeach
-                           
-                        </select>
-                </div>
-              
-      </div> --}}
-     
+        </section>
+<form id="form" action="#" name="form" method="post" enctype="multipart/form-data" >
+    {{csrf_field()}}
+<section id="demographics" style="display:none; color:black;">
         <div class="row" >
-                <h3 align=center style="color:gray; font-weight:bold"><b>Demographics Info</b> </h3><hr/>
+                <h3 align=center style="color:gray;color:black;font-weight:bolder">
+                    <b>Demographics Info</b> </h3>
                 <div class="row">
                         <div class="col-md-3"></div>
                     <div class="col-md-6">
@@ -111,7 +98,7 @@
                                     
                                 <div class="form-group"> 
                                     <b>Phone Number  </b></br>
-                                    <input id="phone" name="phone" type="tel" class="form-control">
+                                    <input id="phone" name="phone" type="tel"  class="form-control">
                                   </div>
                                     {{-- <div class="form-group">
                                             <select name="countryCode" id="phonenum" >
@@ -142,313 +129,356 @@
                                 </div>
                                    
                               
-                        </div>
-                        <div class="row">
-                            <div class="col-md-1"></div>
-                            <div class="col-md-3">
-                                <button type="button" class="btn btn-md btn-danger " style=" width: 252px;" id="go_cnic"> Back</button>                
-                            </div>
-                            <div class="col-md-4"></div>
-                            <div class="col-md-3">
-                                <button type="button" class="btn btn-md btn-success pull-right" style="
-                                width: 252px;" id="education"> Next</button> 
-                            </div>  
-                                <div class="col-md-1"></div>
-                        </div>
-                           
+    </div>
+        <div class="row" >
+            <div class="col-md-1"></div>
+            <div class="col-md-3">
+                <button type="button" class="btn btn-md btn-danger " style=" width: 252px;" id="go_cnic"> Back</button>                
+            </div>
+            <div class="col-md-4"></div>
+            <div class="col-md-3">
+                <button type="button" class="btn btn-md btn-success pull-right" style="
+                width: 252px;" id="education"> Next</button> 
+            </div>  
+            
+        </div>
+            
 
 
 </section>
-<section id="educationSection" style="display:none">
-
-        <h1 align=center style="color:gray;"><b>Education</b> </h1>
-
-        <table class="table ">
-            <tbody>
-            <tr><td><div >
-                    <b><span style="color:red; font-size:2em;">*</span>Schooling Level</b>
-                    <select class="form-control school_level"  name="schooling_level" >
-                    <option value="">Select :</option>
-                    <option >Matric</option>
-                    <option >O-Level</option>
-                </select>
-                </div>
-            </td></tr>
-            <tr> 
-                <input type="hidden" name="school" value="school">
-                <td>
-                    <span class="sch_name" style="display:none;"> School Name <br><input type="text" name="s_Name" id="s_Name" class="form-control"></span>
-                </td>
-                <td>  <span class="sch_board" style="display:none;">Board <br> <input type="text" name="b_Name" id="b_Name"   class="form-control" ></span> </td>
-                <td> <span class="sch_subjects" style="display:none;"><div >
-                        <b> Subjects </b>
-                    <select class="form-control" name="s_subjects">
-                    <option value="">Select :</option>
-                    @foreach($sec_edu as $se)
-                        @if($se->type=='School')
-                        <option value="{{$se->id}}">{{$se->subject_name}}</option>
-                        @elseif($se->type=='olevel')
-                        <option value="{{$se->id}}">{{$se->subject_name}}</option>
-                        @endif
-                    @endforeach    
-                </select>
-                </div>
-                </span>
-                </td>
-                <td>
-                    <span class="school_markstotal" style="display:none">Total Marks <br><input type="number" name="t_marks" id="t_marks" class="form-control">  </span> 
-                    <span class="Grades_olevel" style="display:none">Grades <br><input type="text" name="grades_olevel" id="grades_olevel" class="form-control">  </span> 
-                </td>
-                <td><span class="school_marksobtained" style="display:none"> Achieved Marks <br><input type="number" name="a_marks" id="a_marks" class="form-control" ></span>  </td>
-                <td> <span class="sch_div" style="display:none;">Division <br><input type="text" name="divi" id="divi"  class="form-control" > </span> </td>
-                <td > <span class="sch_dist" style="display:none;"> <div >
-                    <b>Distinction</b>
-                <select class="form-control" name="dist">
-                <option value=""></option>
-                <option value="1">1st</option>
-                <option value="2">2nd</option>
-                <option value="3">3rd</option>
-            </select>
-            </div></span></td>
-
-        </tr>
-        <tr><td><div >
-            <b><span style="color:red; font-size:2em;">*</span>College Level</b>
-            <select class="form-control college_level"  name="college_level" >
-            <option value="">Select :</option>
-            <option >Intermediate</option>
-            <option >A-Level</option>
-        </select>
-        </div>
-    </td></tr>
-    
-    <tr>           
-            <input type="hidden" name="college" value="college">
-            <td> <span class="col_name" style="display:none">College Name<br><input type="text" name="c_Name" id="c_Name"  class="form-control" ></span></td>
-            <td><span class="col_board" style="display:none"> Board <br> <input type="text" name="c_b_Name" id="c_b_Name"   class="form-control" > </span></td>
-            <td><span class="col_subjects" style="display:none"><div >
-                    <b> Degree </b>
-                <select class="form-control" name="c_subjects">
-                <option value="">Select degree:</option>
-                @foreach($sec_edu as $se)
-                @if($se->type=="college")
-                <option value="{{$se->id}}">{{$se->subject_name}}</option>
-                @elseif($se->type=="alevel")
-                <option value="{{$se->id}}">{{$se->subject_name}}</option>
-                @endif
-                @endforeach
-                
-            </select>
-            </div></span></td>
-
-            <td>
-                <span class="col_totalmarks" style="display:none">Total Marks <br><input type="number" name="c_t_marks" id="c_t_marks" class="form-control"> </span> 
-                <span class="col_grades" style="display:none">Grades <br><input type="string" name="c_grades" id="c_grades" class="form-control"> </span> </td>
-            </td>
-                <td><span class="col_achievedmarks" style="display:none">Achieved Marks <br><input type="number" name="c_a_marks" id="c_a_marks" class="form-control" ></span>  </td>
-            <td><span class="col_div" style="display:none">Division <br><input type="text" name="c_div" id="c_div"   class="form-control"> </span> </td>
-            <td ><span class="col_dist" style="display:none"> <div >
-                <b>Distinction</b>
-            <select class="form-control" name="c_dist">
-            <option value=""></option>
-            <option value="1">1st</option>
-            <option value="2">2nd</option>
-            <option value="3">3rd</option>
-        </select>
-        </div></span></td>
-        </tr>
+<section id="educationSection" style="color:black;display:none">
+    <h1 align=center style="color:gray;"><b>Education</b> </h1>
+    <table class="table ">
+            <tbody >
+                <tr>
+                    <td>
+                        <div>
+                            <b><span style="color:red; font-size:2em;">*</span>Schooling Level</b>
+                            <select class="form-control school_level" name="schooling_level">
+                                <option value="">Select :</option>
+                                <option>Matric</option>
+                                <option>O-Level</option>
+                            </select>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <input type="hidden" name="school" value="school">
+                    <td>
+                        <span class="sch_name" style="display:none;"> School Name <br><input type="text" name="s_Name" id="s_Name"
+                                class="form-control"></span>
+                    </td>
+                    <td> <span class="sch_board" style="display:none;">Board <br> <input type="text" name="b_Name" id="b_Name"
+                                class="form-control"></span> </td>
+                    <td> <span class="sch_subjects" style="display:none;">
+                            <div>
+                                <b> Subjects </b>
+                                <select class="form-control" name="s_subjects">
+                                    <option value="">Select :</option>
+                                    @foreach($sec_edu as $se)
+                                    @if($se->type=='School')
+                                    <option value="{{$se->id}}">{{$se->subject_name}}</option>
+                                    @elseif($se->type=='olevel')
+                                    <option value="{{$se->id}}">{{$se->subject_name}}</option>
+                                    @endif
+                                    @endforeach
+                                </select>
+                            </div>
+                        </span>
+                    </td>
+                    <td>
+                        <span class="school_markstotal" style="display:none">Total Marks <br><input type="number" name="t_marks"
+                                id="t_marks" class="form-control"> </span>
+                        <span class="Grades_olevel" style="display:none">Grades <br><input type="text" name="grades_olevel" id="grades_olevel"
+                                class="form-control"> </span>
+                    </td>
+                    <td><span class="school_marksobtained" style="display:none"> Achieved Marks <br><input type="number" name="a_marks"
+                                id="a_marks" class="form-control"></span> </td>
+                    <td> <span class="sch_div" style="display:none;">Division <br><input type="text" name="divi" id="divi"
+                                class="form-control"> </span> </td>
+                    <td> <span class="sch_dist" style="display:none;">
+                            <div>
+                                <b>Distinction</b>
+                                <select class="form-control" name="dist">
+                                    <option value=""></option>
+                                    <option value="1">1st</option>
+                                    <option value="2">2nd</option>
+                                    <option value="3">3rd</option>
+                                </select>
+                            </div>
+                        </span></td>
         
-        <tr><td> <div >
-                <b><span style="color:red; font-size:2em;">*</span>Graduate Level </b>
-            <select class="form-control educationYear"  name="bch_year">
-            <option value="">Select year:</option>
-            <option >2 years</option>
-            <option >4 years</option>
-        </select>
-        </div></td></tr>
+                </tr>
+                <tr>
+                    <td>
+                        <div>
+                            <b><span style="color:red; font-size:2em;">*</span>College Level</b>
+                            <select class="form-control college_level" name="college_level">
+                                <option value="">Select :</option>
+                                <option>Intermediate</option>
+                                <option>A-Level</option>
+                            </select>
+                        </div>
+                    </td>
+                </tr>
+        
+                <tr>
+                    <input type="hidden" name="college" value="college">
+                    <td> <span class="col_name" style="display:none">College Name<br><input type="text" name="c_Name" id="c_Name"
+                                class="form-control"></span></td>
+                    <td><span class="col_board" style="display:none"> Board <br> <input type="text" name="c_b_Name" id="c_b_Name"
+                                class="form-control"> </span></td>
+                    <td><span class="col_subjects" style="display:none">
+                            <div>
+                                <b> Degree </b>
+                                <select class="form-control" name="c_subjects">
+                                    <option value="">Select degree:</option>
+                                    @foreach($sec_edu as $se)
+                                    @if($se->type=="college")
+                                    <option value="{{$se->id}}">{{$se->subject_name}}</option>
+                                    @elseif($se->type=="alevel")
+                                    <option value="{{$se->id}}">{{$se->subject_name}}</option>
+                                    @endif
+                                    @endforeach
+        
+                                </select>
+                            </div>
+                        </span></td>
+        
+                    <td>
+                        <span class="col_totalmarks" style="display:none">Total Marks <br><input type="number" name="c_t_marks"
+                                id="c_t_marks" class="form-control"> </span>
+                        <span class="col_grades" style="display:none">Grades <br><input type="string" name="c_grades" id="c_grades"
+                                class="form-control"> </span> </td>
+                    </td>
+                    <td><span class="col_achievedmarks" style="display:none">Achieved Marks <br><input type="number" name="c_a_marks"
+                                id="c_a_marks" class="form-control"></span> </td>
+                    <td><span class="col_div" style="display:none">Division <br><input type="text" name="c_div" id="c_div"
+                                class="form-control"> </span> </td>
+                    <td><span class="col_dist" style="display:none">
+                            <div>
+                                <b>Distinction</b>
+                                <select class="form-control" name="c_dist">
+                                    <option value=""></option>
+                                    <option value="1">1st</option>
+                                    <option value="2">2nd</option>
+                                    <option value="3">3rd</option>
+                                </select>
+                            </div>
+                        </span></td>
+                </tr>
+                <button class="pull-right add-more btn btn-default">+</button>
+                <tr id="multiple" class="test_0">
+                    <td>
+                        <div>
+                            <b><span style="color:red; font-size:2em;">*</span>Graduate Level </b>
+                            <select class="form-control educationYear" name="bch_year">
+                                <option value="">Select year:</option>
+                                <option>2 years</option>
+                                <option>4 years</option>
+                            </select>
+                        </div>
+                    </td>
+                </tr>
             
-    <tr>
-            <input type="hidden" name="qualification_univ" value="univ">
-            <td><span class="univ_name" style="display:none;">   Institution Name<br><input type="text" name="u_Name" id="u_Name"  class="form-control" >   
-                </span>     
-            </td>
-               <td> <span class="univ_subjects" style="display:none;"><div >
-                    <b> Degree </b>
-                <select class="form-control" name="u_subjects">
-                <option value="">Select degree:</option>
-                @foreach($high_edu as $he)
-                @if($he->type=="university")
-                <option value="{{$he->id}}">{{$he->subject_name}}</option>
-                @endif
-                @endforeach
-               
-            </select>
-            </div></span></td>
-            <td>
-                <span class="foury_cgpa " style="display:none"> CGPA <br>
-                <input type="number" step="0.01" name="cgpa" id="cgpa"  class="form-control" ></span>
-
-                <span class="twoy_totalmarks" style="display:none"> Total Marks <br>
-                <input type="number" name="twoy_t_marks" id="twoy_t_marks" class="form-control">
-                </span>
-            </td>
-             <td>
-                <span class="grad_d" style="display:none">Date Of Graduation<br> <input type="date"  name="grad_date" id="date"  class="form-control" ></span>    
-                  <span class="twoy_achievedmarks" style="display:none"> Achieved Marks <br>
-                    <input type="number" name="twoy_a_marks" id="twoy_a_marks" class="form-control">
-                    </span>
-            </td>
-            <td>
-                <span class="twoy_divi" style="display:none"> Division<br>
-                        <input type="text" name="twoy_div" id="twoy_div" class="form-control"> 
-                </span>
-             <span class="dmc" style="display:none">Final DMC Date<br>
-                <input type="date"  name="dmc_date" id="dmc_date"  class="form-control" ></span></td>
-                <td >  <span class="univ_dist" style="display:none;">     <div >
-                        <b>Distinction</b>
-                    <select class="form-control" name="u_position">
-                    <option value=""></option>
-                    <option value="1">1st</option>
-                    <option value="2">2nd</option>
-                    <option value="3">3rd</option>
-                </select>
-                </div></span></td>
-                <td></td>
+                <tr id="multiple2" class="testt_0">
+                    <input type="hidden" name="qualification_univ" value="univ">
+                    <td><span class="univ_name" style="display:none;"> Institution Name<br><input type="text" name="u_Name" id="u_Name"
+                                class="form-control">
+                        </span>
+                    </td>
+                    <td> <span class="univ_subjects" style="display:none;">
+                            <div>
+                                <b> Degree </b>
+                                <select class="form-control" name="u_subjects">
+                                    <option value="">Select degree:</option>
+                                    @foreach($high_edu as $he)
+                                    @if($he->type=="university")
+                                    <option value="{{$he->id}}">{{$he->subject_name}}</option>
+                                    @endif
+                                    @endforeach
             
-      
-            <tr> 
-                <input type="hidden" name="qualification_postuniv" value="postuniv">                
-
-                <td><b>Institution Name (Graduate-Level)</b><br><input type="text" name="pg_Name" id="pg_Name"  class="form-control" >   
-                </td>
-                <td><div >
-                        <b>Degree Major</b>
-                    <select class="form-control" name="post_grad_degree">
-                    <option value="">Select degree:</option>
-                    @foreach($high_edu as $he)
-                        @if($he->type=="grad")
-                            <option value="{{$he->id}}">{{$he->subject_name}}</option>
-                        @endif
-                    @endforeach
-                </select>
-                </div></td>
-                <td> CGPA<br>
-                    <input type="number" step="0.01" name="pg_cgpa" id="pg_cgpa"  class="form-control" ></td>
-                 <td>Date Of Graduation<br>
-                        <input type="date"  name="pg_date" id="pg_date"  class="form-control" ></td>
-                <td>Final DMC Date<br>
-                <input type="date"  name="pg_dmc_date" id="pg_dmc_date"  class="form-control" ></td>
-                <td > <div >
-                    <b>Distinction</b>
-                    <select class="form-control" name="pg_dist">
-                            <option value=""></option>
-                            <option value="1">1st</option>
-                            <option value="2">2nd</option>
-                            <option value="3">3rd</option>
-            </select>
-            </div></td>
-              <td></td>
-        </tr>
-
-        <tr> 
-                <input type="hidden" name="qualification_postgraduniv" value="postgraduniv">                
-
-                <td><b>Institution Name (PostGraduate-Level)</b><br><input type="text" name="postgrad_Name" id="postgrad_Name"  class="form-control" >   
-                </td>
-                <td><div >
-                        <b>Degree Major</b>
-                    <select class="form-control" name="postgrad_degree">
-                    <option value="">Select degree:</option>
-                    @foreach($high_edu as $he)
-                        @if($he->type=="post_grad")
-                            <option value="{{$he->id}}">{{$he->subject_name}}</option>
-                        @endif
-                    @endforeach
-                </select>
-                </div></td>
-                <td> CGPA<br>
-                    <input type="number" step="0.01" name="postgrad_cgpa" id="postgrad_cgpa"  class="form-control" ></td>
-                 <td>Date Of Graduation<br>
-                        <input type="date"  name="postgrad_date" id="postgrad_date"  class="form-control" ></td>
-                <td>Final DMC Date<br>
-                <input type="date"  name="postgrad_dmc_date" id="postgrad_dmc_date"  class="form-control" ></td>
-                <td></td>
-              <td></td>
-        </tr>
-
-        <tr> 
-                <input type="hidden" name="qualification_postdocuniv" value="postdocuniv">                
-
-                <td><b>Institution Name (Post Doctoral-Level)</b><br><input type="text" name="postdoc_Name" id="postdoc_Name"  class="form-control" >   
-                </td>
-                <td><div >
-                        <b>Degree Major</b>
-                    <select class="form-control" name="postdoc_degree">
-                    <option value="">Select degree:</option>
-                    @foreach($high_edu as $he)
-                        @if($he->type=="postdoc")
-                            <option value="{{$he->id}}">{{$he->subject_name}}</option>
-                        @endif
-                    @endforeach
-                </select>
-                </div></td>
-                <td> CGPA<br>
-                    <input type="number" step="0.01" name="postdoc_cgpa" id="postdoc_cgpa"  class="form-control" ></td>
-                 <td>Date Of Graduation<br>
-                        <input type="date"  name="postdoc_date" id="postdoc_date"  class="form-control" ></td>
-                <td>Final DMC Date<br>
-                <input type="date"  name="postdoc_dmc_date" id="postdoc_dmc_date"  class="form-control" ></td>
-                <td></td>
-              <td></td>
-        </tr>
-
-            <tr>
-                <td><div >
-                        <b> Certification</b>
-                    <select class="form-control" name="app_cer">
-                    <option value="">Select certificate:</option>
-                    @foreach($certifications as $cer)
-                    <option value="{{$cer->id}}">{{$cer->subject_name}}</option>
-                    @endforeach
-                </select>
-                </div></td>
-                <td> Issued By <br> <input type="text"  name="certificate_i" id="certificate_i"  class="form-control" > </td>
-                
-                <td>Date Of Issuance <br>
-                    <input type="date"  name="i_date" id="i_date"  class="form-control" >
-                </td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                
-            </tr>
-         <tr>
-               <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>  
-         </tr>
-    
-
+                                </select>
+                            </div>
+                        </span></td>
+                    <td>
+                        <span class="foury_cgpa " style="display:none"> CGPA <br>
+                            <input type="number" step="0.01" name="cgpa" id="cgpa" class="form-control"></span>
             
+                        <span class="twoy_totalmarks" style="display:none"> Total Marks <br>
+                            <input type="number" name="twoy_t_marks" id="twoy_t_marks" class="form-control">
+                        </span>
+                    </td>
+                    <td>
+                        <span class="grad_d" style="display:none">Date Of Graduation<br> <input type="date" name="grad_date" id="date"
+                                class="form-control"></span>
+                        <span class="twoy_achievedmarks" style="display:none"> Achieved Marks <br>
+                            <input type="number" name="twoy_a_marks" id="twoy_a_marks" class="form-control">
+                        </span>
+                    </td>
+                    <td>
+                        <span class="twoy_divi" style="display:none"> Division<br>
+                            <input type="text" name="twoy_div" id="twoy_div" class="form-control">
+                        </span>
+                        <span class="dmc" style="display:none">Final DMC Date<br>
+                            <input type="date" name="dmc_date" id="dmc_date" class="form-control"></span></td>
+                    <td> <span class="univ_dist" style="display:none;">
+                            <div>
+                                <b>Distinction</b>
+                                <select class="form-control" name="u_position">
+                                    <option value=""></option>
+                                    <option value="1">1st</option>
+                                    <option value="2">2nd</option>
+                                    <option value="3">3rd</option>
+                                </select>
+                            </div>
+                        </span></td>
+                    <td></td>
+                </tr>
+        
+                <tr class="addin">
+                    <input type="hidden" name="qualification_postuniv" value="postuniv">
+        
+                    <td><b>Institution Name (Graduate-Level)</b><br><input type="text" name="pg_Name" id="pg_Name" class="form-control">
+                    </td>
+                    <td>
+                        <div>
+                            <b>Degree Major</b>
+                            <select class="form-control" name="post_grad_degree">
+                                <option value="">Select degree:</option>
+                                @foreach($high_edu as $he)
+                                @if($he->type=="grad")
+                                <option value="{{$he->id}}">{{$he->subject_name}}</option>
+                                @endif
+                                @endforeach
+                            </select>
+                        </div>
+                    </td>
+                    <td> CGPA<br>
+                        <input type="number" step="0.01" name="pg_cgpa" id="pg_cgpa" class="form-control"></td>
+                    <td>Date Of Graduation<br>
+                        <input type="date" name="pg_date" id="pg_date" class="form-control"></td>
+                    <td>Final DMC Date<br>
+                        <input type="date" name="pg_dmc_date" id="pg_dmc_date" class="form-control"></td>
+                    <td>
+                        <div>
+                            <b>Distinction</b>
+                            <select class="form-control" name="pg_dist">
+                                <option value=""></option>
+                                <option value="1">1st</option>
+                                <option value="2">2nd</option>
+                                <option value="3">3rd</option>
+                            </select>
+                        </div>
+                    </td>
+                    <td></td>
+                </tr>
+        
+                <tr>
+                    <input type="hidden" name="qualification_postgraduniv" value="postgraduniv">
+        
+                    <td><b>Institution Name (PostGraduate-Level)</b><br><input type="text" name="postgrad_Name" id="postgrad_Name"
+                            class="form-control">
+                    </td>
+                    <td>
+                        <div>
+                            <b>Degree Major</b>
+                            <select class="form-control" name="postgrad_degree">
+                                <option value="">Select degree:</option>
+                                @foreach($high_edu as $he)
+                                @if($he->type=="post_grad")
+                                <option value="{{$he->id}}">{{$he->subject_name}}</option>
+                                @endif
+                                @endforeach
+                            </select>
+                        </div>
+                    </td>
+                    <td> CGPA<br>
+                        <input type="number" step="0.01" name="postgrad_cgpa" id="postgrad_cgpa" class="form-control"></td>
+                    <td>Date Of Graduation<br>
+                        <input type="date" name="postgrad_date" id="postgrad_date" class="form-control"></td>
+                    <td>Final DMC Date<br>
+                        <input type="date" name="postgrad_dmc_date" id="postgrad_dmc_date" class="form-control"></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+        
+                <tr>
+                    <input type="hidden" name="qualification_postdocuniv" value="postdocuniv">
+        
+                    <td><b>Institution Name (Post Doctoral-Level)</b><br><input type="text" name="postdoc_Name" id="postdoc_Name"
+                            class="form-control">
+                    </td>
+                    <td>
+                        <div>
+                            <b>Degree Major</b>
+                            <select class="form-control" name="postdoc_degree">
+                                <option value="">Select degree:</option>
+                                @foreach($high_edu as $he)
+                                @if($he->type=="postdoc")
+                                <option value="{{$he->id}}">{{$he->subject_name}}</option>
+                                @endif
+                                @endforeach
+                            </select>
+                        </div>
+                    </td>
+                    <td> CGPA<br>
+                        <input type="number" step="0.01" name="postdoc_cgpa" id="postdoc_cgpa" class="form-control"></td>
+                    <td>Date Of Graduation<br>
+                        <input type="date" name="postdoc_date" id="postdoc_date" class="form-control"></td>
+                    <td>Final DMC Date<br>
+                        <input type="date" name="postdoc_dmc_date" id="postdoc_dmc_date" class="form-control"></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+        
+                <tr>
+                    <td>
+                        <div>
+                            <b> Certification</b>
+                            <select class="form-control" name="app_cer">
+                                <option value="">Select certificate:</option>
+                                @foreach($certifications as $cer)
+                                <option value="{{$cer->id}}">{{$cer->subject_name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </td>
+                    <td> Issued By <br> <input type="text" name="certificate_i" id="certificate_i" class="form-control"> </td>
+        
+                    <td>Date Of Issuance <br>
+                        <input type="date" name="i_date" id="i_date" class="form-control">
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+        
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
             </tbody>
         </table>
-        <div class="row">
-                <div class="col-md-1"></div>
-                <div class="col-md-3">
-                    <button type="button" class="btn btn-md btn-danger " style=" width: 252px;" id="go_demo"> Back</button>                
-                </div>
-                <div class="col-md-4"></div>
-                <div class="col-md-3">
-                    <button type="button" class="btn btn-md btn-success pull-right" style="
-                    width: 252px;" id="experience"> Next</button> 
-                </div>  
-                    <div class="col-md-1"></div>
+        
+    <div class="row">
+            <div class="col-md-1"></div>
+            <div class="col-md-3">
+                <button type="button" class="btn btn-md btn-danger " style=" width: 252px;" id="go_demo"> Back</button>                
             </div>
+            <div class="col-md-4"></div>
+            <div class="col-md-3">
+                <button type="button" class="btn btn-md btn-success pull-right" style="
+                width: 252px;" id="experience"> Next</button> 
+            </div>  
+                <div class="col-md-1"></div>
+        </div>
 
 </section>
 
@@ -617,22 +647,23 @@ $('.college_level').on('change',function(){
   }
 });
 
-
-    $('.educationYear').on('change',function(){
-        if($('.educationYear').val()=='2 years')
+        var i = 0;
+    $("tr.test_" + i + " > td > div > select").on('change',function(){
+        if($(this).val()=='2 years')
         { 
-        $('.foury_cgpa').hide(1000);
-        $('.grad_d').hide(1000);
-        $('.dmc').hide(1000);
+            $('.testt_'+ i).
+            $('.foury_cgpa').hide(1000);
+            $('.grad_d').hide(1000);
+            $('.dmc').hide(1000);
 
-        $('.univ_name').show(1000);
-        $('.univ_subjects').show(1000);
-        $('.twoy_totalmarks').show(1000);
-        $('.twoy_achievedmarks').show(1000)
-        $('.twoy_divi').show(1000);
-        $('.univ_dist').show(1000);
+            $('.univ_name').show(1000);
+            $('.univ_subjects').show(1000);
+            $('.twoy_totalmarks').show(1000);
+            $('.twoy_achievedmarks').show(1000)
+            $('.twoy_divi').show(1000);
+            $('.univ_dist').show(1000);
        
-      }else if($('.educationYear').val()=='4 years')
+      }else if($(this).val()=='4 years')
             {
             $('.twoy_totalmarks').hide(1000);
             $('.twoy_achievedmarks').hide(1000)
@@ -703,5 +734,18 @@ $('.college_level').on('change',function(){
            $(this).val($(this).val()+'-');
         
          });
+
+         $(".add-more").click(function(e){
+            e.preventDefault();
+            //tr of Graduate
+            $('#multiple').clone().removeClass('test_' + i).addClass('test_' + (i + 1))
+            .find("input").val("").end()
+            .insertBefore('.addin');
+            i = i+1;
+            //tr of Inputs
+            $('#multiple2').clone().removeClass('testt_' + i).addClass('testt_' + (i + 1))
+            .find("input").val("").end()
+            .insertBefore('.addin');
+ });
 </script>
-@endse
+@endsection

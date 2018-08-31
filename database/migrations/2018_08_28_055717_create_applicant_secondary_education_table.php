@@ -22,6 +22,7 @@ class CreateApplicantSecondaryEducationTable extends Migration
             $table->string('board')->nullable();
             $table->integer('secondarysubject_id')->unsigned()->index()->nullable();
             $table->foreign('secondarysubject_id')->references('id')->on('secondarysubjects')->onDelete('cascade');
+            $table->string('olevel_grades')->nullable();
             $table->integer('total_marks')->nullable();
             $table->integer('achieved_marks')->nullable();
             $table->string('division')->nullable();
