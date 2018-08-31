@@ -2,10 +2,6 @@
 @section('content')
 <form id="form" action="{{route('job_form.store')}}" name="form" method="post" enctype="multipart/form-data" >
     {{csrf_field()}}
-<<<<<<< HEAD
-    <div class="smallbox">
-    <div class="row" style="background-color::blanchedalmond; font-size: 15px;margin-top:15px; margin-bottom: -2px;text-align: center;">
-=======
 
 <section id="cnicSection" > 
     <div class="col-md-3"></div>
@@ -23,7 +19,6 @@
 <section id="demographics" style="display:none">
        
       {{-- <div class="row" style="background-color::blanchedalmond; font-size: 15px;margin-top:15px; margin-bottom: -2px;text-align: center;">
->>>>>>> a1cb0432b7feb4d3b331dad90855e24701f785d4
             <div class=" col-md-12 form-group" >
                     <b>Apply For Specific Designation  </b></br>
                     <select class="form-control" name="afor">
@@ -35,16 +30,7 @@
                         </select>
                 </div>
               
-<<<<<<< HEAD
-      </div>
-    </div>
-      <button id="cloneButton1">clone()</button>
-    <section id="demographics" >
-       
-   
-=======
       </div> --}}
->>>>>>> a1cb0432b7feb4d3b331dad90855e24701f785d4
      
         <div class="row" >
                 <h3 align=center style="color:gray; font-weight:bold"><b>Demographics Info</b> </h3><hr/>
@@ -563,7 +549,7 @@
        // onlyCountries: ['us', 'gb', 'ch', 'ca', 'do'],
        // placeholderNumberType: "MOBILE",
        // preferredCountries: ['cn', 'jp'],
-       //separateDialCode: false,
+    //    separateDialCode: false,
        utilsScript: "public/js/utils.js"
      });
      
@@ -718,4 +704,4 @@ $('.college_level').on('change',function(){
         
          });
 </script>
-@endsection
+@endse
