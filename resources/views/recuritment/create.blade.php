@@ -1,159 +1,167 @@
 @extends('layouts.app')
 @section('content')
-<section id="cnicSection" style="color:black; "> 
-        <h1  style="font-size: 50px; text-align:Center;font-weight:bold;">Hiring Form </h1>
+<form id="form" action="{{route('job_form.store')}}" name="form" method="post" enctype="multipart/form-data">
+    {{csrf_field()}}
 
-    <div class="col-md-3"></div>
-    <div class="col-md-6" style="margin-top:10%;">
-        <div class="form-group ">
-                <b style="font-size:20px;">Enter CNIC Number <span style="color:red;font-size:12px;">   (required)</span> </b></br>
+    <section id="cnicSection">
+        <div class="col-md-3"></div>
+        <div class="col-md-6" style="margin-top:20%;">
+            <div class="form-group">
+                <b style="font-size:20px;">Enter CNIC Number
+                    <span style="color:red;font-size:12px;"> (required)</span>
+                </b>
+                </br>
                 <input type="text" id="cnic" maxlength="15" name="cnic" placeholder="xxxxx-xxxxxxx-x" class="form-control" required>
-                
             </div>
         </div>
-    <div class="col-md-3"></div>
-    <button type="submit" class="btn btn-sm btn-success " style=" margin-left: 43%;
-            width: 200px;font-size:1.5em;" id="basic_info"> Next</button>  
-        </section>
-<form id="form" action="#" name="form" method="post" enctype="multipart/form-data" >
-    {{csrf_field()}}
-<section id="demographics" style="display:none; color:black;">
-        <div class="row" >
-                <h3 align=center style="color:gray;color:black;font-weight:bolder">
-                    <b>Demographics Info</b> </h3>
-                <div class="row">
-                        <div class="col-md-3"></div>
-                    <div class="col-md-6">
+        <div class="col-md-3"></div>
+        <button type="button" class="btn btn-sm btn-success " style=" margin-left: 43%;width: 200px;font-size:1.5em;"id="basic_info">Next</button>
+    </section>
+
+    <sectioon id="demographics"      >
+        <div class="row">
+            <h3 align=center style="color:gray; font-weight:bold">
+                <b>Demographics Info</b>
+            </h3>
+            <hr />
+            <div class="row">
+                <div class="col-md-3"></div>
+                <div class="col-md-6">
                     <div class="form-group " style="text-align: center;font-size: 15px;font-weight: bold;">
-                            <b>Serial Number :</b> HIS_2018_000</br>
-                        </div>
+                        <b>Serial Number :</b> HIS_2018_000</br>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                                <b>Name<span style="color:red;font-size:12px;">   (required)</span>  </b></br>
-                                <input type="text" name="name" id="name"  placeholder="Enter Your Full Name" class="form-control" required>   
-                            </div>
-                            <div class="form-group">
-                                    <b>Father / Husband Name  </b></br>
-                                    <input type="text" name="f_name" id="f_name"  placeholder="Father / Spouse Name(Male)" class="form-control" >   
-                                </div>
-                            <div class="form-group">    
-                                    <b>Gender </b> </br>
-                                
-                                Male<input style="margin-left:6px;margin-right:5px;" type="radio" value="Male" name="gender">
-                                Female<input  style="margin-left:6px;margin-right:5px;"  type="radio" value="Female" name="gender">
-                                Transgender<input   style="margin-left:6px;margin-right:5px;" type="radio" value="Transgender" name="gender">
-                               
-                            </div>
-                          
-                            <div class="form-group">
-                                <b>Date Of Birth </b></br>
-                                <input type="date" name="dob" class="form-control">   
-                            </div>
-                            <div class="form-group">
-                                    <b>Domicile Province</b>
-                              <select class="form-control" name="dom_province">
-                                <option value="">Select Province</option>
-                                @foreach($provinces as $province)
-                                <option value="{{$province->id}}">{{$province->name}}</option>
-                                @endforeach
-                               
-                            </select>
-                            </div>
-                            <div class="form-group">
-                                    <b>Domicile Districts </b>
-                              <select class="form-control"  name="dom_district">
-                                <option value="">Select Districts</option>
-                                @foreach($districts as $dist)
-                                <option value="{{$dist->id}}">{{$dist->name}}</option>
-                                @endforeach
-                              
-                               
-                            </select>
-                            </div>        
-                            
-                        </div>
-                           
-                      
-                        <div class="col-md-6">
-                                <div class="form-group">
-                                        <b>City </b> 
-                                  <select class="form-control" name="dom_city">
-                                    <option value="">Select City:</option>
-                                    @foreach($cities as $city)
-                                    <option value="{{$city->id}}">{{$city->name}}</option>
-                                    @endforeach
-                                   
-                                </select>
-                                </div>
-                                <div class="form-group">
-                                        <b>Postal Address </b></br>
-                                        <textarea type="text" name="address" class="form-control"></textarea>   
-                                    </div>
-                                    <div class="form-group">
-                                            <b>Email Address  : </b></br>
-                                            <input type="email" name="emailaddress" id="email" class="form-control" >   
-                                    </div>
-                                    
-                                <div class="form-group"> 
-                                    <b>Phone Number  </b></br>
-                                    <input id="phone" name="phone" type="tel"  class="form-control">
-                                  </div>
-                                    {{-- <div class="form-group">
-                                            <select name="countryCode" id="phonenum" >
-                                                    <option data-countryCode="GB" value="44" Selected>UK (+44)</option>
-                                                    <option data-countryCode="US" value="1">USA (+1)</option>
-                                                    <optgroup label="Other countries">
-                                                        <option data-countryCode="DZ" value="213">Algeria (+213)</option>
-                                                        <option data-countryCode="AD" value="376">Andorra (+376)</option>
-                                                        <option data-countryCode="AO" value="244">Angola (+244)</option>
-                                                        <option data-countryCode="AI" value="1264">Anguilla (+1264)</option>
-                                                        <option data-countryCode="AG" value="1268">Antigua &amp; Barbuda (+1268)</option>
-                                                        <option data-countryCode="AR" value="54">Argentina (+54)</option>
-                                                    </optgroup>
-                                            </select>
-                                            
-                                    
-                                        </div> --}}
-                                    <div class="form-group">
-                                            <b>Cell Number  </b></br>
-                                            <input id="mobile-number" name="mobile-number" type="tel" class="form-control">                              
-                                              </div>
-                                    <div class="form-group">
-                                            <b>Email Address  : </b></br>
-                                            <input type="email" name="emailaddress" id="email" class="form-control" >   
-                                    </div>
-                                  
-                                   
-                                </div>
-                                   
-                              
-    </div>
-        <div class="row" >
-            <div class="col-md-1"></div>
-            <div class="col-md-3">
-                <button type="button" class="btn btn-md btn-danger " style=" width: 252px;" id="go_cnic"> Back</button>                
             </div>
-            <div class="col-md-4"></div>
-            <div class="col-md-3">
-                <button type="button" class="btn btn-md btn-success pull-right" style="
-                width: 252px;" id="education"> Next</button> 
-            </div>  
-            
+            <div class="col-md-6">
+                <div class="form-group">
+                    <b>Name
+                        <span style="color:red;font-size:12px;"> (required)</span>
+                    </b>
+                    </br>
+                    <input type="text" name="name" id="name" placeholder="Enter Your Full Name" class="form-control"
+                        required>
+                </div>
+                <div class="form-group">
+                    <b>Father / Husband Name </b>
+                    </br>
+                    <input type="text" name="f_name" id="f_name" placeholder="Father / Spouse Name(Male)" class="form-control">
+                </div>
+                <div class="form-group">
+                    <b>Gender </b>
+                    </br>
+
+                    Male
+                    <input style="margin-left:6px;margin-right:5px;" type="radio" value="Male" name="gender"> Female
+                    <input style="margin-left:6px;margin-right:5px;" type="radio" value="Female" name="gender">
+                    Transgender
+                    <input style="margin-left:6px;margin-right:5px;" type="radio" value="Transgender" name="gender">
+
+                </div>
+
+                <div class="form-group">
+                    <b>Date Of Birth </b>
+                    </br>
+                    <input type="date" name="dob" class="form-control">
+                </div>
+                <div class="form-group">
+                    <b>Domicile Province</b>
+                    <select class="form-control" name="dom_province">
+                        <option value="">Select Province</option>
+                        @foreach($provinces as $province)
+                        <option value="{{$province->id}}">{{$province->name}}</option>
+                        @endforeach
+
+                    </select>
+                </div>
+                <div class="form-group">
+                    <b>Domicile Districts </b>
+                    <select class="form-control" name="dom_district">
+                        <option value="">Select Districts</option>
+                        @foreach($districts as $dist)
+                        <option value="{{$dist->id}}">{{$dist->name}}</option>
+                        @endforeach
+
+
+                    </select>
+                </div>
+
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <b>City </b>
+                    <select class="form-control" name="dom_city">
+                        <option value="">Select City:</option>
+                        @foreach($cities as $city)
+                        <option value="{{$city->id}}">{{$city->name}}</option>
+                        @endforeach
+
+                    </select>
+                </div>
+                <div class="form-group">
+                    <b>Postal Address </b>
+                    </br>
+                    <textarea type="text" name="address" class="form-control"></textarea>
+                </div>
+                <div class="form-group">
+                    <b>Email Address : </b>
+                    </br>
+                    <input type="email" name="emailaddress" id="email" class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <b>Phone Number </b>
+                    </br>
+                    <input id="phone" name="phone" type="tel" class="form-control">
+                </div>
+                {{--
+                <div class="form-group">
+                    <select name="countryCode" id="phonenum">
+                        <option data-countryCode="GB" value="44" Selected>UK (+44)</option>
+                        <option data-countryCode="US" value="1">USA (+1)</option>
+                        <optgroup label="Other countries">
+                            <option data-countryCode="DZ" value="213">Algeria (+213)</option>
+                            <option data-countryCode="AD" value="376">Andorra (+376)</option>
+                            <option data-countryCode="AO" value="244">Angola (+244)</option>
+                            <option data-countryCode="AI" value="1264">Anguilla (+1264)</option>
+                            <option data-countryCode="AG" value="1268">Antigua &amp; Barbuda (+1268)</option>
+                            <option data-countryCode="AR" value="54">Argentina (+54)</option>
+                        </optgroup>
+                    </select>
+
+
+                </div> --}}
+                <div class="form-group">
+                    <b>Cell Number </b>
+                    </br>
+                    <input id="mobile-number" name="mobile-number" type="tel" class="form-control">
+                </div>
+                <div class="form-group">
+                    <b>Email Address : </b>
+                    </br>
+                    <input type="email" name="emailaddress" id="email" class="form-control">
+                </div>
+
+
+            </div>
+
+
         </div>
-            
+        <hr />
 
+        <button type="button" class="btn btn-lg btn-danger " style=" width: 252px;" id="go_cnic"> Back</button>
+        <button type="button" class="btn btn-lg btn-success pull-right" style="width: 252px;" id="education"> Next</button>
+    </sectioon>
+   
+    <section id="educationSection" >
+        <h1 align=center style="color:gray;"><b>Education</b> </h1>
 
-</section>
-<section id="educationSection" style="color:black;display:none">
-    <h1 align=center style="color:gray;"><b>Education</b> </h1>
-    <table class="table ">
-            <tbody >
+        <table class="table " id="secondaryeducation">
+            <tbody>
                 <tr>
                     <td>
                         <div>
-                            <b><span style="color:red; font-size:2em;">*</span>Schooling Level</b>
+                            <b>
+                                <span style="color:red; font-size:2em;">*</span>Schooling Level</b>
                             <select class="form-control school_level" name="schooling_level">
                                 <option value="">Select :</option>
                                 <option>Matric</option>
@@ -162,41 +170,56 @@
                         </div>
                     </td>
                 </tr>
-                <tr>
-                    <input type="hidden" name="school" value="school">
+               
+                <tr><input type="hidden" name="school" value="school">
                     <td>
-                        <span class="sch_name" style="display:none;"> School Name <br><input type="text" name="s_Name" id="s_Name"
-                                class="form-control"></span>
+                        <span class="sch_name" style="display:none;"> School Name
+                            <br>
+                            <input type="text" name="s_Name" id="s_Name" class="form-control">
+                        </span>
                     </td>
-                    <td> <span class="sch_board" style="display:none;">Board <br> <input type="text" name="b_Name" id="b_Name"
-                                class="form-control"></span> </td>
-                    <td> <span class="sch_subjects" style="display:none;">
+                    <td>
+                        <span class="sch_board" style="display:none;">Board
+                            <br>
+                            <input type="text" name="b_Name" id="b_Name" class="form-control">
+                        </span>
+                    </td>
+                    <td>
+                        <span class="sch_subjects" style="display:none;">
                             <div>
                                 <b> Subjects </b>
                                 <select class="form-control" name="s_subjects">
                                     <option value="">Select :</option>
-                                    @foreach($sec_edu as $se)
-                                    @if($se->type=='School')
+                                    @foreach($sec_edu as $se) @if($se->type=='School')
                                     <option value="{{$se->id}}">{{$se->subject_name}}</option>
                                     @elseif($se->type=='olevel')
                                     <option value="{{$se->id}}">{{$se->subject_name}}</option>
-                                    @endif
-                                    @endforeach
+                                    @endif @endforeach
                                 </select>
                             </div>
                         </span>
                     </td>
                     <td>
-                        <span class="school_markstotal" style="display:none">Total Marks <br><input type="number" name="t_marks"
-                                id="t_marks" class="form-control"> </span>
-                        <span class="Grades_olevel" style="display:none">Grades <br><input type="text" name="grades_olevel" id="grades_olevel"
-                                class="form-control"> </span>
+                        <span class="school_markstotal" style="display:none">Total Marks
+                            <br>
+                            <input type="number" name="t_marks" id="t_marks" class="form-control"> </span>
+                        <span class="Grades_olevel" style="display:none">Grades
+                            <br>
+                            <input type="text" name="grades_olevel" id="grades_olevel" class="form-control"> </span>
                     </td>
-                    <td><span class="school_marksobtained" style="display:none"> Achieved Marks <br><input type="number" name="a_marks"
-                                id="a_marks" class="form-control"></span> </td>
-                    <td> <span class="sch_div" style="display:none;">Division <br><input type="text" name="divi" id="divi"
-                                class="form-control"> </span> </td>
-                    <td> <span class="sch_dist" style="display:none;">
+                    <td>
+                        <span class="school_marksobtained" style="display:none"> Achieved Marks
+                            <br>
+                            <input type="number" name="a_marks" id="a_marks" class="form-control">
+                        </span>
+                    </td>
+                    <td>
+                        <span class="sch_div" style="display:none;">Division
+                            <br>
+                            <input type="text" name="divi" id="divi" class="form-control"> </span>
+                    </td>
+                    <td>
+                        <span class="sch_dist" style="display:none;">
                             <div>
                                 <b>Distinction</b>
                                 <select class="form-control" name="dist">
@@ -206,13 +229,15 @@
                                     <option value="3">3rd</option>
                                 </select>
                             </div>
-                        </span></td>
-        
+                        </span>
+                    </td>
+
                 </tr>
                 <tr>
                     <td>
                         <div>
-                            <b><span style="color:red; font-size:2em;">*</span>College Level</b>
+                            <b>
+                                <span style="color:red; font-size:2em;">*</span>College Level</b>
                             <select class="form-control college_level" name="college_level">
                                 <option value="">Select :</option>
                                 <option>Intermediate</option>
@@ -221,13 +246,13 @@
                         </div>
                     </td>
                 </tr>
-        
                 <tr>
                     <input type="hidden" name="college" value="college">
-                    <td> <span class="col_name" style="display:none">College Name<br><input type="text" name="c_Name" id="c_Name"
-                                class="form-control"></span></td>
+                    <td> <span class="col_name" style="display:none">College Name<br><input type="text" name="c_Name"
+                                id="c_Name" class="form-control"></span></td>
                     <td><span class="col_board" style="display:none"> Board <br> <input type="text" name="c_b_Name" id="c_b_Name"
-                                class="form-control"> </span></td>
+                                class="form-control">
+                        </span></td>
                     <td><span class="col_subjects" style="display:none">
                             <div>
                                 <b> Degree </b>
@@ -240,21 +265,22 @@
                                     <option value="{{$se->id}}">{{$se->subject_name}}</option>
                                     @endif
                                     @endforeach
-        
+
                                 </select>
                             </div>
                         </span></td>
-        
+
                     <td>
                         <span class="col_totalmarks" style="display:none">Total Marks <br><input type="number" name="c_t_marks"
                                 id="c_t_marks" class="form-control"> </span>
-                        <span class="col_grades" style="display:none">Grades <br><input type="string" name="c_grades" id="c_grades"
-                                class="form-control"> </span> </td>
+                        <span class="col_grades" style="display:none">Grades <br><input type="string" name="c_grades"
+                                id="c_grades" class="form-control"> </span> </td>
                     </td>
-                    <td><span class="col_achievedmarks" style="display:none">Achieved Marks <br><input type="number" name="c_a_marks"
-                                id="c_a_marks" class="form-control"></span> </td>
+                    <td><span class="col_achievedmarks" style="display:none">Achieved Marks <br><input type="number"
+                                name="c_a_marks" id="c_a_marks" class="form-control"></span> </td>
                     <td><span class="col_div" style="display:none">Division <br><input type="text" name="c_div" id="c_div"
-                                class="form-control"> </span> </td>
+                                class="form-control">
+                        </span> </td>
                     <td><span class="col_dist" style="display:none">
                             <div>
                                 <b>Distinction</b>
@@ -267,485 +293,428 @@
                             </div>
                         </span></td>
                 </tr>
-                <button class="pull-right add-more btn btn-default">+</button>
-                <tr id="multiple" class="test_0">
-                    <td>
-                        <div>
-                            <b><span style="color:red; font-size:2em;">*</span>Graduate Level </b>
-                            <select class="form-control educationYear" name="bch_year">
-                                <option value="">Select year:</option>
-                                <option>2 years</option>
-                                <option>4 years</option>
-                            </select>
-                        </div>
-                    </td>
-                </tr>
-            
-                <tr id="multiple2" class="testt_0">
-                    <input type="hidden" name="qualification_univ" value="univ">
-                    <td><span class="univ_name" style="display:none;"> Institution Name<br><input type="text" name="u_Name" id="u_Name"
-                                class="form-control">
-                        </span>
-                    </td>
-                    <td> <span class="univ_subjects" style="display:none;">
-                            <div>
-                                <b> Degree </b>
-                                <select class="form-control" name="u_subjects">
-                                    <option value="">Select degree:</option>
-                                    @foreach($high_edu as $he)
-                                    @if($he->type=="university")
-                                    <option value="{{$he->id}}">{{$he->subject_name}}</option>
-                                    @endif
-                                    @endforeach
-            
-                                </select>
-                            </div>
-                        </span></td>
-                    <td>
-                        <span class="foury_cgpa " style="display:none"> CGPA <br>
-                            <input type="number" step="0.01" name="cgpa" id="cgpa" class="form-control"></span>
-            
-                        <span class="twoy_totalmarks" style="display:none"> Total Marks <br>
-                            <input type="number" name="twoy_t_marks" id="twoy_t_marks" class="form-control">
-                        </span>
-                    </td>
-                    <td>
-                        <span class="grad_d" style="display:none">Date Of Graduation<br> <input type="date" name="grad_date" id="date"
-                                class="form-control"></span>
-                        <span class="twoy_achievedmarks" style="display:none"> Achieved Marks <br>
-                            <input type="number" name="twoy_a_marks" id="twoy_a_marks" class="form-control">
-                        </span>
-                    </td>
-                    <td>
-                        <span class="twoy_divi" style="display:none"> Division<br>
-                            <input type="text" name="twoy_div" id="twoy_div" class="form-control">
-                        </span>
-                        <span class="dmc" style="display:none">Final DMC Date<br>
-                            <input type="date" name="dmc_date" id="dmc_date" class="form-control"></span></td>
-                    <td> <span class="univ_dist" style="display:none;">
-                            <div>
-                                <b>Distinction</b>
-                                <select class="form-control" name="u_position">
-                                    <option value=""></option>
-                                    <option value="1">1st</option>
-                                    <option value="2">2nd</option>
-                                    <option value="3">3rd</option>
-                                </select>
-                            </div>
-                        </span></td>
-                    <td></td>
-                </tr>
-        
-                <tr class="addin">
-                    <input type="hidden" name="qualification_postuniv" value="postuniv">
-        
-                    <td><b>Institution Name (Graduate-Level)</b><br><input type="text" name="pg_Name" id="pg_Name" class="form-control">
-                    </td>
-                    <td>
-                        <div>
-                            <b>Degree Major</b>
-                            <select class="form-control" name="post_grad_degree">
-                                <option value="">Select degree:</option>
-                                @foreach($high_edu as $he)
-                                @if($he->type=="grad")
-                                <option value="{{$he->id}}">{{$he->subject_name}}</option>
-                                @endif
-                                @endforeach
-                            </select>
-                        </div>
-                    </td>
-                    <td> CGPA<br>
-                        <input type="number" step="0.01" name="pg_cgpa" id="pg_cgpa" class="form-control"></td>
-                    <td>Date Of Graduation<br>
-                        <input type="date" name="pg_date" id="pg_date" class="form-control"></td>
-                    <td>Final DMC Date<br>
-                        <input type="date" name="pg_dmc_date" id="pg_dmc_date" class="form-control"></td>
-                    <td>
-                        <div>
-                            <b>Distinction</b>
-                            <select class="form-control" name="pg_dist">
-                                <option value=""></option>
-                                <option value="1">1st</option>
-                                <option value="2">2nd</option>
-                                <option value="3">3rd</option>
-                            </select>
-                        </div>
-                    </td>
-                    <td></td>
-                </tr>
-        
-                <tr>
-                    <input type="hidden" name="qualification_postgraduniv" value="postgraduniv">
-        
-                    <td><b>Institution Name (PostGraduate-Level)</b><br><input type="text" name="postgrad_Name" id="postgrad_Name"
-                            class="form-control">
-                    </td>
-                    <td>
-                        <div>
-                            <b>Degree Major</b>
-                            <select class="form-control" name="postgrad_degree">
-                                <option value="">Select degree:</option>
-                                @foreach($high_edu as $he)
-                                @if($he->type=="post_grad")
-                                <option value="{{$he->id}}">{{$he->subject_name}}</option>
-                                @endif
-                                @endforeach
-                            </select>
-                        </div>
-                    </td>
-                    <td> CGPA<br>
-                        <input type="number" step="0.01" name="postgrad_cgpa" id="postgrad_cgpa" class="form-control"></td>
-                    <td>Date Of Graduation<br>
-                        <input type="date" name="postgrad_date" id="postgrad_date" class="form-control"></td>
-                    <td>Final DMC Date<br>
-                        <input type="date" name="postgrad_dmc_date" id="postgrad_dmc_date" class="form-control"></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-        
-                <tr>
-                    <input type="hidden" name="qualification_postdocuniv" value="postdocuniv">
-        
-                    <td><b>Institution Name (Post Doctoral-Level)</b><br><input type="text" name="postdoc_Name" id="postdoc_Name"
-                            class="form-control">
-                    </td>
-                    <td>
-                        <div>
-                            <b>Degree Major</b>
-                            <select class="form-control" name="postdoc_degree">
-                                <option value="">Select degree:</option>
-                                @foreach($high_edu as $he)
-                                @if($he->type=="postdoc")
-                                <option value="{{$he->id}}">{{$he->subject_name}}</option>
-                                @endif
-                                @endforeach
-                            </select>
-                        </div>
-                    </td>
-                    <td> CGPA<br>
-                        <input type="number" step="0.01" name="postdoc_cgpa" id="postdoc_cgpa" class="form-control"></td>
-                    <td>Date Of Graduation<br>
-                        <input type="date" name="postdoc_date" id="postdoc_date" class="form-control"></td>
-                    <td>Final DMC Date<br>
-                        <input type="date" name="postdoc_dmc_date" id="postdoc_dmc_date" class="form-control"></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-        
-                <tr>
-                    <td>
-                        <div>
-                            <b> Certification</b>
-                            <select class="form-control" name="app_cer">
-                                <option value="">Select certificate:</option>
-                                @foreach($certifications as $cer)
-                                <option value="{{$cer->id}}">{{$cer->subject_name}}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </td>
-                    <td> Issued By <br> <input type="text" name="certificate_i" id="certificate_i" class="form-control"> </td>
-        
-                    <td>Date Of Issuance <br>
-                        <input type="date" name="i_date" id="i_date" class="form-control">
-                    </td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-        
-                </tr>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
             </tbody>
         </table>
         
-    <div class="row">
-            <div class="col-md-1"></div>
-            <div class="col-md-3">
-                <button type="button" class="btn btn-md btn-danger " style=" width: 252px;" id="go_demo"> Back</button>                
-            </div>
-            <div class="col-md-4"></div>
-            <div class="col-md-3">
-                <button type="button" class="btn btn-md btn-success pull-right" style="
-                width: 252px;" id="experience"> Next</button> 
-            </div>  
-                <div class="col-md-1"></div>
+        <div class="row" id="gradeducation">     
+            <div class="col-md-1">
+                <button type="button" id="add_grad_level"   class="btn btn-lg btn-success add_grad_level" style="width: 252px;" ><span
+                     class="glyphicon glyphicon-plus"> Add Graduation Level</span></button>
+            </div>   
         </div>
 
-</section>
+        <hr/>
+        
+        <div class="row" id="postgradeducation" style="margin-top:5px;">     
+                <div class="col-md-1">
+                    <button type="button" id="add_postgrad_level"   class="btn btn-lg btn-success add_postgrad_level" style="width: 252px;" ><span
+                            class="glyphicon glyphicon-plus"> Add Post Graduation Level</span></button>
+                </div>   
+        </div>
 
-<section id="experienceSection" style="display:none">
-        <h1 align=center style="color:gray;"><b>Experience</b> </h1>
+        <hr/>
 
-        <div class="row">
-         
-                <div class="col-md-12">
-                        <div class="form-group">
-                                <b>Organization Name : </b></br>
-                                <input type="text" name="org_Name" id="org_Name"  placeholder="Enter Your Organization Name" class="form-control" >   
-                            </div>
-                           
-                            <div class="form-group" name="org_type">
-                                    <b>Organization Type :</b>
-                              <select class="form-control">
-                                <option value="">Select Type:</option>
-                                <option value="1">Private</option>
-                                <option value="2">Public</option>
-                                <option value="3">Government</option>
-                                <option value="4">Self-Employed</option>
-                                <option value="5">Own Business</option>
-                                <option value="5">International</option>
-                               
-                            </select>
-                            </div>
-                          <div class="col-md-6">
-                              <div>
-                                <b>From </b>
-                                <input type="date" name="start_dob" class="form-control" >    
-                            </div></div>
-                            
-                          <div class="col-md-6">
-                                <div>
-                                        <b>To</b>   <input type="date" name="end_dob" class="form-control"> 
-                                </div>
-                          </div>
-                            
-                            <div class="form-group">
-                                    <b>Roles :</b>
-                                    <input type="text" name="role_name" class="form-control" >
-                               
-                            </select>
-                            </div>        
-                            
-                        </div>
-                        <button type="submit" class="btn btn-md btn-danger " style=" margin-left: 40%;width: 252px;"> Save</button>                
-                           
-</section>
+        <div class="row" id="postdoceducation" style="margin-top:5px;"> 
+            <div class="col-md-1">
+                <button type="button" id="add_postdoc_level"   class="btn btn-lg btn-success add_postdoc_level" style="width: 252px;" ><span
+                        class="glyphicon glyphicon-plus"> Add Post Doctral Level</span></button>
+             </div>
+        </div>
 
-</form> 
+        <hr/>
+        
+        <div class="row" id="certifications" style="margin-top:5px;">
+            
+            <div class="col-md-5">
+                    <h3> <b>Certifications</b>
+                <button type="button" id="add_morecertifications" class="btn btn-md btn-info add_certification "><span
+                class="glyphicon glyphicon-plus"></button></h3>
+            </div> 
+
+        </div>
+
+        <hr/>
+
+        <div class="row" id="trainings" style="margin-top:5px;">
+            <div class="col-md-5">
+                <h3> <b>Trainings</b>
+                    <button type="button" id="add_moretrainings" class="btn btn-md btn-info add_moretrainings" ><span
+                    class="glyphicon glyphicon-plus"></span></button></h3>
+            </div>
+           
+             
+        </div>
+
+        <hr/>
+
+        <div class="row" id="researchpaper" style="margin-top:5px;">
+            <div class="col-md-5">
+                <h3> <b>Research Papers</b>
+                    <button type="button" id="add_morerps" class="btn btn-md btn-info add_morerps" ><span
+                    class="glyphicon glyphicon-plus"></span></button></h3>
+            </div>
+                 
+        </div>
+
+        
+        
+        <div class="row" style="margin-top:5px;">
+            
+                <div class="col-md-1"></div>
+                <div class="col-md-3">
+                    <button type="button" class="btn btn-md btn-danger " style=" width: 252px;" id="go_demo"> Back</button>
+                </div>
+                <div class="col-md-4"></div>
+                <div class="col-md-3">
+                    <button type="button" class="btn btn-md btn-success pull-right" style="
+                        width: 252px;"
+                        id="experience"> Next</button>
+                </div>
+                <div class="col-md-1"></div>
+        </div>
+    </section>
+    
+    <section id="experienceSection"></section>
+    
+    <section id="designationSection" ></section>
+
+    
+</form>
 @endsection
 @section('scriptTags')
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="{{asset('js/intlTelInput.js')}}"></script>
-  <script>
-    $("#phone").intlTelInput({
-       //allowDropdown: false,
-       //autoHideDialCode: false,
-      // autoPlaceholder: "off",
-      // dropdownContainer: "body",
-      // excludeCountries: ["us"],
-      // formatOnDisplay: true,
-      // geoIpLookup: function(callback) {
-      //   $.get("http://ipinfo.io", function() {}, "jsonp").always(function(resp) {
-      //     var countryCode = (resp && resp.country) ? resp.country : "";
-      //     callback(countryCode);
-      //   });
-      // },
-      // hiddenInput: "full_number",
-       //initialCountry: "auto",
-      // localizedCountries: { 'de': 'Deutschland' },
-     // nationalMode: true,
-      // onlyCountries: ['us', 'gb', 'ch', 'ca', 'do'],
-      // placeholderNumberType: "MOBILE",
-      // preferredCountries: ['cn', 'jp'],
-      //separateDialCode: false,
-      utilsScript: "public/js/utils.js"
-    });
-    $("#mobile-number").intlTelInput({
-        //allowDropdown: false,
-        //autoHideDialCode: false,
-       // autoPlaceholder: "off",
-       // dropdownContainer: "body",
-       // excludeCountries: ["us"],
-       // formatOnDisplay: true,
-       // geoIpLookup: function(callback) {
-       //   $.get("http://ipinfo.io", function() {}, "jsonp").always(function(resp) {
-       //     var countryCode = (resp && resp.country) ? resp.country : "";
-       //     callback(countryCode);
-       //   });
-       // },
-       // hiddenInput: "full_number",
-        //initialCountry: "auto",
-       // localizedCountries: { 'de': 'Deutschland' },
-      // nationalMode: true,
-       // onlyCountries: ['us', 'gb', 'ch', 'ca', 'do'],
-       // placeholderNumberType: "MOBILE",
-       // preferredCountries: ['cn', 'jp'],
-    //    separateDialCode: false,
-       utilsScript: "public/js/utils.js"
-     });
-     
-</script>
+<script src="{{asset('js/intlTelInput.js')}}"></script>
 <script>
- 
-	
-   
-	
-    $("#cloneButton1").click(function () {
-		
-	  $('.smallBox').clone().insertAfter(".smallBox");
-	  
-    });
-
-     $('.school_level').on('change',function(){ 
-      if($('.school_level').val()=='Matric')
-        { 
-        $('.Grades_olevel').hide(1000);
-
-        $('.sch_name').show(1000);
-        $('.sch_board').show(1000);
-        $('.sch_subjects').show(1000);
-        $('.school_markstotal').show(1000);
-        $('.school_marksobtained').show(1000);
-        $('.sch_div').show(1000);
-        $('.sch_dist').show(1000);
-        
-      }
-    else if($('.school_level').val()=='O-Level'){
-        $('.school_markstotal').hide(1000);
-        $('.school_marksobtained').hide(1000);
-        $('.sch_name').show(1000);
-        $('.sch_board').show(1000);
-        $('.sch_subjects').show(1000);
-        $('.Grades_olevel').show(1000);
-        $('.sch_div').show(1000);
-        $('.sch_dist').show(1000);
-    }
-});
-
-$('.college_level').on('change',function(){ 
-    if($('.college_level').val()=='Intermediate')
-      { 
-      $('.col_grades').hide(1000);
-
-      $('.col_name').show(1000);
-      $('.col_board').show(1000);
-      $('.col_subjects').show(1000);
-      $('.col_totalmarks').show(1000);
-      $('.col_achievedmarks').show(1000);
-      $('.col_div').show(1000);
-      $('.col_dist').show(1000);
-      
-    }
-  else if($('.college_level').val()=='A-Level'){
-    $('.col_totalmarks').hide(1000);
-    $('.col_achievedmarks').hide(1000);
-    $('.col_grades').show(1000);
-    $('.col_name').show(1000);
-    $('.col_board').show(1000);
-    $('.col_subjects').show(1000);
-    $('.col_div').show(1000);
-    $('.col_dist').show(1000);
-  }
-});
-
-        var i = 0;
-    $("tr.test_" + i + " > td > div > select").on('change',function(){
-        if($(this).val()=='2 years')
-        { 
-            $('.testt_'+ i).
-            $('.foury_cgpa').hide(1000);
-            $('.grad_d').hide(1000);
-            $('.dmc').hide(1000);
-
-            $('.univ_name').show(1000);
-            $('.univ_subjects').show(1000);
-            $('.twoy_totalmarks').show(1000);
-            $('.twoy_achievedmarks').show(1000)
-            $('.twoy_divi').show(1000);
-            $('.univ_dist').show(1000);
-       
-      }else if($(this).val()=='4 years')
-            {
-            $('.twoy_totalmarks').hide(1000);
-            $('.twoy_achievedmarks').hide(1000)
-            $('.twoy_divi').hide(1000); 
-
-            $('.univ_name').show(1000);
-            $('.univ_subjects').show(1000);
-            $('.foury_cgpa').show(1000); 
-            $('.grad_d').show(1000);
-            $('.dmc').show(1000);
-            $('.univ_dist').show(1000);
-            }
-    });
     
-    $('button#basic_info').on('click',function(){
-       
-        $('section#cnicSection').hide(1000); 
-        $('section#demographics').show(1000); 
-       
-    });
-   
-    
-    $('button#education').on('click',function(){
-        if ($("input:invalid").length) {
-            alert('Please Fill out Name or CNIC.');
-          }       
-        else{
-        $('section#demographics').hide(1000); 
-        $('section#cnicSection').hide(1000); 
-        $('section#educationSection').show(1000); 
-
-        }
-    });
-    $('button#go_demo').on('click',function(){
-       
-        $('section#cnicSection').hide(1000); 
-        $('section#educationSection').hide  (1000);
-        $('section#demographics').show(1000); 
-       
-    });
-    $('button#go_cnic').on('click',function(){
-       
-        
-        $('section#educationSection').hide(1000);
-        $('section#demographics').hide(1000); 
-        $('section#cnicSection').show(1000); 
-    });
-    
-    $('button#experience').on('click',function(){
-        $('section#demographics').hide(1000); 
-        $('section#cnicSection').hide(1000); 
-        $('section#educationSection').hide(1000); 
-        $('section#experienceSection').show(1000); 
-    });
-        $('#cnic').keydown(function(){
-        
-          //allow  backspace, tab, ctrl+A, escape, carriage return
-          if (event.keyCode == 8 || event.keyCode == 9 
-                            || event.keyCode == 27 || event.keyCode == 13 
-                            || (event.keyCode == 65 && event.ctrlKey === true) )
-                                return;
-          if((event.keyCode < 48 || event.keyCode > 57))
-           event.preventDefault();
-        
-          var length = $(this).val().length; 
-                      
-          if(length == 5 || length == 13)
-           $(this).val($(this).val()+'-');
-        
+        $('button#basic_info').on('click', function () {
+            $('section#cnicSection').hide(1000);
+            $('section#demographics').show(1000);
          });
+        
+        $('button#education').on('click', function () {
+    
+            $('section#demographics').hide(1000);
+            $('section#cnicSection').hide(1000);
+            $('section#educationSection').show(1000);
+    
+    
+        });
+            $('button#go_demo').on('click', function () {
+        
+                $('section#cnicSection').hide(1000);
+                $('section#educationSection').hide(1000);
+                $('section#demographics').show(1000);
+        
+            });
+            $('button#go_cnic').on('click', function () {
+        
+        
+                $('section#educationSection').hide(1000);
+                $('section#demographics').hide(1000);
+                $('section#cnicSection').show(1000);
+            });
+        
+            $('button#experience').on('click', function () {
+                $('section#demographics').hide(1000);
+                $('section#cnicSection').hide(1000);
+                $('section#educationSection').hide(1000);
+                $('section#experienceSection').show(1000);
+            });
 
-         $(".add-more").click(function(e){
-            e.preventDefault();
-            //tr of Graduate
-            $('#multiple').clone().removeClass('test_' + i).addClass('test_' + (i + 1))
-            .find("input").val("").end()
-            .insertBefore('.addin');
-            i = i+1;
-            //tr of Inputs
-            $('#multiple2').clone().removeClass('testt_' + i).addClass('testt_' + (i + 1))
-            .find("input").val("").end()
-            .insertBefore('.addin');
- });
+        $('.school_level').on('change', function () {
+            if ($('.school_level').val() == 'Matric') {
+                $('.Grades_olevel').hide(1000);
+    
+                $('.sch_name').show(1000);
+                $('.sch_board').show(1000);
+                $('.sch_subjects').show(1000);
+                $('.school_markstotal').show(1000);
+                $('.school_marksobtained').show(1000);
+                $('.sch_div').show(1000);
+                $('.sch_dist').show(1000);
+    
+            } else if ($('.school_level').val() == 'O-Level') {
+                $('.school_markstotal').hide(1000);
+                $('.school_marksobtained').hide(1000);
+                $('.sch_name').show(1000);
+                $('.sch_board').show(1000);
+                $('.sch_subjects').show(1000);
+                $('.Grades_olevel').show(1000);
+                $('.sch_div').show(1000);
+                $('.sch_dist').show(1000);
+            }
+        });
+    
+        $('.college_level').on('change', function () {
+            if ($('.college_level').val() == 'Intermediate') {
+                $('.col_grades').hide(1000);
+    
+                $('.col_name').show(1000);
+                $('.col_board').show(1000);
+                $('.col_subjects').show(1000);
+                $('.col_totalmarks').show(1000);
+                $('.col_achievedmarks').show(1000);
+                $('.col_div').show(1000);
+                $('.col_dist').show(1000);
+    
+            } else if ($('.college_level').val() == 'A-Level') {
+                $('.col_totalmarks').hide(1000);
+                $('.col_achievedmarks').hide(1000);
+                $('.col_grades').show(1000);
+                $('.col_name').show(1000);
+                $('.col_board').show(1000);
+                $('.col_subjects').show(1000);
+                $('.col_div').show(1000);
+                $('.col_dist').show(1000);
+            }
+        });
+
+        $('.educationYear').on('change',function(){
+            if($('.educationYear').val()=='2 years')
+            { 
+                $('.fouryear_grad').hide(500);
+                $('.univ_cgpa').hide(500);
+                $('.grad_date').hide(500);
+                $('.dmc').hide(500);
+
+                $('.twoyear_grad').show(1000);
+                $('.univsubjects').show(1000);
+                $('.total_marks').show(1000);
+                $('.achieved_marks').show(1000);
+                $('.division').show(1000);
+                $('.dist').show(1000);
+            }
+            else if( $('.educationYear').val()=='4 years')
+            {  
+                $('.twoyear_grad').hide(1000);
+                $('.univsubjects').hide(1000);
+                $('.total_marks').hide(1000);
+                $('.achieved_marks').hide(1000);
+                $('.division').hide(1000);
+                
+                $('.fouryear_grad').show(1000);
+                $('.univsubjects').show(1000);
+                $('.univ_cgpa').show(1000);
+                $('.grad_date').show(1000);
+                $('.dmc').show(1000);
+                $('.dist').show(1000);
+                
+            }
+        }); 
+
+        
+            $('button#add_grad_level').click(function(e){
+            
+            var eduprogram ='<div class="row"  id="new_edurow[]">'
+                            +'<div class="col-md-12" style="margin-bottom: 15px;margin-top: 15px;">'
+                            +'<div class="col-md-1 remove"><button type="button" id="remove[]"  class="pull-left btn btn-danger btn-sm add" style=" margin-top: 19px;" onclick="remove_data(this)" ><span class="glyphicon glyphicon-minus"></span></button></div>'
+                            +'<div class="col-md-2" >Graduate Level'
+                            +'<select class="form-control educationYear" name="bch_year[]" onchange="add_newdata(this)">'
+                            +'<option value="">Select year:</option>'
+                            +' <option>2 years</option>'
+                            +'<option>4 years</option>'
+                            +'</select> </div> </div></div></div>';
+            $('#gradeducation').append(eduprogram);     
+        }); 
+        
+        $('button#add_postgrad_level').click(function(e){
+            
+        var eduprogram ='<div class="row" id="new_postgradrow[]">'
+                        +'<div class="col-md-12" style="margin-bottom: 15px;margin-top: 15px;">'
+                        +'<div class="col-md-1 remove_grad_level"><button type="button" id="remove_grad_level[]"  class="pull-left btn btn-danger btn-sm add" style=" margin-top: 19px;" onclick="remove_data(this)" ><span class="glyphicon glyphicon-minus"></span></button></div>'
+                        +'<input type="hidden" name="qualification_postuniv" value="post_grad">'
+                        +'<div class="col-md-2 institute_name">Institution Name<input type="text" name="pg_Name" id="pg_Name" class="form-control"> </div>'    
+                        +'<div class="col-md-2 postgrad_subjects">Major Subjects<select class="form-control" name="post_grad_degree"><option value="">Select degree:</option>'
+                        +'<option value="1">cs degree</option><option value="1">cs degree</option></select> </div>'
+                        +'<div class="col-md-2 post_cgpa">CGPA<input type="number" step="0.01" name="pg_cgpa" id="pg_cgpa" class="form-control"></div>'
+                        +'<div class="col-md-2 post_dg">Date Of Graduation <input type="date" name="pg_date" id="pg_date" class="form-control"> </div>'
+                        +'<div class="col-md-2 post_dmc">Final DMC Date<input type="date" name="pg_dmc_date" id="pg_dmc_date" class="form-control"></div></div></div>';
+            $('#postgradeducation').append(eduprogram);
+            
+        }); 
+
+        $('button#add_postdoc_level').click(function(e){
+            
+            var eduprogram ='<div class="row" id="new_postdocrow[]">'
+                            +'<div class="col-md-12" style="margin-bottom: 15px;margin-top: 15px;">'
+                            +'<div class="col-md-1 remove_graddoc_level"><button type="button" id="remove_graddoc_level[]"  class="pull-left btn btn-danger btn-sm add" style=" margin-top: 19px;" onclick="remove_data(this)" ><span class="glyphicon glyphicon-minus"></span></button></div>'
+                            +'<input type="hidden" name="qualification_postuniv" value="post_graddoc">'
+                            +'<div class="col-md-2 pd_institute_name">Institution Name<input type="text" name="pd_Name" id="pd_Name" class="form-control"> </div>'    
+                            +'<div class="col-md-2 postdoc_subjects">Major Subjects<select class="form-control" name="post_graddoc_degree"><option value="">Select degree:</option>'
+                            +'<option value="1">cs degree</option><option value="1">cs degree</option></select> </div>'
+                            +'<div class="col-md-2 postdoc_cgpa">CGPA<input type="number" step="0.01" name="pd_cgpa" id="pd_cgpa" class="form-control"></div>'
+                            +'<div class="col-md-2 postdoc_dg">Date Of Graduation <input type="date" name="pd_date" id="pd_date" class="form-control"> </div>'
+                            +'<div class="col-md-2 postdoc_dmc">Final DMC Date<input type="date" name="pd_dmc_date" id="pd_dmc_date" class="form-control"></div></div></div>';
+                $('#postdoceducation').append(eduprogram);
+                
+            }); 
+
+            $('button#add_morecertifications').click(function(e){
+            
+                var certifications_app ='<div class="row" id="new_cer[]" >'
+                      +'<div class="col-md-12" style="margin-bottom: 15px;margin-top: 15px;">'
+                       +' <div class="col-md-3"><b>Name</b><input type="text" name="app_cer[]" id="app_cer[]" class="form-control"></div>'
+                       +' <div class="col-md-3"><b>Issued By </b><br> <input type="text" name="certificate_i[]" id="certificate_i[]" class="form-control"></div>'
+                       +'<div class="col-md-3"><b>Date Of Issuance</b> <br><input type="date" name="i_date[]" id="i_date[]" class="form-control"></div>'
+                       +'<div class="col-md-3" style="margin-top: 21px;"><button type="button" id="remove_certification[]" onclick="remove_certification(this)" class="btn btn-sm btn-danger form-control">Remove</button></div>'
+                       +'</div></div>';
+                    $('#certifications').append(certifications_app);
+                    
+                });
+                
+            $('button#add_moretrainings').click(function(e){
+        
+                var training_app ='<div class="row" id="new_tr[]" >'
+                        +'<div class="col-md-12" style="margin-bottom: 15px;margin-top: 15px;">'
+                        +'<div class="col-md-3"> <b>Training Name</b> <input type="text" name="app_cer" id="app_tr" class="form-control"></div>'
+                        +'<div class="col-md-3"><b>By </b><br> <input type="text" name="tr_by" id="tr_by" class="form-control"></div>'
+                        +'<div class="col-md-3"><b>Duration</b><br><input type="text" name="tr_duration" id="tr_duration" class="form-control"></div>'
+                        +'<div class="col-md-3" style="margin-top: 21px;"><button type="button" id="remove_training[]" onclick="remove_training(this)" class="btn btn-sm btn-danger form-control">Remove</button></div>'
+                        +'</div></div>';
+                
+                    $('#trainings').append(training_app);
+                    
+                });
+                
+                $('button#add_morerps').click(function(e){
+        
+                    var research_app ='<div class="row" id="new_tr[]" >'
+                            +'<div class="col-md-12" style="margin-bottom: 15px;margin-top: 15px;">'
+                            +'<div class="col-md-3"><b>Research Paper Name</b><input type="text" name="app_rp" id="app_rp" class="form-control"></div>'
+                            +'<div class="col-md-3"><b>Published By </b><br> <input type="text" name="pb_by" id="pb_by" class="form-control"></div>'
+                            +'<div class="col-md-3"><b>Conference</b> <br><input type="text" name="conf" id="conf" class="form-control"></div>'
+                            +'<div class="col-md-3" style="margin-top: 21px;"><button type="button" id="remove_researchpaper[]" onclick="remove_researchpaper(this)" class="btn btn-sm btn-danger form-control">Remove</button></div>'
+                            +'</div></div>';
+                    
+                        $('#researchpaper').append(research_app);
+                        
+                    }); 
+
+       function add_newdata(e)
+        { 
+            var education_y = $(e).val();
+            
+            var add_year_fields="";
+            
+            if(education_y=='2 years')
+            {
+                add_year_fields='<div class="col-md-2 years">'
+                    +'<input type="hidden" name="qualification_univ[]" value="bachelor">'
+                +'<span class="twoyear_grad" id="twoyear_grad" >'
+            +'Institution Name<select class="form-control"  id="college_university_names[]" name="college_university_names[]" onchange="add_newUC(this)">'
+                        +'<option value="">Name:</option>'
+                        +'<option value="1">punjab college</option>'
+                        +'<option value="2">gujranwala college</option>'
+                        +'<option value="3">lahore college</option>'
+                        +'<option value="other">other</option>'
+                        +'</select><br><input type="hidden" id="real_college_university_names"/>'
+                        +'<div id="other_college_univ" style=" margin-top: -20px; display:none;">'
+                        +'<input type="text"   name="other_collegebox[]" id="other_univbox[]" class="form-control"/>'
+                        +' </div></span></div>'
+                        +'<div class="col-md-2 subjects">'
+                        +'<span class="univsubjects">'
+                        +'Subjects<select class="form-control" name="u_subjects[]">'
+                        +'<option value="">Subjects:</option>'
+                        +'<option value="1">ICS</option>'
+                        +'<option value="2">Maths</option>'
+                        +'<option value="3">science</option>'
+                        +'</select></span></div>'
+                        +'<div class="col-md-1 marks">Total Marks<input type="number" name="twoy_t_marks[]" id="twoy_t_marks" class="form-control"/></div>'
+                        +'<div class="col-md-1 achievedmarks"> Achieved Marks<input type="number" name="twoy_a_marks[]" id="twoy_a_marks" class="form-control"></div>'
+                        +'<div class="col-md-1 division"> Division'
+                        +'<input type="number" name="division[]" id="division[]" class="form-control"></div>'
+                        +'<div class="col-md-2 distinction">Distinction'
+                        +'<select class="form-control" name="distinction[]">'
+                        +'<option value=""></option><option value="Yes">Yes</option><option value="No">No</option></select></div>';
+
+            }
+            else if(education_y=='4 years')
+            {
+                    add_year_fields='<div class="col-md-2 years">'
+                   +'<input type="hidden" name="qualification_univ[]" value="bachelor">'
+                    +'<span class=" fouryear_grad" id="fouryear_grad" >'
+                    +'Institution Name<input type="hidden" name="qualification_univ[]" value="four_year">'
+                +'<select class="form-control"  id="university_names[]" name="university_names[]" onchange="add_newUC(this)">'
+                    +'<option value="">ok:</option>'
+                    +'<option value="1">umt</option>'
+                    +'<option value="2">ucp</option>'
+                    +'<option value="3">gcu</option>'
+                    +'<option value="other">other</option>'
+                    +'</select><br>'
+                    +'<input type="hidden" id="real_university_names[]"/>'
+                    +'<div id="other_univ" style=" margin-top: -20px; display:none;">'
+                    +'<input type="text"  name="other_univbox[]" id="other_univbox[]" class="form-control"/>'
+                    +'</div> </span></div>'
+                    +'<div class="col-md-2 subjects">'
+                    +'<span class="univsubjects" >'
+                    +'Subjects<select class="form-control" name="u_subjects[]">'
+                    +'<option value="">Subjects:</option>'
+                    +'<option value="1">ICS</option>'
+                    +'<option value="2">Maths</option>'
+                    +'<option value="3">science</option>'
+                    +'</select></span></div>'
+                    +'<div class="col-md-1 marks">CGPA<input type="number" step="0.01" name="cgpa[]" id="cgpa" class="form-control"></div>'
+                    +'<div class="col-md-1 grad_date">Graduation Date<input type="date" name="grad_date[]" id="grad_date" class="form-control"></div>'
+                    +'<div class="col-md-1 dmc">DMC<input type="date" name="dmc_date[]" id="dmc_date" class="form-control"></div>'
+                    +'<div class="col-md-2 distinction">Distinction'
+                    +'<select class="form-control" name="distinction[]">'
+                    +'<option value=""></option><option value="Yes">Yes</option><option value="No">No</option></select></div>';
+            }
+
+            $(e).parent().parent().find('.years').remove();
+            $(e).parent().parent().find('.subjects').remove();
+            $(e).parent().parent().find('.marks').remove();
+            $(e).parent().parent().find('.achievedmarks').remove();
+            $(e).parent().parent().find('.grad_date').remove();
+            $(e).parent().parent().find('.division').remove();
+            $(e).parent().parent().find('.dmc').remove();
+            $(e).parent().parent().find('.distinction').remove();
+            $(e).parent().parent().append(add_year_fields); 
+        }
+            
+        function add_newUC(e)
+        {
+            if($(e).val()=="other")
+            console.log($(e).next().next().next().show())
+            else{
+            console.log($(e).next().next().next().hide())
+            }
+        }
+        
+        function remove_certification(e)
+        {
+            $(e).parent().parent().parent().remove(); 
+        }
+        function remove_training(e)
+        {
+            $(e).parent().parent().parent().remove(); 
+        }
+        function remove_researchpaper(e)
+        {
+            $(e).parent().parent().parent().remove(); 
+        }
+
+        function remove_data(e)
+        {
+            $(e).parent().parent().parent().remove();
+        }
+        
+
+    $('#cnic').keydown(function () {
+
+        //allow  backspace, tab, ctrl+A, escape, carriage return
+        if (event.keyCode == 8 || event.keyCode == 9 ||
+            event.keyCode == 27 || event.keyCode == 13 ||
+            (event.keyCode == 65 && event.ctrlKey === true))
+            return;
+        if ((event.keyCode < 48 || event.keyCode > 57))
+            event.preventDefault();
+
+        var length = $(this).val().length;
+
+        if (length == 5 || length == 13)
+            $(this).val($(this).val() + '-');
+    });
+
 </script>
 @endsection
