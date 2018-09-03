@@ -15,8 +15,8 @@ class CreateSecondarysubjectsTable extends Migration
     {
         Schema::create('secondarysubjects', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('subject_name');
-            $table->string('type');
+            $table->string('subject_name')->nullable();
+            $table->string('type')->nullable();
             $table->timestamps();
         });
     }

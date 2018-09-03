@@ -19,9 +19,9 @@ class CreateApplicantCertificationsTable extends Migration
             $table->integer('applicant_id')->unsigned()->index()->nullable();
             $table->foreign('applicant_id')->references('id')->on('applicants')->onDelete('cascade');
             
-            $table->integer('certification_id')->unsigned()->index()->nullable();
-            $table->foreign('certification_id')->references('id')->on('certifications')->onDelete('cascade');
-            
+            // $table->integer('certification_id')->unsigned()->index()->nullable();
+            // $table->foreign('certification_id')->references('id')->on('certifications')->onDelete('cascade');
+            $table->string('name_certifictaion')->nullable(); 
             $table->string('issued_by')->nullable();
             $table->string('date_of_issuance')->nullable();
             $table->boolean('status')->default();

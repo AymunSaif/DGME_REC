@@ -19,6 +19,8 @@ use App\SecondarySubject;
 use App\Province;
 use App\User;
 use Illuminate\Http\Request;
+use App\ApplicantTraining;
+use App\ApplicantResearchWork;
 
 class JobFormController extends Controller
 {
@@ -72,7 +74,7 @@ class JobFormController extends Controller
     public function store(Request $request)
     {
         
-    //   dd($request->all());
+      dd($request->all());
        $person= new Applicant();
        $person->diary_num= '1';
        $person->name= $request->name;
@@ -146,56 +148,87 @@ class JobFormController extends Controller
       }
        $person_secondaryEdu_college->save();
 
-       if($request->bch_year=="2 years")
+       $i=0;
+       foreach($request->bch_year as $by)
+       {if($by=="2 years")
        {
        $person_higherEdu_2yr = new ApplicantHigherEducation();
        $person_higherEdu_2yr->applicant_id=$person->id;
-       $person_higherEdu_2yr->name_of_institute=$request->u_Name;
-       $person_higherEdu_2yr->qualification_type=$request->qualification_univ;
-       $person_higherEdu_2yr->bach_year=$request->bch_year;
-       $person_higherEdu_2yr->highersubject_id=$request->u_subjects;
-       $person_higherEdu_2yr->total_marks=$request->twoy_totalmarks;
-       $person_higherEdu_2yr->achieved_marks=$request->twoy_achievedmarks;
-       $person_higherEdu_2yr->division=$request->twoy_div;
-       $person_higherEdu_2yr->distinction=$request->u_position;
+
+       if(isset($request->college_university_names[$i]))
+       $person_higherEdu_2yr->name_of_institute=$request->college_university_names[$i];
+       else 
+       $person_higherEdu_2yr->name_of_institute=$request->other_collegebox[$i];
+      
+       if(isset($request->qualification_univ[$i]))
+       $person_higherEdu_2yr->qualification_type=$request->qualification_univ[$i];
+      
+       $person_higherEdu_2yr->bach_year=$by;
+      
+       if(isset($request->u_subjects[$i]))
+       $person_higherEdu_2yr->highersubject_id=$request->u_subjects[$i];
+       if(isset($request->twoy_t_marks[$i]))
+       $person_higherEdu_2yr->total_marks=$request->twoy_t_marks[$i];
+       if(isset($request->twoy_a_marks[$i]))
+       $person_higherEdu_2yr->achieved_marks=$request->twoy_a_marks[$i];
+       if(isset($request->division[$i]))
+       $person_higherEdu_2yr->division=$request->division[$i];
+       if(isset($request->distinction[$i]))
+       $person_higherEdu_2yr->distinction=$request->distinction[$i];
        $person_higherEdu_2yr->save();
 
        }
-       elseif ($request->bch_year=="4 years") {
+       elseif ($by=="4 years") {
+
         $person_higherEdu_univ = new ApplicantHigherEducation();
         $person_higherEdu_univ->applicant_id=$person->id;
-        $person_higherEdu_univ->name_of_institute=$request->u_Name;
-        $person_higherEdu_univ->qualification_type=$request->qualification_univ;
-        $person_higherEdu_univ->bach_year=$request->bch_year;
-        $person_higherEdu_univ->highersubject_id=$request->u_subjects;
-        $person_higherEdu_univ->cgpa=$request->cgpa;
-        $person_higherEdu_univ->date_of_grad=$request->grad_date;
-        $person_higherEdu_univ->final_dmc_date=$request->dmc_date;
-        $person_higherEdu_univ->distinction=$request->u_position;
+
+        if(isset($request->university_names[$i]))
+        $person_higherEdu_univ->name_of_institute=$request->university_names[$i];
+        else 
+        $person_higherEdu_univ->name_of_institute=$request->other_univbox[$i];
+
+        if(isset($request->qualification_univ[$i]))
+        $person_higherEdu_univ->qualification_type=$request->qualification_univ[$i];
+       
+        $person_higherEdu_univ->bach_year=$by;
+        
+        
+        if(isset($request->u_subjects[$i]))
+        $person_higherEdu_univ->highersubject_id=$request->u_subjects[$i];
+
+        if(isset($request->cgpa[$i]))
+        $person_higherEdu_univ->cgpa=$request->cgpa[$i];
+
+        if(isset($request->grad_date[$i]))
+        $person_higherEdu_univ->date_of_grad=$request->grad_date[$i];
+
+        if(isset($request->dmc_date[$i]))
+        $person_higherEdu_univ->final_dmc_date=$request->dmc_date[$i];
+
+        if(isset($request->distinction[$i]))
+        $person_higherEdu_univ->distinction=$request->distinction[$i];
         $person_higherEdu_univ->save();
        }
-
-       $person_higherEdu_grad = new ApplicantHigherEducation();
+    }
+       $i=0;
+       foreach($request->pg_Name as $pg_name)
+       {
+        $person_higherEdu_grad = new ApplicantHigherEducation();
        $person_higherEdu_grad->applicant_id=$person->id;
-       $person_higherEdu_grad->name_of_institute=$request->pg_Name;
-       $person_higherEdu_grad->qualification_type=$request->qualification_postuniv;
-       $person_higherEdu_grad->highersubject_id=$request->post_grad_degree;
-       $person_higherEdu_grad->cgpa=$request->pg_cgpa;
-       $person_higherEdu_grad->date_of_grad=$request->pg_date;
-       $person_higherEdu_grad->final_dmc_date=$request->pg_dmc_date;
-       $person_higherEdu_grad->distinction=$request->pg_dist;
+       $person_higherEdu_grad->name_of_institute=$pg_name;
+       $person_higherEdu_grad->qualification_type=$request->qualification_postuniv[$i];
+       $person_higherEdu_grad->highersubject_id=$request->post_grad_degree[$i];
+       $person_higherEdu_grad->cgpa=$request->pg_cgpa[$i];
+       $person_higherEdu_grad->date_of_grad=$request->pg_date[$i];
+       $person_higherEdu_grad->final_dmc_date=$request->pg_dmc_date[$i];
+       $person_higherEdu_grad->distinction=$request->pg_distinction[$i];
        $person_higherEdu_grad->save();
+       }
 
-       $person_higherEdu_postgrad = new ApplicantHigherEducation();
-       $person_higherEdu_postgrad->applicant_id=$person->id;
-       $person_higherEdu_postgrad->name_of_institute=$request->postgrad_Name;
-       $person_higherEdu_postgrad->qualification_type=$request->qualification_postgraduniv;
-       $person_higherEdu_postgrad->highersubject_id=$request->postgrad_degree;
-       $person_higherEdu_postgrad->cgpa=$request->postgrad_cgpa;
-       $person_higherEdu_postgrad->date_of_grad=$request->postgrad_date;
-       $person_higherEdu_postgrad->final_dmc_date=$request->postgrad_dmc_date;
-       $person_higherEdu_postgrad->save();
-
+      
+       $i=0;
+       foreach($request->pd_Name as $pd_name)
        $person_higherEdu_postdoc = new ApplicantHigherEducation();
        $person_higherEdu_postdoc->applicant_id=$person->id;
        $person_higherEdu_postdoc->name_of_institute=$request->postdoc_Name;
@@ -206,22 +239,78 @@ class JobFormController extends Controller
        $person_higherEdu_postdoc->final_dmc_date=$request->postdoc_dmc_date;
        $person_higherEdu_postdoc->save();
 
+       $i=0;
+       foreach($request->pd_Name as $pd_name)
+       {
+       $person_higherEdu_postgrad = new ApplicantHigherEducation();
+       $person_higherEdu_postgrad->applicant_id=$person->id;
+       $person_higherEdu_postgrad->name_of_institute=$pd_name;
+       $person_higherEdu_postgrad->qualification_type=$request->qualification_postdocuniv[$i];
+       $person_higherEdu_postgrad->highersubject_id=$request->post_graddoc_degree[$i];
+       $person_higherEdu_postgrad->cgpa=$request->pd_cgpa[$i];
+       $person_higherEdu_postgrad->date_of_grad=$request->pd_date[$i];
+       $person_higherEdu_postgrad->final_dmc_date=$request->pd_dmc_date[$i];
+       $person_higherEdu_postgrad->save();
+       }
+
+       $i=0;
+       foreach($request->app_cer as $app_cer){ 
        $person_certificate= new ApplicantCertification();
        $person_certificate->applicant_id=$person->id;
-       $person_certificate->certification_id=$request->app_cer;
-       $person_certificate->issued_by=$request->certificate_i;
-       $person_certificate->date_of_issuance=$request->i_date;
+       $person_certificate->name_certifictaion=$request->app_cer;
+       $person_certificate->issued_by=$request->certificate_i[$i];
+       $person_certificate->date_of_issuance=$request->i_date[$i];
        $person_certificate->save();
+       }
 
+       $i=0;
+       foreach($request->app_cer as $app_cer){ 
+       $person_certificate= new ApplicantCertification();
+       $person_certificate->applicant_id=$person->id;
+       $person_certificate->name_certifictaion=$request->app_cer;
+       $person_certificate->issued_by=$request->certificate_i[$i];
+       $person_certificate->date_of_issuance=$request->i_date[$i];
+       $person_certificate->save();
+       }
 
+       $i=0;
+       foreach($request->app_tr as $app_tr){ 
+       $person_training= new ApplicantTraining();
+       $person_training->applicant_id=$person->id;
+       $person_training->training_name=$app_tr;
+       $person_training->by_name=$request->tr_by[$i];
+       $person_training->duration=$request->tr_duration[$i];
+       $person_training->save();
+       }
+
+       $i=0;
+       foreach($request->app_rp as $app_rp){ 
+       $person_researchwork= new ApplicantResearchWork();
+       $person_researchwork->applicant_id=$person->id;
+       $person_researchwork->researchwork=$app_rp;
+       $person_researchwork->published_by=$request->tr_by[$i];
+       $person_researchwork->conference=$request->tr_duration[$i];
+       $person_researchwork->save();
+       }
+       
+       $i=0;
+       foreach($request->org_Name as $org){
        $person_exp= new ApplicantExperience();
        $person_exp->applicant_id=$person->id;
-       $person_exp->org_name=$request->org_Name;
-       $person_exp->org_type=$request->org_type;
-       $person_exp->start_date=$request->start_dob;
-       $person_exp->end_date=$request->end_dob;
-       $person_exp->role=$request->role_name;
+       if(isset($request->org_name[$i]))
+           $person_exp->org_name=$org;
+        if(isset($request->org_type[$i]))
+           $person_exp->org_type=$request->org_type[$i];
+        if(isset($request->start_dob[$i]))
+       $person_exp->start_date=$request->start_dob[$i];
+        if(isset($request->end_dob[$i]))
+       $person_exp->end_date=$request->end_dob[$i];
+       if(isset($request->role_name[$i]))
+       $person_exp->role=$request->role_name[$i];
        $person_exp->save();
+       $i++;
+       }
+
        return redirect()->back()->with('success','New Recuritment Has Been Added!!');
     // return redirect()->route('job_form.index')->with('success','New Recuritment Has Been Added!!');
 }

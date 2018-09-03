@@ -13,13 +13,13 @@ class CreateTrainingsTable extends Migration
      */
     public function up()
     {
-        Schema::create('trainings', function (Blueprint $table) {
+        Schema::create('applicant_trainings', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('applicant_id')->unsigned()->index()->nullable();
             $table->foreign('applicant_id')->references('id')->on('applicants')->onDelete('cascade');
-            $table->string('Training_name');
-            $table->string('by_name');
-            $table->string('duration');
+            $table->string('training_name')->nullable();
+            $table->string('by_name')->nullable();
+            $table->string('duration')->nullable();
             $table->boolean('status')->default(1);
             $table->timestamps();
         });

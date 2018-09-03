@@ -2,8 +2,28 @@
 @section('content')
 <form id="form" action="{{route('job_form.store')}}" name="form" method="post" enctype="multipart/form-data">
     {{csrf_field()}}
-
-    <section id="cnicSection">
+    <div class="row">
+        <div class="col-md-12">
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active cnicSection " style="color:black;!important" data-toggle="tab" href="#cnicSection" role="tab" aria-controls="home" aria-selected="true">CNIC</a>
+                </li>
+                <li class="nav-item">
+                        <a class="nav-link active demographicsSection " style="color:black;!important" data-toggle="tab" href="#demographicsSection" role="tab" aria-controls="home" aria-selected="true">Demographics</a>
+                    </li>
+                <li class="nav-item">
+                    <a class="nav-link educationSection" style="color:black;!important" id="profile-tab" data-toggle="tab" href="#experienceSection" role="tab" aria-controls="profile" aria-selected="false">Education</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link experienceSection" style="color:black;!important" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Experience</a>
+                </li>
+                <li class="nav-item">
+                        <a class="nav-link designationSection" style="color:black;!important" id="designation-tab" data-toggle="tab" href="#designationSection" role="tab" aria-controls="contact" aria-selected="false">Designation</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <section id="cnicSection" >
         <div class="col-md-3"></div>
         <div class="col-md-6" style="margin-top:20%;">
             <div class="form-group">
@@ -18,7 +38,7 @@
         <button type="button" class="btn btn-sm btn-success " style=" margin-left: 43%;width: 200px;font-size:1.5em;"id="basic_info">Next</button>
     </section>
 
-    <sectioon id="demographics"      >
+    <sectioon id="demographicsSection"   style="display:none"   >
         <div class="row">
             <h3 align=center style="color:gray; font-weight:bold">
                 <b>Demographics Info</b>
@@ -29,6 +49,7 @@
                 <div class="col-md-6">
                     <div class="form-group " style="text-align: center;font-size: 15px;font-weight: bold;">
                         <b>Serial Number :</b> HIS_2018_000</br>
+                        
                     </div>
                 </div>
             </div>
@@ -38,13 +59,12 @@
                         <span style="color:red;font-size:12px;"> (required)</span>
                     </b>
                     </br>
-                    <input type="text" name="name" id="name" placeholder="Enter Your Full Name" class="form-control"
-                        required>
+                    <input type="text" name="name" id="name" placeholder="Enter Your Full Name" class="form-control"    required>
                 </div>
                 <div class="form-group">
                     <b>Father / Husband Name </b>
                     </br>
-                    <input type="text" name="f_name" id="f_name" placeholder="Father / Spouse Name(Male)" class="form-control">
+                    <input type="text" name="f_name" id="f_name" placeholder="" class="form-control">
                 </div>
                 <div class="form-group">
                     <b>Gender </b>
@@ -88,6 +108,11 @@
             </div>
             <div class="col-md-6">
                 <div class="form-group">
+                        <b>Postal Address </b>
+                        </br>
+                        <textarea type="text" name="address" class="form-control"></textarea>
+                    </div>
+                <div class="form-group">
                     <b>City </b>
                     <select class="form-control" name="dom_city">
                         <option value="">Select City:</option>
@@ -97,11 +122,7 @@
 
                     </select>
                 </div>
-                <div class="form-group">
-                    <b>Postal Address </b>
-                    </br>
-                    <textarea type="text" name="address" class="form-control"></textarea>
-                </div>
+                
                 <div class="form-group">
                     <b>Email Address : </b>
                     </br>
@@ -112,6 +133,7 @@
                     <b>Phone Number </b>
                     </br>
                     <input id="phone" name="phone" type="tel" class="form-control">
+                    
                 </div>
                 {{--
                 <div class="form-group">
@@ -131,16 +153,12 @@
 
                 </div> --}}
                 <div class="form-group">
-                    <b>Cell Number </b>
-                    </br>
-                    <input id="mobile-number" name="mobile-number" type="tel" class="form-control">
+                    <b>Cell Number (1)</b>
+                     <input id="mobile-number" name="mobile-number" type="tel" class="form-control"></br>
+                     <b>Cell Number (2)</b>
+                      <input id="mobile-number" name="mobile-number" type="tel" class="form-control">
                 </div>
-                <div class="form-group">
-                    <b>Email Address : </b>
-                    </br>
-                    <input type="email" name="emailaddress" id="email" class="form-control">
-                </div>
-
+               
 
             </div>
 
@@ -152,10 +170,10 @@
         <button type="button" class="btn btn-lg btn-success pull-right" style="width: 252px;" id="education"> Next</button>
     </sectioon>
    
-    <section id="educationSection" >
+    <section id="educationSection" style="display:none">
         <h1 align=center style="color:gray;"><b>Education</b> </h1>
 
-        <table class="table " id="secondaryeducation">
+        <table class="table " id="secondaryeducation" >
             <tbody>
                 <tr>
                     <td>
@@ -171,7 +189,8 @@
                     </td>
                 </tr>
                
-                <tr><input type="hidden" name="school" value="school">
+                <tr>
+                    <input type="hidden" name="school" value="school">
                     <td>
                         <span class="sch_name" style="display:none;"> School Name
                             <br>
@@ -180,8 +199,14 @@
                     </td>
                     <td>
                         <span class="sch_board" style="display:none;">Board
-                            <br>
-                            <input type="text" name="b_Name" id="b_Name" class="form-control">
+                         <div>
+                            <select class="form-control" name="b_Name">
+                                <option value="">Select Board</option>
+                                <option value="">Lhr Board</option>
+                                <option value="">grw Board</option>
+                                
+                            </select>
+                                </div>
                         </span>
                     </td>
                     <td>
@@ -189,7 +214,7 @@
                             <div>
                                 <b> Subjects </b>
                                 <select class="form-control" name="s_subjects">
-                                    <option value="">Select :</option>
+                                    <option value="">Select Subjects</option>
                                     @foreach($sec_edu as $se) @if($se->type=='School')
                                     <option value="{{$se->id}}">{{$se->subject_name}}</option>
                                     @elseif($se->type=='olevel')
@@ -200,40 +225,49 @@
                         </span>
                     </td>
                     <td>
-                        <span class="school_markstotal" style="display:none">Total Marks
-                            <br>
-                            <input type="number" name="t_marks" id="t_marks" class="form-control"> </span>
-                        <span class="Grades_olevel" style="display:none">Grades
-                            <br>
-                            <input type="text" name="grades_olevel" id="grades_olevel" class="form-control"> </span>
-                    </td>
-                    <td>
-                        <span class="school_marksobtained" style="display:none"> Achieved Marks
-                            <br>
-                            <input type="number" name="a_marks" id="a_marks" class="form-control">
-                        </span>
-                    </td>
-                    <td>
-                        <span class="sch_div" style="display:none;">Division
-                            <br>
-                            <input type="text" name="divi" id="divi" class="form-control"> </span>
-                    </td>
-                    <td>
                         <span class="sch_dist" style="display:none;">
                             <div>
                                 <b>Distinction</b>
                                 <select class="form-control" name="dist">
                                     <option value=""></option>
-                                    <option value="1">1st</option>
-                                    <option value="2">2nd</option>
-                                    <option value="3">3rd</option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
                                 </select>
                             </div>
                         </span>
                     </td>
+                    <td></td>
 
                 </tr>
                 <tr>
+                        <td>
+                            <span class="school_markstotal" style="display:none">Total Marks
+                                <br>
+                                <input type="number" name="t_marks" id="t_marks" class="form-control"> </span>
+                            </td>
+                            <td>
+                                <span class="school_marksobtained" style="display:none"> Achieved Marks
+                                    <br>
+                                    <input type="number" name="a_marks" id="a_marks" class="form-control">
+                                </span>
+                            </td>
+                            <td>
+                                <span class="sch_percentage" style="display:none">Percentage  <br>
+                                <input type="string" name="sch_percentage" id="sch_percentage" class="form-control"> </span>
+                            </td>
+    
+                            <td>
+                                <span class="sch_div" style="display:none;">Division
+                                    <br>
+                                    <input type="text" name="divi" id="divi" class="form-control"> </span>
+                            </td>
+                            <td>
+                                <span class="Grades_olevel" style="display:none">Grades  <br>
+                                <input type="string" name="grades_olevel" id="grades_olevel" class="form-control"> </span>
+                            </td>
+                    </tr>
+
+                <tr >
                     <td>
                         <div>
                             <b>
@@ -246,12 +280,18 @@
                         </div>
                     </td>
                 </tr>
-                <tr>
+
+                <tr >
                     <input type="hidden" name="college" value="college">
                     <td> <span class="col_name" style="display:none">College Name<br><input type="text" name="c_Name"
                                 id="c_Name" class="form-control"></span></td>
-                    <td><span class="col_board" style="display:none"> Board <br> <input type="text" name="c_b_Name" id="c_b_Name"
-                                class="form-control">
+                    <td><span class="col_board" style="display:none"> <b> Board </b>
+                        <select class="form-control" name="c_b_Name">
+                            <option value="">Select Board</option>
+                            <option value="">Lhr Board</option>
+                            <option value="">grw Board</option>
+                           
+                        </select>
                         </span></td>
                     <td><span class="col_subjects" style="display:none">
                             <div>
@@ -270,29 +310,39 @@
                             </div>
                         </span></td>
 
-                    <td>
-                        <span class="col_totalmarks" style="display:none">Total Marks <br><input type="number" name="c_t_marks"
-                                id="c_t_marks" class="form-control"> </span>
-                        <span class="col_grades" style="display:none">Grades <br><input type="string" name="c_grades"
-                                id="c_grades" class="form-control"> </span> </td>
-                    </td>
-                    <td><span class="col_achievedmarks" style="display:none">Achieved Marks <br><input type="number"
-                                name="c_a_marks" id="c_a_marks" class="form-control"></span> </td>
-                    <td><span class="col_div" style="display:none">Division <br><input type="text" name="c_div" id="c_div"
-                                class="form-control">
-                        </span> </td>
+                   
                     <td><span class="col_dist" style="display:none">
                             <div>
                                 <b>Distinction</b>
                                 <select class="form-control" name="c_dist">
-                                    <option value=""></option>
-                                    <option value="1">1st</option>
-                                    <option value="2">2nd</option>
-                                    <option value="3">3rd</option>
+                                        <option value=""></option>
+                                        <option value="Yes">Yes</option>
+                                        <option value="No">No</option>
                                 </select>
                             </div>
                         </span></td>
+                        <td></td>
                 </tr>
+                <tr> 
+                    <td>
+                        <span class="col_totalmarks" style="display:none">Total Marks <br><input type="number" name="c_t_marks"
+                                id="c_t_marks" class="form-control"> </span>
+                    </td>
+                    <td><span class="col_achievedmarks" style="display:none">Achieved Marks <br><input type="number"
+                                name="c_a_marks" id="c_a_marks" class="form-control"></span> </td>
+
+                    <td> <span class="col_percentage" style="display:none">Percentage <br>
+                        <input type="string" name="c_percentage"id="c_percentage" class="form-control"> </span> 
+                    </td>
+
+                    <td><span class="col_div" style="display:none">Division <br><input type="text" name="c_div" id="c_div"
+                                class="form-control">
+                        </span> 
+                    </td>
+                    <td> <span class="col_grades" style="display:none">Grades <br><input type="string" name="c_grades"
+                        id="c_grades" class="form-control"> </span> </td>
+
+                    </tr>
             </tbody>
         </table>
         
@@ -314,6 +364,14 @@
 
         <hr/>
 
+        <div class="row" id="phdeducation" style="margin-top:5px;">     
+                <div class="col-md-1">
+                    <button type="button" id="add_phd_level"   class="btn btn-lg btn-success add_phd_level" style="width: 252px;" ><span
+                            class="glyphicon glyphicon-plus"> Add PHD Level</span></button>
+                </div>   
+        </div>
+        <hr/>
+
         <div class="row" id="postdoceducation" style="margin-top:5px;"> 
             <div class="col-md-1">
                 <button type="button" id="add_postdoc_level"   class="btn btn-lg btn-success add_postdoc_level" style="width: 252px;" ><span
@@ -324,15 +382,13 @@
         <hr/>
         
         <div class="row" id="certifications" style="margin-top:5px;">
-            
             <div class="col-md-5">
-                    <h3> <b>Certifications</b>
-                <button type="button" id="add_morecertifications" class="btn btn-md btn-info add_certification "><span
-                class="glyphicon glyphicon-plus"></button></h3>
-            </div> 
+             <h3> <b>Certifications</b>
+            <button type="button" id="add_morecertifications" class="btn btn-md btn-info add_certification "><span
+            class="glyphicon glyphicon-plus"></button></h3>
+          </div> 
 
         </div>
-
         <hr/>
 
         <div class="row" id="trainings" style="margin-top:5px;">
@@ -356,7 +412,7 @@
                  
         </div>
 
-        
+        <hr/>
         
         <div class="row" style="margin-top:5px;">
             
@@ -374,9 +430,57 @@
         </div>
     </section>
     
-    <section id="experienceSection"></section>
+    <section id="experienceSection" style="display:none">
+        <h1 style="text-align:center;">Experience</h1>
+        <table class="table table-bordered" id="exp_table">
+            <tr >
+                <th style="text-align:center;">Organization Name</th>
+                <th style="text-align:center;">Organization Type</th>
+                <th style="text-align:center;">From</th>
+                <th style="text-align:center;">To</th>
+                <th style="text-align:center;">Role</th>
+                <th style="text-align:center;"><button type="button" id="add_moreexp" class="btn btn-success btn-sm add_moreexp"><span class="glyphicon glyphicon-plus"></span></button></th>
+            </tr>
+        </table>
+        <div class="row" style="margin-top:5px;">
+            
+                <div class="col-md-1"></div>
+                <div class="col-md-3">
+                    <button type="button" class="btn btn-md btn-danger " style=" width: 252px;" id="go_edu"> Back</button>
+                </div>
+                <div class="col-md-4"></div>
+                <div class="col-md-3">
+                    <button type="button" class="btn btn-md btn-success pull-right" style="
+                        width: 252px;"
+                        id="designation"> Next</button>
+                </div>
+                <div class="col-md-1"></div>
+        </div>
+    </section>
     
-    <section id="designationSection" ></section>
+    <section id="designationSection" style="display:none">
+            <h1 style="text-align:center;">Designation</h1>
+            <table class="table table-bordered" id="designation_table">
+                <tr >
+                    <th style="text-align:center;">Designation</th>
+                    <th style="text-align:center;">Attach Documents</th>
+                    <th style="text-align:center;"><button type="button" id="add_moredesignation" class="btn btn-success btn-sm add_moredesignation"><span class="glyphicon glyphicon-plus"></span></button></th>
+                </tr>
+            </table>    
+            <div class="row" style="margin-top:5px;">
+            
+                    <div class="col-md-1"></div>
+                    <div class="col-md-3">
+                        <button type="button" class="btn btn-md btn-danger " style=" width: 252px;" id="go_exp"> Back</button>
+                    </div>
+                    <div class="col-md-4"></div>
+                    <div class="col-md-3">
+                        <button type="submit" class="btn btn-md btn-primary pull-right" style=" width: 252px;"
+                            id="submit"> Submit</button>
+                    </div>
+                    <div class="col-md-1"></div>
+            </div>
+    </section>
 
     
 </form>
@@ -386,40 +490,75 @@
 <script src="{{asset('js/intlTelInput.js')}}"></script>
 <script>
     
-        $('button#basic_info').on('click', function () {
+        $('button#basic_info , .demographicsSection').on('click', function () {
+            
             $('section#cnicSection').hide(1000);
-            $('section#demographics').show(1000);
+            $('section#experienceSection').hide(1000);
+            $('section#designationSection').hide(1000);
+            $('section#educationSection').hide(1000);
+            $('#demographicsSection').show(1000);
+    
          });
         
-        $('button#education').on('click', function () {
+        
+         $('button#education, .educationSection').on('click', function () {
     
-            $('section#demographics').hide(1000);
+            $('#demographicsSection').hide(1000);
             $('section#cnicSection').hide(1000);
+            $('section#experienceSection').hide(1000);
+            $('section#designationSection').hide(1000);
             $('section#educationSection').show(1000);
     
     
         });
-            $('button#go_demo').on('click', function () {
         
-                $('section#cnicSection').hide(1000);
-                $('section#educationSection').hide(1000);
-                $('section#demographics').show(1000);
+        $('button#go_demo, .demographicsSection').on('click', function () {
+    
+            $('section#cnicSection').hide(1000);
+            $('section#educationSection').hide(1000);
+            $('section#experienceSection').hide(1000);
+            $('section#designationSection').hide(1000);
+            $('section#demographicsSection').show(1000);
+    
+        });
         
-            });
-            $('button#go_cnic').on('click', function () {
-        
-        
-                $('section#educationSection').hide(1000);
-                $('section#demographics').hide(1000);
-                $('section#cnicSection').show(1000);
-            });
-        
-            $('button#experience').on('click', function () {
-                $('section#demographics').hide(1000);
-                $('section#cnicSection').hide(1000);
-                $('section#educationSection').hide(1000);
-                $('section#experienceSection').show(1000);
-            });
+        $('button#go_cnic,.cnicSection').on('click', function () {
+            $('#demographicsSection').hide(1000);
+            $('section#educationSection').hide(1000);
+            $('section#cnicSection').show(1000);
+        });
+    
+        $('button#experience, .experienceSection').on('click', function () {
+            $('#demographicsSection').hide(1000);
+            $('section#cnicSection').hide(1000);
+            $('section#designationSection').hide(1000);
+            $('section#educationSection').hide(1000);
+            $('section#experienceSection').show(1000);
+        });
+
+        $('button#go_edu').on('click', function () {
+            $('section#experienceSection').hide(1000);
+            $('#demographicsSection').hide(1000);
+            $('section#cnicSection').hide(1000);
+            $('section#designationSection').hide(1000);
+            $('section#educationSection').show(1000);
+        });
+
+        $('button#designation, .designationSection').on('click', function () {
+            $('section#experienceSection').hide(1000);
+            $('#demographicsSection').hide(1000);
+            $('section#cnicSection').hide(1000);
+            $('section#educationSection').hide(1000);
+            $('section#designationSection').show(1000);
+        });
+
+        $('button#go_exp, .experienceSection').on('click', function () {   
+            $('#designationSection').hide(1000);
+            $('section#educationSection').hide(1000);         
+            $('section#demographicsSection').hide(1000);
+            $('section#cnicSection').hide(1000);
+            $('section#experienceSection').show(1000);
+        });
 
         $('.school_level').on('change', function () {
             if ($('.school_level').val() == 'Matric') {
@@ -430,15 +569,17 @@
                 $('.sch_subjects').show(1000);
                 $('.school_markstotal').show(1000);
                 $('.school_marksobtained').show(1000);
+                $('.sch_percentage').show(1000);
                 $('.sch_div').show(1000);
                 $('.sch_dist').show(1000);
     
             } else if ($('.school_level').val() == 'O-Level') {
-                $('.school_markstotal').hide(1000);
-                $('.school_marksobtained').hide(1000);
                 $('.sch_name').show(1000);
                 $('.sch_board').show(1000);
                 $('.sch_subjects').show(1000);
+                $('.school_markstotal').show(1000);
+                $('.school_marksobtained').show(1000);
+                $('.sch_percentage').show(1000);
                 $('.Grades_olevel').show(1000);
                 $('.sch_div').show(1000);
                 $('.sch_dist').show(1000);
@@ -454,13 +595,15 @@
                 $('.col_subjects').show(1000);
                 $('.col_totalmarks').show(1000);
                 $('.col_achievedmarks').show(1000);
+                $('.col_percentage').show(1000);
                 $('.col_div').show(1000);
                 $('.col_dist').show(1000);
     
             } else if ($('.college_level').val() == 'A-Level') {
-                $('.col_totalmarks').hide(1000);
-                $('.col_achievedmarks').hide(1000);
+                $('.col_totalmarks').show(1000);
+                $('.col_achievedmarks').show(1000);
                 $('.col_grades').show(1000);
+                $('.col_percentage').show(1000);
                 $('.col_name').show(1000);
                 $('.col_board').show(1000);
                 $('.col_subjects').show(1000);
@@ -503,7 +646,7 @@
         }); 
 
         
-            $('button#add_grad_level').click(function(e){
+        $('button#add_grad_level').click(function(e){
             
             var eduprogram ='<div class="row"  id="new_edurow[]">'
                             +'<div class="col-md-12" style="margin-bottom: 15px;margin-top: 15px;">'
@@ -513,84 +656,123 @@
                             +'<option value="">Select year:</option>'
                             +' <option>2 years</option>'
                             +'<option>4 years</option>'
-                            +'</select> </div> </div></div></div>';
+                            +'</select> </div> </div></div>';
             $('#gradeducation').append(eduprogram);     
         }); 
-        
-        $('button#add_postgrad_level').click(function(e){
-            
-        var eduprogram ='<div class="row" id="new_postgradrow[]">'
+    
+        $('button#add_postgrad_level').click(function(e)
+          {  var eduprogram ='<div class="row" id="new_postgradrow[]">'
                         +'<div class="col-md-12" style="margin-bottom: 15px;margin-top: 15px;">'
                         +'<div class="col-md-1 remove_grad_level"><button type="button" id="remove_grad_level[]"  class="pull-left btn btn-danger btn-sm add" style=" margin-top: 19px;" onclick="remove_data(this)" ><span class="glyphicon glyphicon-minus"></span></button></div>'
-                        +'<input type="hidden" name="qualification_postuniv" value="post_grad">'
+                        +'<input type="hidden" name="qualification_postuniv[]" value="post_grad">'
                         +'<div class="col-md-2 institute_name">Institution Name<input type="text" name="pg_Name" id="pg_Name" class="form-control"> </div>'    
-                        +'<div class="col-md-2 postgrad_subjects">Major Subjects<select class="form-control" name="post_grad_degree"><option value="">Select degree:</option>'
+                        +'<div class="col-md-2 postgrad_subjects">Major Subjects<select class="form-control" name="post_grad_degree[]"><option value="">Select degree:</option>'
                         +'<option value="1">cs degree</option><option value="1">cs degree</option></select> </div>'
                         +'<div class="col-md-2 post_cgpa">CGPA<input type="number" step="0.01" name="pg_cgpa" id="pg_cgpa" class="form-control"></div>'
                         +'<div class="col-md-2 post_dg">Date Of Graduation <input type="date" name="pg_date" id="pg_date" class="form-control"> </div>'
-                        +'<div class="col-md-2 post_dmc">Final DMC Date<input type="date" name="pg_dmc_date" id="pg_dmc_date" class="form-control"></div></div></div>';
-            $('#postgradeducation').append(eduprogram);
-            
-        }); 
+                        +'<div class="col-md-2 post_dmc">Final DMC Date<input type="date" name="pg_dmc_date" id="pg_dmc_date" class="form-control"></div>'
+                        +'<div class="col-md-1 distinction">Distinction'
+                        +'<select class="form-control" name="pg_distinction[]">'
+                        +'<option value=""></option><option value="Yes">Yes</option><option value="No">No</option></select></div></div></div>';
+                
+                $('#postgradeducation').append(eduprogram);       
+        });
+         
+        
+        $('button#add_phd_level').click(function(e){
+            var eduprogram ='<div class="row" id="new_phdrow[]">'
+                           +'<div class="col-md-12" style="margin-bottom: 15px;margin-top: 15px;">'
+                           +'<div class="col-md-1 remove_phd_level"><button type="button" id="remove_phd_level[]"  class="pull-left btn btn-danger btn-sm add" style=" margin-top: 19px;" onclick="remove_data(this)" ><span class="glyphicon glyphicon-minus"></span></button></div>'
+                           +'<input type="hidden" name="qualification_phduniv[]" value="phd"">'
+                           +'<div class="col-md-2 phd_institute_name">Institution Name<input type="text" name="phd_Name[]" id="phd_Name[]" class="form-control"> </div>'    
+                           +'<div class="col-md-2 phd_subjects">Subjects<input type="text" name="phd_subjects[]" id="phd_subjects[]" class="form-control">  </div>'
+                           +'<div class="col-md-2 phd_dg">Date Of Graduation <input type="date" name="phd_date[]" id="phd_date[]" class="form-control"> </div></div></div>'
+                          
+               $('#phdeducation').append(eduprogram);     
+       }); 
+
 
         $('button#add_postdoc_level').click(function(e){
-            
-            var eduprogram ='<div class="row" id="new_postdocrow[]">'
+             var eduprogram ='<div class="row" id="new_postdocrow[]">'
                             +'<div class="col-md-12" style="margin-bottom: 15px;margin-top: 15px;">'
                             +'<div class="col-md-1 remove_graddoc_level"><button type="button" id="remove_graddoc_level[]"  class="pull-left btn btn-danger btn-sm add" style=" margin-top: 19px;" onclick="remove_data(this)" ><span class="glyphicon glyphicon-minus"></span></button></div>'
-                            +'<input type="hidden" name="qualification_postuniv" value="post_graddoc">'
-                            +'<div class="col-md-2 pd_institute_name">Institution Name<input type="text" name="pd_Name" id="pd_Name" class="form-control"> </div>'    
-                            +'<div class="col-md-2 postdoc_subjects">Major Subjects<select class="form-control" name="post_graddoc_degree"><option value="">Select degree:</option>'
+                            +'<input type="hidden" name="qualification_postdocuniv[]" value="post_graddoc">'
+                            +'<div class="col-md-2 pd_institute_name">Institution Name<input type="text" name="pd_Name[]" id="pd_Name[]" class="form-control"> </div>'    
+                            +'<div class="col-md-2 postdoc_subjects">Major Subjects<select class="form-control" name="post_graddoc_degree[]"><option value="">Select degree:</option>'
                             +'<option value="1">cs degree</option><option value="1">cs degree</option></select> </div>'
-                            +'<div class="col-md-2 postdoc_cgpa">CGPA<input type="number" step="0.01" name="pd_cgpa" id="pd_cgpa" class="form-control"></div>'
-                            +'<div class="col-md-2 postdoc_dg">Date Of Graduation <input type="date" name="pd_date" id="pd_date" class="form-control"> </div>'
-                            +'<div class="col-md-2 postdoc_dmc">Final DMC Date<input type="date" name="pd_dmc_date" id="pd_dmc_date" class="form-control"></div></div></div>';
-                $('#postdoceducation').append(eduprogram);
-                
-            }); 
+                            +'<div class="col-md-2 postdoc_cgpa">CGPA<input type="number" step="0.01" name="pd_cgpa[]" id="pd_cgpa[]" class="form-control"></div>'
+                            +'<div class="col-md-2 postdoc_dg">Date Of Graduation <input type="date" name="pd_date[]" id="pd_date[]" class="form-control"> </div>'
+                            +'<div class="col-md-2 postdoc_dmc">Final DMC Date<input type="date" name="pd_dmc_date[]" id="pd_dmc_date[]" class="form-control"></div></div></div>';
+                $('#postdoceducation').append(eduprogram);     
+        }); 
 
-            $('button#add_morecertifications').click(function(e){
+        $('button#add_morecertifications').click(function(e){
+        
+            var certifications_app ='<div class="row" id="new_cer[]" >'
+                    +'<div class="col-md-12" style="margin-bottom: 15px;margin-top: 15px;">'
+                    +' <div class="col-md-3"><b>Name</b><input type="text" name="app_cer[]" id="app_cer[]" class="form-control"></div>'
+                    +' <div class="col-md-3"><b>Issued By </b><br> <input type="text" name="certificate_i[]" id="certificate_i[]" class="form-control"></div>'
+                    +'<div class="col-md-3"><b>Date Of Issuance</b> <br><input type="date" name="i_date[]" id="i_date[]" class="form-control"></div>'
+                    +'<div class="col-md-3" style="margin-top: 21px;"><button type="button" id="remove_certification[]" onclick="remove_certification(this)" class="btn btn-sm btn-danger form-control">Remove</button></div>'
+                    +'</div></div>';
+                $('#certifications').append(certifications_app);
+                
+        });
+                
+        $('button#add_moretrainings').click(function(e){
+    
+            var training_app ='<div class="row" id="new_tr[]" >'
+                    +'<div class="col-md-12" style="margin-bottom: 15px;margin-top: 15px;">'
+                    +'<div class="col-md-3"> <b>Training Name</b> <input type="text" name="app_tr[]" id="app_tr[]" class="form-control"></div>'
+                    +'<div class="col-md-3"><b>By </b><br> <input type="text" name="tr_by[]" id="tr_by[]" class="form-control"></div>'
+                    +'<div class="col-md-3"><b>Duration</b><br><input type="text" name="tr_duration[]" id="tr_duration[]" class="form-control"></div>'
+                    +'<div class="col-md-3" style="margin-top: 21px;"><button type="button" id="remove_training[]" onclick="remove_training(this)" class="btn btn-sm btn-danger form-control">Remove</button></div>'
+                    +'</div></div>';
             
-                var certifications_app ='<div class="row" id="new_cer[]" >'
-                      +'<div class="col-md-12" style="margin-bottom: 15px;margin-top: 15px;">'
-                       +' <div class="col-md-3"><b>Name</b><input type="text" name="app_cer[]" id="app_cer[]" class="form-control"></div>'
-                       +' <div class="col-md-3"><b>Issued By </b><br> <input type="text" name="certificate_i[]" id="certificate_i[]" class="form-control"></div>'
-                       +'<div class="col-md-3"><b>Date Of Issuance</b> <br><input type="date" name="i_date[]" id="i_date[]" class="form-control"></div>'
-                       +'<div class="col-md-3" style="margin-top: 21px;"><button type="button" id="remove_certification[]" onclick="remove_certification(this)" class="btn btn-sm btn-danger form-control">Remove</button></div>'
-                       +'</div></div>';
-                    $('#certifications').append(certifications_app);
-                    
-                });
+                $('#trainings').append(training_app);
                 
-            $('button#add_moretrainings').click(function(e){
-        
-                var training_app ='<div class="row" id="new_tr[]" >'
-                        +'<div class="col-md-12" style="margin-bottom: 15px;margin-top: 15px;">'
-                        +'<div class="col-md-3"> <b>Training Name</b> <input type="text" name="app_cer" id="app_tr" class="form-control"></div>'
-                        +'<div class="col-md-3"><b>By </b><br> <input type="text" name="tr_by" id="tr_by" class="form-control"></div>'
-                        +'<div class="col-md-3"><b>Duration</b><br><input type="text" name="tr_duration" id="tr_duration" class="form-control"></div>'
-                        +'<div class="col-md-3" style="margin-top: 21px;"><button type="button" id="remove_training[]" onclick="remove_training(this)" class="btn btn-sm btn-danger form-control">Remove</button></div>'
-                        +'</div></div>';
+        });
                 
-                    $('#trainings').append(training_app);
-                    
-                });
-                
-                $('button#add_morerps').click(function(e){
-        
-                    var research_app ='<div class="row" id="new_tr[]" >'
-                            +'<div class="col-md-12" style="margin-bottom: 15px;margin-top: 15px;">'
-                            +'<div class="col-md-3"><b>Research Paper Name</b><input type="text" name="app_rp" id="app_rp" class="form-control"></div>'
-                            +'<div class="col-md-3"><b>Published By </b><br> <input type="text" name="pb_by" id="pb_by" class="form-control"></div>'
-                            +'<div class="col-md-3"><b>Conference</b> <br><input type="text" name="conf" id="conf" class="form-control"></div>'
-                            +'<div class="col-md-3" style="margin-top: 21px;"><button type="button" id="remove_researchpaper[]" onclick="remove_researchpaper(this)" class="btn btn-sm btn-danger form-control">Remove</button></div>'
-                            +'</div></div>';
-                    
-                        $('#researchpaper').append(research_app);
-                        
-                    }); 
+        $('button#add_morerps').click(function(e){
 
-       function add_newdata(e)
+            var research_app ='<div class="row" id="new_tr[]" >'
+                    +'<div class="col-md-12" style="margin-bottom: 15px;margin-top: 15px;">'
+                    +'<div class="col-md-3"><b>Research Paper Name</b><input type="text" name="app_rp[]" id="app_rp[]" class="form-control"></div>'
+                    +'<div class="col-md-3"><b>Published By </b><br> <input type="text" name="pb_by" id="pb_by" class="form-control"></div>'
+                    +'<div class="col-md-3"><b>Conference</b> <br><input type="text" name="conf" id="conf" class="form-control"></div>'
+                    +'<div class="col-md-3" style="margin-top: 21px;"><button type="button" id="remove_researchpaper[]" onclick="remove_researchpaper(this)" class="btn btn-sm btn-danger form-control">Remove</button></div>'
+                    +'</div></div>';
+            
+                $('#researchpaper').append(research_app);
+                
+        }); 
+
+        //experience section   
+        $('button#add_moreexp').click(function(e){
+            
+            var exp_row = '';
+            exp_row += '<tr>';
+            exp_row += '<td><input type="text" name="org_Name[]" id="org_Name[]" placeholder="Enter Your Organization Name" class="form-control"></td>';
+            exp_row += '<td><select class="form-control" name="org_type[]"><option value="">Select Type:</option><option value="1">Private</option><option value="2">Public</option><option value="3">Government</option><option value="4">Self-Employed</option><option value="5">Own Business</option><option value="5">International</option></select></td>';
+            exp_row += '<td> <input type="date" name="start_dob[]" class="form-control"></td>';
+            exp_row +='<td><input type="date" name="end_dob[]" class="form-control"></td>'
+            exp_row +='<td><input type="text" name="role_name[]" class="form-control"></td>'
+            exp_row += '<td style="text-align:center;"><button type="button" id="remove_exp[]" onclick="remove_exp(this)" class="btn btn-danger btn-sm remove" ><span class=" glyphicon glyphicon-minus"></span></button></td></tr>';
+            $('#exp_table').append(exp_row);    
+        });    
+        
+        //designation
+        $('button#add_moredesignation').click(function(e){
+            
+            var designation_row = '';
+            designation_row += '<tr>';
+            designation_row += '<td><select class="form-control"><option value="">Select Designation:</option><option value="1">Private</option><option value="2">Public</option><option value="3">Government</option><option value="4">Self-Employed</option><option value="5">Own Business</option><option value="5">International</option></select></td>';
+            designation_row += '<td> <input type="file" name="documents[]" class="form-control" multiple></td>';
+            designation_row += '<td style="text-align:center;"><button type="button" id="remove_designation[]" onclick="remove_designation(this)" class="btn btn-danger btn-sm remove" style="text-align:center;"><span class=" glyphicon glyphicon-minus"></span></button></td></tr>';
+            $('#designation_table').append(designation_row);    
+        }); 
+
+    function add_newdata(e)
         { 
             var education_y = $(e).val();
             
@@ -598,14 +780,14 @@
             
             if(education_y=='2 years')
             {
-                add_year_fields='<div class="col-md-2 years">'
+                add_year_fields='<div class="col-md-12"></div><div class="col-md-2 years">'
                     +'<input type="hidden" name="qualification_univ[]" value="bachelor">'
                 +'<span class="twoyear_grad" id="twoyear_grad" >'
             +'Institution Name<select class="form-control"  id="college_university_names[]" name="college_university_names[]" onchange="add_newUC(this)">'
-                        +'<option value="">Name:</option>'
-                        +'<option value="1">punjab college</option>'
-                        +'<option value="2">gujranwala college</option>'
-                        +'<option value="3">lahore college</option>'
+                        +'<option value="">Names</option>'
+                        +'<option >punjab college</option>'
+                        +'<option >gujranwala college</option>'
+                        +'<option >lahore college</option>'
                         +'<option value="other">other</option>'
                         +'</select><br><input type="hidden" id="real_college_university_names"/>'
                         +'<div id="other_college_univ" style=" margin-top: -20px; display:none;">'
@@ -614,18 +796,18 @@
                         +'<div class="col-md-2 subjects">'
                         +'<span class="univsubjects">'
                         +'Subjects<select class="form-control" name="u_subjects[]">'
-                        +'<option value="">Subjects:</option>'
-                        +'<option value="1">ICS</option>'
-                        +'<option value="2">Maths</option>'
-                        +'<option value="3">science</option>'
-                        +'</select></span></div>'
-                        +'<div class="col-md-1 marks">Total Marks<input type="number" name="twoy_t_marks[]" id="twoy_t_marks" class="form-control"/></div>'
-                        +'<div class="col-md-1 achievedmarks"> Achieved Marks<input type="number" name="twoy_a_marks[]" id="twoy_a_marks" class="form-control"></div>'
+                        +'<option >Subjects:</option>'
+                        +'<option >ICS</option>'
+                        +'<option >Maths</option>'
+                        +'<option >science</option>'
+                        +'</select></span></div></div>'
+                        +'<div class="col-md-2 marks">Total Marks<input type="number" name="twoy_t_marks[]" id="twoy_t_marks" class="form-control"/></div>'
+                        +'<div class="col-md-2 achievedmarks">Achieved<input type="number" name="twoy_a_marks[]" id="twoy_a_marks" class="form-control"></div>'
                         +'<div class="col-md-1 division"> Division'
                         +'<input type="number" name="division[]" id="division[]" class="form-control"></div>'
                         +'<div class="col-md-2 distinction">Distinction'
                         +'<select class="form-control" name="distinction[]">'
-                        +'<option value=""></option><option value="Yes">Yes</option><option value="No">No</option></select></div>';
+                        +'<option value=""></option><option value="Yes">Yes</option><option value="No">No</option></select></div></div>';
 
             }
             else if(education_y=='4 years')
@@ -645,7 +827,7 @@
                     +'<div id="other_univ" style=" margin-top: -20px; display:none;">'
                     +'<input type="text"  name="other_univbox[]" id="other_univbox[]" class="form-control"/>'
                     +'</div> </span></div>'
-                    +'<div class="col-md-2 subjects">'
+                    +'<div class="col-md-1 subjects">'
                     +'<span class="univsubjects" >'
                     +'Subjects<select class="form-control" name="u_subjects[]">'
                     +'<option value="">Subjects:</option>'
@@ -653,10 +835,10 @@
                     +'<option value="2">Maths</option>'
                     +'<option value="3">science</option>'
                     +'</select></span></div>'
-                    +'<div class="col-md-1 marks">CGPA<input type="number" step="0.01" name="cgpa[]" id="cgpa" class="form-control"></div>'
-                    +'<div class="col-md-1 grad_date">Graduation Date<input type="date" name="grad_date[]" id="grad_date" class="form-control"></div>'
-                    +'<div class="col-md-1 dmc">DMC<input type="date" name="dmc_date[]" id="dmc_date" class="form-control"></div>'
-                    +'<div class="col-md-2 distinction">Distinction'
+                    +'<div class="col-md-1 marks">CGPA<input type="number" step="0.01" name="cgpa[]" id="cgpa" class="form-control"><input placeholder="/4"></div>'
+                    +'<div class="col-md-2 grad_date">Graduation Date<input type="date" name="grad_date[]" id="grad_date" class="form-control"></div>'
+                    +'<div class="col-md-2 dmc">DMC Date<input type="date" name="dmc_date[]" id="dmc_date" class="form-control"></div>'
+                    +'<div class="col-md-1 distinction">Position'
                     +'<select class="form-control" name="distinction[]">'
                     +'<option value=""></option><option value="Yes">Yes</option><option value="No">No</option></select></div>';
             }
@@ -670,37 +852,47 @@
             $(e).parent().parent().find('.dmc').remove();
             $(e).parent().parent().find('.distinction').remove();
             $(e).parent().parent().append(add_year_fields); 
-        }
+    }
             
-        function add_newUC(e)
+    function add_newUC(e)
+     {
+        if($(e).val()=="other")
         {
-            if($(e).val()=="other")
-            console.log($(e).next().next().next().show())
-            else{
-            console.log($(e).next().next().next().hide())
-            }
+            $(e).next().next().next().show()
         }
+        else
+        {
+            $(e).next().next().next().hide()
+        }
+    }
         
-        function remove_certification(e)
-        {
+     function remove_certification(e){
             $(e).parent().parent().parent().remove(); 
-        }
-        function remove_training(e)
-        {
-            $(e).parent().parent().parent().remove(); 
-        }
-        function remove_researchpaper(e)
-        {
-            $(e).parent().parent().parent().remove(); 
-        }
+    }
 
-        function remove_data(e)
-        {
-            $(e).parent().parent().parent().remove();
-        }
-        
+    function remove_training(e){
+         $(e).parent().parent().parent().remove(); 
+    }
 
-    $('#cnic').keydown(function () {
+     function remove_researchpaper(e)
+       {
+            $(e).parent().parent().parent().remove(); 
+    }
+
+    function remove_data(e)
+      {
+     $(e).parent().parent().parent().remove();
+    }
+   
+    function remove_exp(e){
+      $(e).closest('tr').remove();
+    }
+
+    function remove_designation(e){
+      $(e).closest('tr').remove();
+    }
+     
+     $('#cnic').keydown(function () {
 
         //allow  backspace, tab, ctrl+A, escape, carriage return
         if (event.keyCode == 8 || event.keyCode == 9 ||

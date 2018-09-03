@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateApplicantAppliedforTable extends Migration
+class CreateCnicStoresTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,12 @@ class CreateApplicantAppliedforTable extends Migration
      */
     public function up()
     {
-        Schema::create('applicant_appliedfor', function (Blueprint $table) {
+        Schema::create('cnic_stores', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
-            $table->string('attachments');
-            $table->boolean('status')->default();
+            $table->integer('user_id')->unsigned()->index()->nullable();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');           
+            $table->string('cnic')->unique()->nullable();
+            $table->integer('status')->default(0);
             $table->timestamps();
         });
     }
@@ -29,6 +30,6 @@ class CreateApplicantAppliedforTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('applicant_appliedfor');
+        Schema::dropIfExists('cnic_stores');
     }
 }

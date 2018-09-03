@@ -26,7 +26,6 @@ class CreateApplicantHigherEducationTable extends Migration
             $table->double('cgpa',5,2)->nullable();
             $table->integer('total_marks')->nullable();
             $table->integer('achieved_marks')->nullable();
-            $table->string('alevel_grades')->nullable();
             $table->string('division')->nullable();
             $table->string('distinction')->nullable();
           

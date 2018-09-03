@@ -13,14 +13,13 @@ class CreateResearchWorksTable extends Migration
      */
     public function up()
     {
-        Schema::create('research_works', function (Blueprint $table) {
+        Schema::create('applicant_research_works', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('applicant_id')->unsigned()->index()->nullable();
             $table->foreign('applicant_id')->references('id')->on('applicants')->onDelete('cascade');
-            $table->string('reseacrhwork');
-            $table->string('published_by');
-            $table->string('conference');
-            $table->string('duration');
+            $table->string('researchwork')->nullable();
+            $table->string('published_by')->nullable();
+            $table->string('conference')->nullable();
             $table->boolean('status')->default(1);
             $table->timestamps();
         });

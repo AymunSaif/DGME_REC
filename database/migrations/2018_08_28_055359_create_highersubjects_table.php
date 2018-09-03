@@ -15,8 +15,8 @@ class CreateHighersubjectsTable extends Migration
     {
         Schema::create('highersubjects', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('subject_name');
-            $table->string('type');
+            $table->string('subject_name')->nullable();
+            $table->string('type')->nullable();
             $table->timestamps();
         });
     }

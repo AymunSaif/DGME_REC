@@ -15,13 +15,16 @@ class CreateApplicantsTable extends Migration
     {
         Schema::create('applicants', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('status')->nullable();
+            
             $table->integer('diary_num')->nullable();
             $table->string('name')->nullable();
             $table->string('cnic')->unique()->nullable();
             $table->string('gender')->nullable();
             $table->date('dob')->nullable();
-            $table->string('email')->nullable();    
+            $table->string('email')->nullable();
+            $table->integer('status')->default(1);
+            $table->integer('created_by')->unsigned()->index();
+            $table->foreign('created_by')->references('id')->on('users')->onDelete('no action');   
             $table->timestamps();
         });
 
