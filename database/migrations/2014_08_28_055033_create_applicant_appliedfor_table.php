@@ -15,9 +15,8 @@ class CreateApplicantAppliedforTable extends Migration
     {
         Schema::create('applicant_appliedfor', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
-            $table->string('attachments');
-            $table->boolean('status')->default();
+            $table->string('position_name')->nullable();
+            $table->boolean('status')->default(1)->nullable();
             $table->timestamps();
         });
     }

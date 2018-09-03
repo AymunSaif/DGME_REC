@@ -252,14 +252,14 @@
                                 </span>
                             </td>
                             <td>
-                                <span class="sch_percentage" style="display:none">Percentage  <br>
-                                <input type="string" name="sch_percentage" id="sch_percentage" class="form-control"> </span>
+                                <span class="sch_percentage" style="display:none">Percentage %<br>
+                                <input type="number" step="0.01" name="sch_percentage" id="percentage" value="" class="form-control" ></span>
                             </td>
     
                             <td>
                                 <span class="sch_div" style="display:none;">Division
                                     <br>
-                                    <input type="text" name="divi" id="divi" class="form-control"> </span>
+                                    <input type="text" name="divi" id="division" value="" class="form-control"> </span>
                             </td>
                             <td>
                                 <span class="Grades_olevel" style="display:none">Grades  <br>
@@ -332,11 +332,10 @@
                                 name="c_a_marks" id="c_a_marks" class="form-control"></span> </td>
 
                     <td> <span class="col_percentage" style="display:none">Percentage <br>
-                        <input type="string" name="c_percentage"id="c_percentage" class="form-control"> </span> 
+                        <input type="number" name="c_percentage" id="c_percentage" value="" class="form-control"> </span> 
                     </td>
 
-                    <td><span class="col_div" style="display:none">Division <br><input type="text" name="c_div" id="c_div"
-                                class="form-control">
+                    <td><span class="col_div" style="display:none">Division <br><input type="text" name="c_div" value="" id="c_division" class="form-control">
                         </span> 
                     </td>
                     <td> <span class="col_grades" style="display:none">Grades <br><input type="string" name="c_grades"
@@ -413,6 +412,17 @@
         </div>
 
         <hr/>
+
+        <div class="row" id="professional_membership" style="margin-top:5px;">
+            <div class="col-md-5">
+                <h3> <b>Professional Certification Membership</b>
+                    <button type="button" id="addmore_pro_member" class="btn btn-md btn-info    " ><span
+                    class="glyphicon glyphicon-plus"></span></button></h3>
+            </div>
+                    
+        </div>
+        
+        <hr/>
         
         <div class="row" style="margin-top:5px;">
             
@@ -462,11 +472,21 @@
             <h1 style="text-align:center;">Designation</h1>
             <table class="table table-bordered" id="designation_table">
                 <tr >
-                    <th style="text-align:center;">Designation</th>
-                    <th style="text-align:center;">Attach Documents</th>
+                    <th style="text-align:center;">Serial No </th>
+                    <th style="text-align:center;">Position Applied</th>
                     <th style="text-align:center;"><button type="button" id="add_moredesignation" class="btn btn-success btn-sm add_moredesignation"><span class="glyphicon glyphicon-plus"></span></button></th>
                 </tr>
-            </table>    
+            </table> 
+              
+              <h1 style="text-align:center; background-color:azure;">Upload Documents</h1>
+            <table class="table table-bordered" id="attach_documents">
+                    <tr >
+                        <th style="text-align:center;">Upload Picture</th>
+                        <th style="text-align:center;">Upload CV</th>
+                        <th style="text-align:center;"><button type="button" id="add_moredocuments" class="btn btn-success btn-sm add_moredocuments"><span class="glyphicon glyphicon-plus"></span></button></th>
+                    </tr>
+            </table> 
+
             <div class="row" style="margin-top:5px;">
             
                     <div class="col-md-1"></div>
@@ -518,7 +538,7 @@
             $('section#educationSection').hide(1000);
             $('section#experienceSection').hide(1000);
             $('section#designationSection').hide(1000);
-            $('section#demographicsSection').show(1000);
+            $('#demographicsSection').show(1000);
     
         });
         
@@ -559,6 +579,83 @@
             $('section#cnicSection').hide(1000);
             $('section#experienceSection').show(1000);
         });
+
+        //school percentage and division
+        $("#t_marks, #a_marks").keyup( function(){
+
+            var total_marks = $("#t_marks").val();
+            var achieved_marks = $("#a_marks").val();
+            
+              var result = (achieved_marks/total_marks)*100;
+             result= result.toFixed(2);
+              $("#percentage").val(result);
+
+              if(result >=70 && result <=100)
+              {
+              $("#division").val('First');
+              
+              }
+              else if(result >=60 && result <=69)
+              {
+              $("#division").val('Second'); 
+              
+              }
+              else if(result >=50 && result <=59)
+              {
+              $("#division").val('Third');
+              
+              }
+              else if(result >=40 && result <=49)
+              {
+              $("#division").val('Fourth');
+              
+              }
+              else if(result >=33 && result <=39)
+              {
+              $("#division").val('Fifth or Minimum Passing Marks');
+              
+              }
+              else if(result >=0 && result <=32)
+              {
+              $("#division").val('Fail');
+              
+              }
+           
+       });
+
+       
+       //college percentage and division
+       $("#c_t_marks, #c_a_marks").keyup( function(){
+
+        var total_marks = $("#c_t_marks").val();
+        var achieved_marks = $("#c_a_marks").val();
+        
+          var result = (achieved_marks/total_marks)*100;
+         result= result.toFixed(2);
+          $("#c_percentage").val(result);
+
+          if(result >=60 && result <=100)
+          {
+          $("#c_division").val('First');
+          
+          }
+          else if(result >=36 && result <=59)
+          {
+          $("#c_division").val('Second');
+          
+          }
+          else if(result >=33 && result <=35)
+          {
+          $("#c_division").val('Third');
+          
+          }
+          else if(result >=0 && result <=32)
+          {
+          $("#c_division").val('Fail');
+          
+          }
+       
+     });
 
         $('.school_level').on('change', function () {
             if ($('.school_level').val() == 'Matric') {
@@ -612,68 +709,35 @@
             }
         });
 
-        $('.educationYear').on('change',function(){
-            if($('.educationYear').val()=='2 years')
-            { 
-                $('.fouryear_grad').hide(500);
-                $('.univ_cgpa').hide(500);
-                $('.grad_date').hide(500);
-                $('.dmc').hide(500);
-
-                $('.twoyear_grad').show(1000);
-                $('.univsubjects').show(1000);
-                $('.total_marks').show(1000);
-                $('.achieved_marks').show(1000);
-                $('.division').show(1000);
-                $('.dist').show(1000);
-            }
-            else if( $('.educationYear').val()=='4 years')
-            {  
-                $('.twoyear_grad').hide(1000);
-                $('.univsubjects').hide(1000);
-                $('.total_marks').hide(1000);
-                $('.achieved_marks').hide(1000);
-                $('.division').hide(1000);
-                
-                $('.fouryear_grad').show(1000);
-                $('.univsubjects').show(1000);
-                $('.univ_cgpa').show(1000);
-                $('.grad_date').show(1000);
-                $('.dmc').show(1000);
-                $('.dist').show(1000);
-                
-            }
-        }); 
 
         
         $('button#add_grad_level').click(function(e){
             
             var eduprogram ='<div class="row"  id="new_edurow[]">'
                             +'<div class="col-md-12" style="margin-bottom: 15px;margin-top: 15px;">'
-                            +'<div class="col-md-1 remove"><button type="button" id="remove[]"  class="pull-left btn btn-danger btn-sm add" style=" margin-top: 19px;" onclick="remove_data(this)" ><span class="glyphicon glyphicon-minus"></span></button></div>'
-                            +'<div class="col-md-2" >Graduate Level'
+                            +'<div class="col-md-2">Graduate Level'
                             +'<select class="form-control educationYear" name="bch_year[]" onchange="add_newdata(this)">'
-                            +'<option value="">Select year:</option>'
+                            +'<option value="">Pick year:</option>'
                             +' <option>2 years</option>'
                             +'<option>4 years</option>'
-                            +'</select> </div> </div></div>';
+                            +'</select> </div></div></div>';
             $('#gradeducation').append(eduprogram);     
         }); 
     
         $('button#add_postgrad_level').click(function(e)
           {  var eduprogram ='<div class="row" id="new_postgradrow[]">'
                         +'<div class="col-md-12" style="margin-bottom: 15px;margin-top: 15px;">'
-                        +'<div class="col-md-1 remove_grad_level"><button type="button" id="remove_grad_level[]"  class="pull-left btn btn-danger btn-sm add" style=" margin-top: 19px;" onclick="remove_data(this)" ><span class="glyphicon glyphicon-minus"></span></button></div>'
                         +'<input type="hidden" name="qualification_postuniv[]" value="post_grad">'
                         +'<div class="col-md-2 institute_name">Institution Name<input type="text" name="pg_Name" id="pg_Name" class="form-control"> </div>'    
-                        +'<div class="col-md-2 postgrad_subjects">Major Subjects<select class="form-control" name="post_grad_degree[]"><option value="">Select degree:</option>'
+                        +'<div class="col-md-2 postgrad_subjects">Subjects<select class="form-control" name="post_grad_degree[]"><option value=""></option>'
                         +'<option value="1">cs degree</option><option value="1">cs degree</option></select> </div>'
                         +'<div class="col-md-2 post_cgpa">CGPA<input type="number" step="0.01" name="pg_cgpa" id="pg_cgpa" class="form-control"></div>'
                         +'<div class="col-md-2 post_dg">Date Of Graduation <input type="date" name="pg_date" id="pg_date" class="form-control"> </div>'
                         +'<div class="col-md-2 post_dmc">Final DMC Date<input type="date" name="pg_dmc_date" id="pg_dmc_date" class="form-control"></div>'
                         +'<div class="col-md-1 distinction">Distinction'
                         +'<select class="form-control" name="pg_distinction[]">'
-                        +'<option value=""></option><option value="Yes">Yes</option><option value="No">No</option></select></div></div></div>';
+                        +'<option value=""></option><option value="Yes">Yes</option><option value="No">No</option></select></div>'
+                        +'<div class="col-md-1 remove_grad_level"><button type="button" id="remove_grad_level[]"  class="pull-left btn btn-danger btn-sm add" style=" margin-top: 19px;" onclick="remove_data(this)" ><span class="glyphicon glyphicon-minus"></span></button></div></div></div>';
                 
                 $('#postgradeducation').append(eduprogram);       
         });
@@ -682,11 +746,11 @@
         $('button#add_phd_level').click(function(e){
             var eduprogram ='<div class="row" id="new_phdrow[]">'
                            +'<div class="col-md-12" style="margin-bottom: 15px;margin-top: 15px;">'
-                           +'<div class="col-md-1 remove_phd_level"><button type="button" id="remove_phd_level[]"  class="pull-left btn btn-danger btn-sm add" style=" margin-top: 19px;" onclick="remove_data(this)" ><span class="glyphicon glyphicon-minus"></span></button></div>'
                            +'<input type="hidden" name="qualification_phduniv[]" value="phd"">'
                            +'<div class="col-md-2 phd_institute_name">Institution Name<input type="text" name="phd_Name[]" id="phd_Name[]" class="form-control"> </div>'    
-                           +'<div class="col-md-2 phd_subjects">Subjects<input type="text" name="phd_subjects[]" id="phd_subjects[]" class="form-control">  </div>'
-                           +'<div class="col-md-2 phd_dg">Date Of Graduation <input type="date" name="phd_date[]" id="phd_date[]" class="form-control"> </div></div></div>'
+                           +'<div class="col-md-2 phd_thesis">Thesis Topic<input type="text" name="phd_thesis[]" id="phd_thesis[]" class="form-control">  </div>'
+                           +'<div class="col-md-2 phd_dg">Date Of Graduation <input type="date" name="phd_date[]" id="phd_date[]" class="form-control"> </div>'
+                           +'<div class="col-md-1 remove_phd_level"><button type="button" id="remove_phd_level[]"  class=" btn btn-danger btn-md remove_phd_level" style="margin-top:21px;" onclick="remove_data(this)" ><span class="glyphicon glyphicon-minus"></span></button></div></div></div>';
                           
                $('#phdeducation').append(eduprogram);     
        }); 
@@ -695,14 +759,11 @@
         $('button#add_postdoc_level').click(function(e){
              var eduprogram ='<div class="row" id="new_postdocrow[]">'
                             +'<div class="col-md-12" style="margin-bottom: 15px;margin-top: 15px;">'
-                            +'<div class="col-md-1 remove_graddoc_level"><button type="button" id="remove_graddoc_level[]"  class="pull-left btn btn-danger btn-sm add" style=" margin-top: 19px;" onclick="remove_data(this)" ><span class="glyphicon glyphicon-minus"></span></button></div>'
                             +'<input type="hidden" name="qualification_postdocuniv[]" value="post_graddoc">'
                             +'<div class="col-md-2 pd_institute_name">Institution Name<input type="text" name="pd_Name[]" id="pd_Name[]" class="form-control"> </div>'    
-                            +'<div class="col-md-2 postdoc_subjects">Major Subjects<select class="form-control" name="post_graddoc_degree[]"><option value="">Select degree:</option>'
-                            +'<option value="1">cs degree</option><option value="1">cs degree</option></select> </div>'
-                            +'<div class="col-md-2 postdoc_cgpa">CGPA<input type="number" step="0.01" name="pd_cgpa[]" id="pd_cgpa[]" class="form-control"></div>'
+                            +'<div class="col-md-2 postdoc_thesis">Thesis Topic<input type="text" name="pd_thesis[]" id="pd_thesis[]" class="form-control"> </div>'
                             +'<div class="col-md-2 postdoc_dg">Date Of Graduation <input type="date" name="pd_date[]" id="pd_date[]" class="form-control"> </div>'
-                            +'<div class="col-md-2 postdoc_dmc">Final DMC Date<input type="date" name="pd_dmc_date[]" id="pd_dmc_date[]" class="form-control"></div></div></div>';
+                            +'<div class="col-md-1 remove_graddoc_level"><button type="button" id="remove_graddoc_level[]"  class="btn btn-danger btn-md " style=" margin-top: 21px;" onclick="remove_data(this)" ><span class="glyphicon glyphicon-minus"></span></button></div></div></div>';
                 $('#postdoceducation').append(eduprogram);     
         }); 
 
@@ -710,10 +771,11 @@
         
             var certifications_app ='<div class="row" id="new_cer[]" >'
                     +'<div class="col-md-12" style="margin-bottom: 15px;margin-top: 15px;">'
-                    +' <div class="col-md-3"><b>Name</b><input type="text" name="app_cer[]" id="app_cer[]" class="form-control"></div>'
-                    +' <div class="col-md-3"><b>Issued By </b><br> <input type="text" name="certificate_i[]" id="certificate_i[]" class="form-control"></div>'
-                    +'<div class="col-md-3"><b>Date Of Issuance</b> <br><input type="date" name="i_date[]" id="i_date[]" class="form-control"></div>'
-                    +'<div class="col-md-3" style="margin-top: 21px;"><button type="button" id="remove_certification[]" onclick="remove_certification(this)" class="btn btn-sm btn-danger form-control">Remove</button></div>'
+                    +'<div class="col-md-3"><b>Certification Name</b><input type="text" name="app_cer[]" id="app_cer[]" class="form-control"></div>'
+                    +'<div class="col-md-2"><b>Certificate Number</b><input type="string" name="cer_num[]" id="cer_num[]" class="form-control"></div>'
+                    +'<div class="col-md-2"><b>Issued By </b><br> <input type="text" name="certificate_i[]" id="certificate_i[]" class="form-control"></div>'
+                    +'<div class="col-md-2"><b>Date Of Issuance</b> <br><input type="date" name="i_date[]" id="i_date[]" class="form-control"></div>'
+                    +'<div class="col-md-2" style="margin-top: 21px;"><button type="button" id="remove_certification[]" onclick="remove_certification(this)" class="btn btn-sm btn-danger form-control">Remove</button></div>'
                     +'</div></div>';
                 $('#certifications').append(certifications_app);
                 
@@ -726,7 +788,7 @@
                     +'<div class="col-md-3"> <b>Training Name</b> <input type="text" name="app_tr[]" id="app_tr[]" class="form-control"></div>'
                     +'<div class="col-md-3"><b>By </b><br> <input type="text" name="tr_by[]" id="tr_by[]" class="form-control"></div>'
                     +'<div class="col-md-3"><b>Duration</b><br><input type="text" name="tr_duration[]" id="tr_duration[]" class="form-control"></div>'
-                    +'<div class="col-md-3" style="margin-top: 21px;"><button type="button" id="remove_training[]" onclick="remove_training(this)" class="btn btn-sm btn-danger form-control">Remove</button></div>'
+                    +'<div class="col-md-2" style="margin-top: 21px;"><button type="button" name="remove_training[]" id="remove_training[]" onclick="remove_training(this)" class="btn btn-sm btn-danger form-control">Remove</button></div>'
                     +'</div></div>';
             
                 $('#trainings').append(training_app);
@@ -735,17 +797,65 @@
                 
         $('button#add_morerps').click(function(e){
 
-            var research_app ='<div class="row" id="new_tr[]" >'
+            var research_app ='<div class="row" id="new_rp[]" >'
                     +'<div class="col-md-12" style="margin-bottom: 15px;margin-top: 15px;">'
-                    +'<div class="col-md-3"><b>Research Paper Name</b><input type="text" name="app_rp[]" id="app_rp[]" class="form-control"></div>'
-                    +'<div class="col-md-3"><b>Published By </b><br> <input type="text" name="pb_by" id="pb_by" class="form-control"></div>'
-                    +'<div class="col-md-3"><b>Conference</b> <br><input type="text" name="conf" id="conf" class="form-control"></div>'
-                    +'<div class="col-md-3" style="margin-top: 21px;"><button type="button" id="remove_researchpaper[]" onclick="remove_researchpaper(this)" class="btn btn-sm btn-danger form-control">Remove</button></div>'
-                    +'</div></div>';
+                    +'<div class="col-md-2">Research Type'
+                    +'<select class="form-control researchType" name="researchType[]" onchange="add_newresearch(this)">'
+                    +'<option value=""></option>'
+                    +' <option>Journal</option>'
+                    +'<option>Conference</option>'
+                    +'</select></div></div></div>';
             
                 $('#researchpaper').append(research_app);
                 
         }); 
+
+        $('button#addmore_pro_member').click(function(e){
+
+            var professional_app ='<div class="row" id="new_pm[]" >'
+                    +'<div class="col-md-12" style="margin-bottom: 15px;margin-top: 15px;">'
+                    +'<div class="col-md-3"> <b>Name</b> <input type="text" name="app_pmname[]" id="app_pmname[]" class="form-control"></div>'
+                    +'<div class="col-md-2"><b>Membership Level</b><br> <input type="text" name="m_level[]" id="m_level[]" class="form-control"></div>'
+                    +'<div class="col-md-2"><b>Issued By</b><br><input type="string" name="issued_name[]" id="issued_name[]" class="form-control"></div>'
+                    +'<div class="col-md-2"><b>Issuance Date</b><br><input type="date" name="pm_doi[]" id="pm_doi[]" class="form-control"></div>'
+                    +'<div class="col-md-2"><b>Registeration # </b><br><input type="number" name="pm_reg[]" id="pm_reg[]" class="form-control"></div>'
+                    +'<div class="col-md-1 " style="margin-top: 21px;"><button type="button" name="remove_membership[]" id="remove_membership[]" onclick="remove_member(this)" class="btn btn-sm btn-danger form-control">Remove</button></div>'
+                    +'</div></div>';
+            
+                $('#professional_membership').append(professional_app);
+                
+        }); 
+
+       function add_newresearch(e)
+        { 
+            var researchtype = $(e).val();
+            
+            var research="";
+
+            if(researchtype=='Journal')
+            {
+            research='<div class="col-md-2 J_name">Name Of Journal<input type="text" name="app_jr[]" id="app_jr[]" class="form-control"></div>'
+                +'<div class="col-md-2 J_pyear">Published Year<input type="number" name="app_yr[]" id="app_yr[]" class="form-control"></div>'
+                +'<div class="col-md-2 J_date">Date<input type="number" name="app_dt[]" id="app_dt[]" class="form-control"></div>'
+                +'<div class="col-md-1 remove"><button type="button" id="remove[]"  class="pull-left btn btn-danger btn-md add" style=" margin-top: 21px;" onclick="remove_data(this)" ><span class="glyphicon glyphicon-minus"></span></button></div>';
+
+            }
+            else if(researchtype=='Conference')
+            {
+                research='<div class="col-md-2 research_paper">Research Paper<input type="text" name="app_rp[]" id="app_rp[]" class="form-control"></div>'
+                +'<div class="col-md-2 conf_pyear">Published Year<input type="number" name="app_crp[]" id="app_cyr[]" class="form-control"></div>'
+                +'<div class="col-md-2 conf_name">Conference<input type="number" name="app_conf[]" id="app_conf[]" class="form-control"></div>'
+                +'<div class="col-md-1 remove"><button type="button" id="remove[]"  class="pull-left btn btn-danger btn-md add" style=" margin-top: 21px;" onclick="remove_data(this)" ><span class="glyphicon glyphicon-minus"></span></button></div>';
+            }
+            $(e).parent().parent().find('.remove').remove();
+            $(e).parent().parent().find('.J_name').remove();
+            $(e).parent().parent().find('.J_pyear').remove();
+            $(e).parent().parent().find('.J_date').remove();
+            $(e).parent().parent().find('.research_paper').remove();
+            $(e).parent().parent().find('.conf_pyear').remove();
+            $(e).parent().parent().find('.conf_name').remove();
+            $(e).parent().parent().append(research); 
+    }
 
         //experience section   
         $('button#add_moreexp').click(function(e){
@@ -754,24 +864,36 @@
             exp_row += '<tr>';
             exp_row += '<td><input type="text" name="org_Name[]" id="org_Name[]" placeholder="Enter Your Organization Name" class="form-control"></td>';
             exp_row += '<td><select class="form-control" name="org_type[]"><option value="">Select Type:</option><option value="1">Private</option><option value="2">Public</option><option value="3">Government</option><option value="4">Self-Employed</option><option value="5">Own Business</option><option value="5">International</option></select></td>';
-            exp_row += '<td> <input type="date" name="start_dob[]" class="form-control"></td>';
-            exp_row +='<td><input type="date" name="end_dob[]" class="form-control"></td>'
+            exp_row += '<td> <input type="date" name="start_date[]" id="start_date" class="form-control"></td>';
+            exp_row +='<td><input type="date" name="end_date[]" id="end_date" class="form-control"></td>'
             exp_row +='<td><input type="text" name="role_name[]" class="form-control"></td>'
             exp_row += '<td style="text-align:center;"><button type="button" id="remove_exp[]" onclick="remove_exp(this)" class="btn btn-danger btn-sm remove" ><span class=" glyphicon glyphicon-minus"></span></button></td></tr>';
             $('#exp_table').append(exp_row);    
         });    
         
         //designation
+        var i=0;
         $('button#add_moredesignation').click(function(e){
-            
+        
             var designation_row = '';
             designation_row += '<tr>';
+            designation_row += '<td>1</td>';
             designation_row += '<td><select class="form-control"><option value="">Select Designation:</option><option value="1">Private</option><option value="2">Public</option><option value="3">Government</option><option value="4">Self-Employed</option><option value="5">Own Business</option><option value="5">International</option></select></td>';
-            designation_row += '<td> <input type="file" name="documents[]" class="form-control" multiple></td>';
             designation_row += '<td style="text-align:center;"><button type="button" id="remove_designation[]" onclick="remove_designation(this)" class="btn btn-danger btn-sm remove" style="text-align:center;"><span class=" glyphicon glyphicon-minus"></span></button></td></tr>';
             $('#designation_table').append(designation_row);    
         }); 
 
+        //documents
+        $('button#add_moredocuments').click(function(e){
+            
+            var documents_row = '';
+            documents_row += '<tr>';
+            documents_row +='<td> <input type="file" name="documents[]" class="form-control" multiple></td>'
+            documents_row += '<td> <input type="file" name="documents[]" class="form-control" multiple></td>';
+            documents_row += '<td style="text-align:center;"><button type="button" name="remove_documents[]" id="remove_documents[]" onclick="remove_documents(this)" class="btn btn-danger btn-sm remove" style="text-align:center;"><span class=" glyphicon glyphicon-minus"></span></button></td></tr>';
+            $('#attach_documents').append(documents_row);    
+        }); 
+        
     function add_newdata(e)
         { 
             var education_y = $(e).val();
@@ -780,11 +902,11 @@
             
             if(education_y=='2 years')
             {
-                add_year_fields='<div class="col-md-12"></div><div class="col-md-2 years">'
+                add_year_fields='<div class="col-md-2 years">'
                     +'<input type="hidden" name="qualification_univ[]" value="bachelor">'
                 +'<span class="twoyear_grad" id="twoyear_grad" >'
             +'Institution Name<select class="form-control"  id="college_university_names[]" name="college_university_names[]" onchange="add_newUC(this)">'
-                        +'<option value="">Names</option>'
+                        +'<option value=""></option>'
                         +'<option >punjab college</option>'
                         +'<option >gujranwala college</option>'
                         +'<option >lahore college</option>'
@@ -793,31 +915,34 @@
                         +'<div id="other_college_univ" style=" margin-top: -20px; display:none;">'
                         +'<input type="text"   name="other_collegebox[]" id="other_univbox[]" class="form-control"/>'
                         +' </div></span></div>'
-                        +'<div class="col-md-2 subjects">'
+                        +'<div class="col-md-1 subjects">'
                         +'<span class="univsubjects">'
                         +'Subjects<select class="form-control" name="u_subjects[]">'
-                        +'<option >Subjects:</option>'
+                        +'<option ></option>'
                         +'<option >ICS</option>'
                         +'<option >Maths</option>'
                         +'<option >science</option>'
-                        +'</select></span></div></div>'
-                        +'<div class="col-md-2 marks">Total Marks<input type="number" name="twoy_t_marks[]" id="twoy_t_marks" class="form-control"/></div>'
-                        +'<div class="col-md-2 achievedmarks">Achieved<input type="number" name="twoy_a_marks[]" id="twoy_a_marks" class="form-control"></div>'
+                        +'</select></span></div>'
+                        +'<div class="col-md-1 marks">Total Marks<input type="number" name="twoyear_t_marks[]" id="twoyear_t_marks" onchange="getmarks(this)" class="form-control"/></div>'
+                        +'<div class="col-md-2 achievedmarks">Achieved Marks<input type="number" name="twoyear_a_marks[]" id="twoyear_a_marks" class="form-control"></div>'
                         +'<div class="col-md-1 division"> Division'
-                        +'<input type="number" name="division[]" id="division[]" class="form-control"></div>'
-                        +'<div class="col-md-2 distinction">Distinction'
+                        +'<input type="number" name="division[]" id="twoyear_division" value="" class="form-control"></div>'
+                        +'<div class="col-md-1 Percentage"> Percentage'
+                        +'<input type="number" step="0.01" name="percentage[]" id="twoyear_percentage" value="" class="form-control"></div>'
+                        +'<div class="col-md-1 distinction">Distinction'
                         +'<select class="form-control" name="distinction[]">'
-                        +'<option value=""></option><option value="Yes">Yes</option><option value="No">No</option></select></div></div>';
+                        +'<option value=""></option><option value="Yes">Yes</option><option value="No">No</option></select></div>'
+                        +'<div class="col-md-1 remove"><button type="button" id="remove[]"  class="pull-left btn btn-danger btn-md add" style=" margin-top: 19px;" onclick="remove_data(this)" ><span class="glyphicon glyphicon-minus"></span></button></div>';
 
             }
             else if(education_y=='4 years')
             {
-                    add_year_fields='<div class="col-md-2 years">'
+                    add_year_fields='<div class="col-md-1 years">'
                    +'<input type="hidden" name="qualification_univ[]" value="bachelor">'
                     +'<span class=" fouryear_grad" id="fouryear_grad" >'
-                    +'Institution Name<input type="hidden" name="qualification_univ[]" value="four_year">'
-                +'<select class="form-control"  id="university_names[]" name="university_names[]" onchange="add_newUC(this)">'
-                    +'<option value="">ok:</option>'
+                    +'Institute <input type="hidden" name="qualification_univ[]" value="four_year">'
+                   +'<select class="form-control"  id="university_names[]" name="university_names[]" onchange="add_newUC(this)">'
+                    +'<option value=""></option>'
                     +'<option value="1">umt</option>'
                     +'<option value="2">ucp</option>'
                     +'<option value="3">gcu</option>'
@@ -827,22 +952,26 @@
                     +'<div id="other_univ" style=" margin-top: -20px; display:none;">'
                     +'<input type="text"  name="other_univbox[]" id="other_univbox[]" class="form-control"/>'
                     +'</div> </span></div>'
-                    +'<div class="col-md-1 subjects">'
+                    +'<div class="col-md-1  subjects">'
                     +'<span class="univsubjects" >'
                     +'Subjects<select class="form-control" name="u_subjects[]">'
-                    +'<option value="">Subjects:</option>'
+                    +'<option value=""></option>'
                     +'<option value="1">ICS</option>'
                     +'<option value="2">Maths</option>'
                     +'<option value="3">science</option>'
                     +'</select></span></div>'
-                    +'<div class="col-md-1 marks">CGPA<input type="number" step="0.01" name="cgpa[]" id="cgpa" class="form-control"><input placeholder="/4"></div>'
-                    +'<div class="col-md-2 grad_date">Graduation Date<input type="date" name="grad_date[]" id="grad_date" class="form-control"></div>'
-                    +'<div class="col-md-2 dmc">DMC Date<input type="date" name="dmc_date[]" id="dmc_date" class="form-control"></div>'
-                    +'<div class="col-md-1 distinction">Position'
+                    +'<div class="col-md-1 marks">CGPA/4<input type="number" step="0.01" name="cgpa[]" id="cgpa" class="form-control"></div>'
+                    +'<div class="col-md-1 marks">Total Marks<input type="number" name="foury_t_marks[]" id="foury_t_marks" class="form-control"/></div>'
+                    +'<div class="col-md-1 achievedmarks">Achieved  <input type="number" name="foury_a_marks[]" id="foury_a_marks" class="form-control"></div>'
+                    +'<div class="col-md-1 Percentage">Percentage <input type="number"step="0.01" name="univ_per[]" value="" id="univ_per" class="form-control"></div>'
+                    +'<div class="col-md-2 dmc">Final DMC Date<input type="date" name="dmc_date[]" id="dmc_date" class="form-control"></div>'
+                    +'<div class="col-md-1 distinction">Distinction'
                     +'<select class="form-control" name="distinction[]">'
-                    +'<option value=""></option><option value="Yes">Yes</option><option value="No">No</option></select></div>';
+                    +'<option value=""></option><option value="Yes">Yes</option><option value="No">No</option></select></div>'
+                    +'<div class="col-md-1 remove"><button type="button" id="remove[]"  class="pull-left btn btn-danger btn-md add" style=" margin-top: 19px;" onclick="remove_data(this)" ><span class="glyphicon glyphicon-minus"></span></button></div>';
             }
-
+            $(e).parent().parent().find('.remove').remove();
+            $(e).parent().parent().find('.Percentage').remove();
             $(e).parent().parent().find('.years').remove();
             $(e).parent().parent().find('.subjects').remove();
             $(e).parent().parent().find('.marks').remove();
@@ -854,6 +983,8 @@
             $(e).parent().parent().append(add_year_fields); 
     }
             
+    
+
     function add_newUC(e)
      {
         if($(e).val()=="other")
@@ -865,12 +996,81 @@
             $(e).next().next().next().hide()
         }
     }
+    
+      //2year graduation
+      $("#twoyear_t_marks, #twoyear_a_marks").keyup( function(){
+
+        var total_marks = $("#twoyear_t_marks").val();
+        var achieved_marks = $("#twoyear_a_marks").val();
         
+          var result = (achieved_marks/total_marks)*100;
+         result= result.toFixed(2);
+          $("#twoyear_percentage").val(result);
+          
+          if(result >=60 && result <=100)
+          {
+          $("#twoyear_division").val('First');
+          
+          }
+          else if(result >=36 && result <=59)
+          {
+          $("#twoyear_division").val('Second');
+          
+          }
+          else if(result >=33 && result <=35)
+          {
+          $("#twoyear_division").val('Third');
+          
+          }
+          else if(result >=0 && result <=32)
+          {
+          $("#twoyear_division").val('Fail');
+          
+          }
+       
+     });
+
+     //4year
+     $("#foury_t_marks, #foury_a_marks").keyup( function(){
+
+        var total_marks = $("#foury_t_marks").val();
+        var achieved_marks = $("#foury_a_marks").val();
+        
+          var result = (achieved_marks/total_marks)*100;
+         result= result.toFixed(2);
+       $("#univ_per").val(result);
+     });
+
+     //exp duration
+    $("#start_date").datepicker({ 	});  
+     $("#end_date").datepicker({ 
+         onSelect: function () { 
+             var  duration_of_exp= duration();  
+            $('#expduration').val(duration_of_exp);
+            }
+        }); 
+    
+     function duration(){
+        var start= $("#start_date").datepicker("getDate");
+        var end= $("#end_date").datepicker("getDate");
+        days = (end- start) / (1000 * 60 * 60 * 24);
+        months= days/31;
+        years= months/12;
+        return  Math.floor(days) + "days " + Math.floor(months) + "months " +    Math.floor(years) + "years";
+     }
+
+
      function remove_certification(e){
             $(e).parent().parent().parent().remove(); 
     }
 
-    function remove_training(e){
+    function remove_member(e){
+      $(e).parent().parent().parent().remove(); 
+     }
+
+
+   
+     function remove_training(e){
          $(e).parent().parent().parent().remove(); 
     }
 
@@ -891,7 +1091,11 @@
     function remove_designation(e){
       $(e).closest('tr').remove();
     }
-     
+
+    function remove_documents(e){
+        $(e).closest('tr').remove();
+      }
+
      $('#cnic').keydown(function () {
 
         //allow  backspace, tab, ctrl+A, escape, carriage return

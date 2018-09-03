@@ -17,10 +17,10 @@ class CreateApplicantHigherEducationTable extends Migration
             $table->increments('id');
             $table->integer('applicant_id')->unsigned()->index()->nullable();
             $table->foreign('applicant_id')->references('id')->on('applicants')->onDelete('cascade');           
-            $table->string('name_of_institute')->nullable();
             $table->string('qualification_type')->nullable();
             $table->string('bach_year')->nullable();
-            $table->string('degree')->nullable();
+            $table->string('institute_name')->nullable();
+            $table->string('thesis_topic')->nullable();
             $table->integer('highersubject_id')->unsigned()->index()->nullable();
             $table->foreign('highersubject_id')->references('id')->on('highersubjects')->onDelete('cascade');            
             $table->double('cgpa',5,2)->nullable();
@@ -28,7 +28,7 @@ class CreateApplicantHigherEducationTable extends Migration
             $table->integer('achieved_marks')->nullable();
             $table->string('division')->nullable();
             $table->string('distinction')->nullable();
-          
+            $table->string('percentage')->nullable();
             $table->date('date_of_grad')->nullable();
             $table->date('final_dmc_date')->nullable();
 

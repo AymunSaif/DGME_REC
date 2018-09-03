@@ -21,6 +21,7 @@ class CreateApplicantExperiencesTable extends Migration
             $table->string('org_type')->nullable();
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
+            $table->date('totalduration')->nullable();
             $table->string('role')->nullable();
             $table->timestamps();
         });

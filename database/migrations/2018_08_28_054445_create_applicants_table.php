@@ -17,6 +17,7 @@ class CreateApplicantsTable extends Migration
             $table->increments('id');
             
             $table->integer('diary_num')->nullable();
+            $table->integer('uniqueNumber')->nullable();
             $table->string('name')->nullable();
             $table->string('cnic')->unique()->nullable();
             $table->string('gender')->nullable();

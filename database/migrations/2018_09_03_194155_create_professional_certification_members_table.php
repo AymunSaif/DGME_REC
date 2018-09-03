@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateApplicantCertificationsTable extends Migration
+class CreateProfessionalCertificationMembersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,16 @@ class CreateApplicantCertificationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('applicant_certifications', function (Blueprint $table) {
+        Schema::create('professional_certification_members', function (Blueprint $table) {
             $table->increments('id');
-
             $table->integer('applicant_id')->unsigned()->index()->nullable();
             $table->foreign('applicant_id')->references('id')->on('applicants')->onDelete('cascade');
-            $table->string('name_certifictaion')->nullable(); 
+            $table->string('name')->nullable();
+            $table->string('membership_level')->nullable();
             $table->string('issued_by')->nullable();
-            $table->string('date_of_issuance')->nullable();
-            $table->boolean('status')->default();
+            $table->string('registeration')->nullable();
+            $table->date('issuance_date')->nullable();
+            $table->boolean('status')->default(1);
             $table->timestamps();
         });
     }
@@ -33,6 +34,6 @@ class CreateApplicantCertificationsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('applicant_certifications');
+        Schema::dropIfExists('professional_certification_members');
     }
 }

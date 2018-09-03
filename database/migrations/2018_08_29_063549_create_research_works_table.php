@@ -17,9 +17,11 @@ class CreateResearchWorksTable extends Migration
             $table->increments('id');
             $table->integer('applicant_id')->unsigned()->index()->nullable();
             $table->foreign('applicant_id')->references('id')->on('applicants')->onDelete('cascade');
-            $table->string('researchwork')->nullable();
-            $table->string('published_by')->nullable();
+            $table->string('researchtype')->nullable();
+            $table->string('name')->nullable();
+            $table->string('published_year')->nullable();
             $table->string('conference')->nullable();
+            $table->date('date_published')->nullable();
             $table->boolean('status')->default(1);
             $table->timestamps();
         });
