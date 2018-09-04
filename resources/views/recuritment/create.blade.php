@@ -545,6 +545,7 @@
         $('button#go_cnic,.cnicSection').on('click', function () {
             $('#demographicsSection').hide(1000);
             $('section#educationSection').hide(1000);
+            $('#demographicsSection').hide(1000);
             $('section#cnicSection').show(1000);
         });
     
@@ -923,10 +924,10 @@
                         +'<option >Maths</option>'
                         +'<option >science</option>'
                         +'</select></span></div>'
-                        +'<div class="col-md-1 marks">Total Marks<input type="number" name="twoyear_t_marks[]" id="twoyear_t_marks" onchange="getmarks(this)" class="form-control"/></div>'
-                        +'<div class="col-md-2 achievedmarks">Achieved Marks<input type="number" name="twoyear_a_marks[]" id="twoyear_a_marks" class="form-control"></div>'
+                        +'<div class="col-md-1 marks">Total Marks<input type="number" name="twoyear_t_marks[]"  class="form-control twoyear_t_marks"/></div>'
+                        +'<div class="col-md-2 achievedmarks">Achieved Marks<input type="number" onkeyup="calculatePercentage(this)" name="twoyear_a_marks[]"  class="form-control twoyear_a_marks"></div>'
                         +'<div class="col-md-1 division"> Division'
-                        +'<input type="number" name="division[]" id="twoyear_division" value="" class="form-control"></div>'
+                        +'<input type="string" name="division[]" value="" class="form-control twoyear_division"></div>'
                         +'<div class="col-md-1 Percentage"> Percentage'
                         +'<input type="number" step="0.01" name="percentage[]" id="twoyear_percentage" value="" class="form-control"></div>'
                         +'<div class="col-md-1 distinction">Distinction'
@@ -960,9 +961,9 @@
                     +'<option value="2">Maths</option>'
                     +'<option value="3">science</option>'
                     +'</select></span></div>'
-                    +'<div class="col-md-1 marks">CGPA/4<input type="number" step="0.01" name="cgpa[]" id="cgpa" class="form-control"></div>'
-                    +'<div class="col-md-1 marks">Total Marks<input type="number" name="foury_t_marks[]" id="foury_t_marks" class="form-control"/></div>'
-                    +'<div class="col-md-1 achievedmarks">Achieved  <input type="number" name="foury_a_marks[]" id="foury_a_marks" class="form-control"></div>'
+                    +'<div class="col-md-1 cgpamarks">CGPA/4<input type="number" step="0.01" name="cgpa[]" id="cgpa" class="form-control"></div>'
+                    +'<div class="col-md-1 marks">Total Marks<input type="number" name="foury_t_marks[]" class="form-control foury_t_marks"/></div>'
+                    +'<div class="col-md-1 achievedmarks">Achieved  <input type="number" name="foury_a_marks[]" onkeyup="calculate4Percentage(this)"  class="form-control foury_a_marks"></div>'
                     +'<div class="col-md-1 Percentage">Percentage <input type="number"step="0.01" name="univ_per[]" value="" id="univ_per" class="form-control"></div>'
                     +'<div class="col-md-2 dmc">Final DMC Date<input type="date" name="dmc_date[]" id="dmc_date" class="form-control"></div>'
                     +'<div class="col-md-1 distinction">Distinction'
@@ -974,6 +975,7 @@
             $(e).parent().parent().find('.Percentage').remove();
             $(e).parent().parent().find('.years').remove();
             $(e).parent().parent().find('.subjects').remove();
+            $(e).parent().parent().find('.cgpamarks').remove();
             $(e).parent().parent().find('.marks').remove();
             $(e).parent().parent().find('.achievedmarks').remove();
             $(e).parent().parent().find('.grad_date').remove();
@@ -998,48 +1000,88 @@
     }
     
       //2year graduation
-      $("#twoyear_t_marks, #twoyear_a_marks").keyup( function(){
-
-        var total_marks = $("#twoyear_t_marks").val();
-        var achieved_marks = $("#twoyear_a_marks").val();
+      function calculatePercentage(e){
+        var total_marks=0;var achieved_marks=0;
+        if($(e).hasClass("twoyear_t_marks"))
+            { 
+                achieved_marks = $(e).parent().siblings('.achievedmarks').children('input[name="twoyear_a_marks[]"]').val();
+                total_marks=$(e).val();
+            }
+        else if($(e).hasClass("twoyear_a_marks"))
+             {
+                 total_marks = $(e).parent().siblings('.marks').children('input[name="twoyear_t_marks[]"]').val();
+                 achieved_marks=$(e).val();                
+             }
         
+          var percntgInput= $(e).parent().siblings('.Percentage').children('input[name="percentage[]"]');
           var result = (achieved_marks/total_marks)*100;
-         result= result.toFixed(2);
-          $("#twoyear_percentage").val(result);
+          result= result.toFixed(2);
+          percntgInput.val(result);
           
           if(result >=60 && result <=100)
           {
-          $("#twoyear_division").val('First');
-          
+              console.log('ddsdd');
+            $(e).parent().siblings('.division').children('input[name="division[]"]').val('First');
           }
           else if(result >=36 && result <=59)
           {
-          $("#twoyear_division").val('Second');
+            $(e).parent().siblings('.division').children('input[name="division[]"]').val('Second');
           
           }
           else if(result >=33 && result <=35)
           {
-          $("#twoyear_division").val('Third');
+            $(e).parent().siblings('.division').children('input[name="division[]"]').val('Third');
           
           }
           else if(result >=0 && result <=32)
           {
-          $("#twoyear_division").val('Fail');
+            $(e).parent().siblings('.division').children('input[name="division[]"]').val('Fail');
           
           }
        
-     });
+     }
 
-     //4year
-     $("#foury_t_marks, #foury_a_marks").keyup( function(){
-
-        var total_marks = $("#foury_t_marks").val();
-        var achieved_marks = $("#foury_a_marks").val();
+      //4year graduation
+      function calculate4Percentage(e){
+        var total_marks=0;var achieved_marks=0;
+        if($(e).hasClass("foury_t_marks"))
+            { 
+                achieved_marks = $(e).parent().siblings('.achievedmarks').children('input[name="foury_a_marks[]"]').val();
+                total_marks=$(e).val();
+            }
+        else if($(e).hasClass("foury_a_marks"))
+             {
+                 total_marks = $(e).parent().siblings('.marks').children('input[name="foury_t_marks[]"]').val();
+                 achieved_marks=$(e).val();                
+             }
         
+          var percntgInput= $(e).parent().siblings('.Percentage').children('input[name="univ_per[]"]');
           var result = (achieved_marks/total_marks)*100;
-         result= result.toFixed(2);
-       $("#univ_per").val(result);
-     });
+          result= result.toFixed(2);
+          percntgInput.val(result);
+          
+          if(result >=60 && result <=100)
+          {
+              
+            $(e).parent().siblings('.division').children('input[name="division[]"]').val('First');
+          }
+          else if(result >=36 && result <=59)
+          {
+            $(e).parent().siblings('.division').children('input[name="division[]"]').val('Second');
+          
+          }
+          else if(result >=33 && result <=35)
+          {
+            $(e).parent().siblings('.division').children('input[name="division[]"]').val('Third');
+          
+          }
+          else if(result >=0 && result <=32)
+          {
+            $(e).parent().siblings('.division').children('input[name="division[]"]').val('Fail');
+          
+          }
+       
+     }
 
      //exp duration
     $("#start_date").datepicker({ 	});  
