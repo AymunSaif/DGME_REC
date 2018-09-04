@@ -73,7 +73,7 @@ class JobFormController extends Controller
      */
     public function store(Request $request)
     {
-        
+
     //   dd($request->all());
        $person= new Applicant();
        $person->diary_num=$request->d_num;
@@ -124,7 +124,7 @@ class JobFormController extends Controller
         $person_secondaryEdu->percentage=$request->sch_percentage;
         $person_secondaryEdu->division=$request->divi;
         $person_secondaryEdu->olevel_grades=$request->grades_olevel;
-       
+
        }
         $person_secondaryEdu->save();
 
@@ -169,32 +169,32 @@ class JobFormController extends Controller
 
                 if(isset($request->college_university_names[$i]))
                 $person_higherEdu_2yr->institute_name=$request->college_university_names[$i];
-                else 
+                else
                 $person_higherEdu_2yr->institute_name=$request->other_collegebox[$i];
-                
+
                 if(isset($request->qualification_univ[$i]))
                 $person_higherEdu_2yr->qualification_type=$request->qualification_univ[$i];
-                
+
                 $person_higherEdu_2yr->bach_year=$by;
-                
+
                 if(isset($request->u_subjects[$i]))
                 $person_higherEdu_2yr->highersubject_id=$request->u_subjects[$i];
-               
+
                 if(isset($request->twoy_t_marks[$i]))
                 $person_higherEdu_2yr->total_marks=$request->twoyear_t_marks[$i];
-               
+
                 if(isset($request->twoy_a_marks[$i]))
                 $person_higherEdu_2yr->achieved_marks=$request->twoyear_a_marks[$i];
-                
+
                 if(isset($request->percentage[$i]))
                 $person_higherEdu_2yr->percentage=$request->percentage[$i];
 
                 if(isset($request->division[$i]))
                 $person_higherEdu_2yr->division=$request->division[$i];
-               
+
                 if(isset($request->distinction[$i]))
                 $person_higherEdu_2yr->distinction=$request->distinction[$i];
-               
+
                 $person_higherEdu_2yr->save();
             }
             elseif ($by=="4 years")
@@ -205,15 +205,15 @@ class JobFormController extends Controller
 
                 if(isset($request->university_names[$i]))
                 $person_higherEdu_univ->institute_name=$request->university_names[$i];
-                else 
+                else
                 $person_higherEdu_univ->institute_name=$request->other_univbox[$i];
 
                 if(isset($request->qualification_univ[$i]))
                 $person_higherEdu_univ->qualification_type=$request->qualification_univ[$i];
-            
+
                 $person_higherEdu_univ->bach_year=$by;
-                
-                
+
+
                 if(isset($request->u_subjects[$i]))
                 $person_higherEdu_univ->highersubject_id=$request->u_subjects[$i];
 
@@ -234,7 +234,7 @@ class JobFormController extends Controller
 
                 if(isset($request->distinction[$i]))
                 $person_higherEdu_univ->distinction=$request->distinction[$i];
-                
+
                 $person_higherEdu_univ->save();
             }
             $i++;
@@ -249,13 +249,13 @@ class JobFormController extends Controller
 
        if(isset($request->distinction[$i]))
        $person_higherEdu_grad->institute_name=$pg_name;
-       
+
        if(isset($request->distinction[$i]))
        $person_higherEdu_grad->qualification_type=$request->qualification_postuniv[$i];
-     
+
        if(isset($request->distinction[$i]))
        $person_higherEdu_grad->highersubject_id=$request->post_grad_degree[$i];
-       
+
        if(isset($request->distinction[$i]))
        $person_higherEdu_grad->cgpa=$request->pg_cgpa[$i];
        $person_higherEdu_grad->final_dmc_date=$request->pg_dmc_date[$i];
@@ -264,7 +264,7 @@ class JobFormController extends Controller
        $i++;
        }
 
-      
+
        $i=0;
        foreach($request->phd_Name as $pd_name)
        $person_higherEdu_phd = new ApplicantHigherEducation();
@@ -290,7 +290,7 @@ class JobFormController extends Controller
        }
 
        $i=0;
-       foreach($request->app_cer as $app_cer){ 
+       foreach($request->app_cer as $app_cer){
        $person_certificate= new ApplicantCertification();
        $person_certificate->applicant_id=$person->id;
        $person_certificate->name_certifictaion=$request->app_cer;
@@ -300,7 +300,7 @@ class JobFormController extends Controller
        }
 
        $i=0;
-       foreach($request->app_cer as $app_cer){ 
+       foreach($request->app_cer as $app_cer){
        $person_certificate= new ApplicantCertification();
        $person_certificate->applicant_id=$person->id;
        $person_certificate->name_certifictaion=$request->app_cer;
@@ -310,7 +310,7 @@ class JobFormController extends Controller
        }
 
        $i=0;
-       foreach($request->app_tr as $app_tr){ 
+       foreach($request->app_tr as $app_tr){
        $person_training= new ApplicantTraining();
        $person_training->applicant_id=$person->id;
        $person_training->training_name=$app_tr;
@@ -320,7 +320,7 @@ class JobFormController extends Controller
        }
 
        $i=0;
-       foreach($request->app_rp as $app_rp){ 
+       foreach($request->app_rp as $app_rp){
        $person_researchwork= new ApplicantResearchWork();
        $person_researchwork->applicant_id=$person->id;
        $person_researchwork->researchwork=$app_rp;
@@ -328,7 +328,7 @@ class JobFormController extends Controller
        $person_researchwork->conference=$request->tr_duration[$i];
        $person_researchwork->save();
        }
-       
+
        $i=0;
        foreach($request->org_Name as $org){
        $person_exp= new ApplicantExperience();
