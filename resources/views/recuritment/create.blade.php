@@ -44,16 +44,13 @@
                 <b>Demographics Info</b>
             </h3>
             <hr />
-            <div class="row">
-                <div class="col-md-3"></div>
-                <div class="col-md-6">
-                    <div class="form-group " style="text-align: center;font-size: 15px;font-weight: bold;">
-                        <b>Serial Number :</b> HIS_2018_000</br>
-                        
-                    </div>
-                </div>
-            </div>
+            
             <div class="col-md-6">
+            <div class="form-group">
+                    <b>Diary Number</b>
+                    </br>
+                    <input type="number" name="d_num" id="d_num" class="form-control" >
+                </div>
                 <div class="form-group">
                     <b>Name
                         <span style="color:red;font-size:12px;"> (required)</span>
