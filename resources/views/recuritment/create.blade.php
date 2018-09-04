@@ -1,4 +1,7 @@
 @extends('layouts.app')
+@section('styletags')
+  <link href="{{ asset('css/intlTelInput.css') }}" rel="stylesheet">
+@endsection
 @section('content')
 <form id="form" action="{{route('job_form.store')}}" name="form" method="post" enctype="multipart/form-data">
     {{csrf_field()}}
@@ -44,12 +47,12 @@
                 <b>Demographics Info</b>
             </h3>
             <hr />
-            
+
             <div class="col-md-6">
             <div class="form-group">
                     <b>Diary Number</b>
                     <br>
-                    <input type="number" name="d_num" id="d_num" class="form-control" >
+                    <input type="text" name="d_num" id="d_num" class="form-control" >
                 </div>
                 <div class="form-group">
                     <b>Name
@@ -119,7 +122,7 @@
 
                     </select>
                 </div>
-                
+
                 <div class="form-group">
                     <b>Email Address : </b>
                     <br>
@@ -130,15 +133,21 @@
                     <b>Phone Number </b>
                     <br>
                     <input id="phone" name="phone" type="tel" class="form-control">
-                    
+                    <span id="valid-msg" style="color:#3c763d" class="hide valid-msg">✓ Valid</span>
+                    <span id="error-msg" style="color:red" class="hide error-msg">X Invalid number</span>
+
                 </div>
                 <div class="form-group">
                     <b>Cell Number (1)</b>
-                     <input id="" name="mobile_number1" type="tel" class="form-control mobile_number1">
+                     <input id="mobilenumber" name="mobile_number1" type="tel" class="form-control mobile_number">
+                     <span id="valid-msg" style="color:#3c763d" class="hide valid-msg">✓ Valid</span>
+                     <span id="error-msg" style="color:red" class="hide error-msg">X Invalid number</span>
                 </div>
                 <div class="form-group">
                 <b>Cell Number (2)</b>
-                <input id="mobile-number" name="mobile_number2" type="tel" class="form-control">
+                <input id="mobile_number2" name="mobile_number" type="tel" class="form-control">
+                <span id="valid-msg" style="color:#3c763d" class="hide valid-msg">✓ Valid</span>
+                <span id="error-msg" style="color:red" class="hide error-msg">X Invalid number</span>
                 </div>
 
             </div>
@@ -169,7 +178,7 @@
                         </div>
                     </td>
                 </tr>
-               
+
                 <tr>
                     <input type="hidden" name="qualification" value="">
                     <td>
@@ -185,7 +194,7 @@
                                 <option value="">Select Board</option>
                                 <option value="">Lhr Board</option>
                                 <option value="">grw Board</option>
-                                
+
                             </select>
                                 </div>
                         </span>
@@ -196,8 +205,8 @@
                                 <b> Subjects </b>
                                 <select class="form-control" name="s_subjects">
                                     <option value="">Select Subjects</option>
-                                    @foreach($sec_edu as $se) 
-                                    
+                                    @foreach($sec_edu as $se)
+
                                     @if($se->type=='School')
                                     <option value="{{$se->id}}">{{$se->subject_name}}</option>
                                     @elseif($se->type=='Olevel')
@@ -238,7 +247,7 @@
                                 <span class="sch_percentage" style="display:none">Percentage %<br>
                                 <input type="number" step="0.01" name="sch_percentage" id="percentage" value="" class="form-control" ></span>
                             </td>
-    
+
                             <td>
                                 <span class="sch_div" style="display:none;">Division
                                     <br>
@@ -273,7 +282,7 @@
                             <option value="">Select Board</option>
                             <option value="">Lhr Board</option>
                             <option value="">grw Board</option>
-                           
+
                         </select>
                         </span></td>
                     <td><span class="col_subjects" style="display:none">
@@ -282,9 +291,9 @@
                                 <select class="form-control" name="c_subjects">
                                     <option value="">Select degree:</option>
                                     @foreach($sec_edu as $se)
-                                    @if($se->type=="college")
+                                    @if($se->type=="Intermediate")
                                     <option value="{{$se->id}}">{{$se->subject_name}}</option>
-                                    @elseif($se->type=="alevel")
+                                    @elseif($se->type=="Alevel")
                                     <option value="{{$se->id}}">{{$se->subject_name}}</option>
                                     @endif
                                     @endforeach
@@ -293,7 +302,7 @@
                             </div>
                         </span></td>
 
-                   
+
                     <td><span class="col_dist" style="display:none">
                             <div>
                                 <b>Distinction</b>
@@ -306,7 +315,7 @@
                         </span></td>
                         <td></td>
                 </tr>
-                <tr> 
+                <tr>
                     <td>
                         <span class="col_totalmarks" style="display:none">Total Marks <br><input type="number" name="c_t_marks"
                                 id="c_t_marks" class="form-control"> </span>
@@ -319,7 +328,7 @@
                     </td>
 
                     <td><span class="col_div" style="display:none">Division <br><input type="text" name="c_div" value="" id="c_division" class="form-control">
-                        </span> 
+                        </span>
                     </td>
                     <td> <span class="col_grades" style="display:none">Grades <br><input type="string" name="c_grades"
                         id="c_grades" class="form-control"> </span> </td>
@@ -327,34 +336,34 @@
                     </tr>
             </tbody>
         </table>
-        
-        <div class="row" id="gradeducation">     
+
+        <div class="row" id="gradeducation">
             <div class="col-md-1">
                 <button type="button" id="add_grad_level"   class="btn btn-lg btn-success add_grad_level" style="width: 252px;" ><span
                      class="glyphicon glyphicon-plus"> Add Graduation Level</span></button>
-            </div>   
+            </div>
         </div>
 
         <hr/>
-        
-        <div class="row" id="postgradeducation" style="margin-top:5px;">     
+
+        <div class="row" id="postgradeducation" style="margin-top:5px;">
                 <div class="col-md-1">
                     <button type="button" id="add_postgrad_level"   class="btn btn-lg btn-success add_postgrad_level" style="width: 252px;" ><span
                             class="glyphicon glyphicon-plus"> Add Post Graduation Level</span></button>
-                </div>   
+                </div>
         </div>
 
         <hr/>
 
-        <div class="row" id="phdeducation" style="margin-top:5px;">     
+        <div class="row" id="phdeducation" style="margin-top:5px;">
                 <div class="col-md-1">
                     <button type="button" id="add_phd_level"   class="btn btn-lg btn-success add_phd_level" style="width: 252px;" ><span
                             class="glyphicon glyphicon-plus"> Add PHD Level</span></button>
-                </div>   
+                </div>
         </div>
         <hr/>
 
-        <div class="row" id="postdoceducation" style="margin-top:5px;"> 
+        <div class="row" id="postdoceducation" style="margin-top:5px;">
             <div class="col-md-1">
                 <button type="button" id="add_postdoc_level"   class="btn btn-lg btn-success add_postdoc_level" style="width: 252px;" ><span
                         class="glyphicon glyphicon-plus"> Add Post Doctral Level</span></button>
@@ -362,13 +371,13 @@
         </div>
 
         <hr/>
-        
+
         <div class="row" id="certifications" style="margin-top:5px;">
             <div class="col-md-5">
              <h3> <b>Certifications</b>
             <button type="button" id="add_morecertifications" class="btn btn-md btn-info add_certification "><span
             class="glyphicon glyphicon-plus"></button></h3>
-          </div> 
+          </div>
 
         </div>
         <hr/>
@@ -379,8 +388,8 @@
                     <button type="button" id="add_moretrainings" class="btn btn-md btn-info add_moretrainings" ><span
                     class="glyphicon glyphicon-plus"></span></button></h3>
             </div>
-           
-             
+
+
         </div>
 
         <hr/>
@@ -391,7 +400,7 @@
                     <button type="button" id="add_morerps" class="btn btn-md btn-info add_morerps" ><span
                     class="glyphicon glyphicon-plus"></span></button></h3>
             </div>
-                 
+
         </div>
 
         <hr/>
@@ -402,13 +411,13 @@
                     <button type="button" id="addmore_pro_member" class="btn btn-md btn-info    " ><span
                     class="glyphicon glyphicon-plus"></span></button></h3>
             </div>
-                    
+
         </div>
-        
+
         <hr/>
-        
+
         <div class="row" style="margin-top:5px;">
-            
+
                 <div class="col-md-1"></div>
                 <div class="col-md-3">
                     <button type="button" class="btn btn-md btn-danger " style=" width: 252px;" id="go_demo"> Back</button>
@@ -422,7 +431,7 @@
                 <div class="col-md-1"></div>
         </div>
     </section>
-    
+
     <section id="experienceSection" style="display:none">
         <h1 style="text-align:center;">Experience</h1>
         <table class="table table-bordered" id="exp_table">
@@ -436,7 +445,7 @@
             </tr>
         </table>
         <div class="row" style="margin-top:5px;">
-            
+
                 <div class="col-md-1"></div>
                 <div class="col-md-3">
                     <button type="button" class="btn btn-md btn-danger " style=" width: 252px;" id="go_edu"> Back</button>
@@ -450,7 +459,7 @@
                 <div class="col-md-1"></div>
         </div>
     </section>
-    
+
     <section id="designationSection" style="display:none">
             <h1 style="text-align:center;">Designation</h1>
             <table class="table table-bordered" id="designation_table">
@@ -459,8 +468,8 @@
                     <th style="text-align:center;">Position Applied</th>
                     <th style="text-align:center;"><button type="button" id="add_moredesignation" class="btn btn-success btn-sm add_moredesignation"><span class="glyphicon glyphicon-plus"></span></button></th>
                 </tr>
-            </table> 
-              
+            </table>
+
               <h1 style="text-align:center; background-color:azure;">Upload Documents</h1>
             <table class="table table-bordered" id="attach_documents">
                     <tr >
@@ -468,10 +477,10 @@
                         <th style="text-align:center;">Upload CV</th>
                         <th style="text-align:center;"><button type="button" id="add_moredocuments" class="btn btn-success btn-sm add_moredocuments"><span class="glyphicon glyphicon-plus"></span></button></th>
                     </tr>
-            </table> 
+            </table>
 
             <div class="row" style="margin-top:5px;">
-            
+
                     <div class="col-md-1"></div>
                     <div class="col-md-3">
                         <button type="button" class="btn btn-md btn-danger " style=" width: 252px;" id="go_exp"> Back</button>
@@ -485,7 +494,7 @@
             </div>
     </section>
 
-    
+
 </form>
 @endsection
 @section('scriptTags')
@@ -493,7 +502,16 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="{{asset('js/intlTelInput.js')}}"></script>
 <script>
-  
+    $('#mobilenumber, #mobile_number2').on('blur',function(){
+      if($(this).intlTelInput("isValidNumber"))
+      {
+          $(this).parent().siblings('.valid-msg').removeClass('hide');
+          $(this).parent().siblings('.error-msg').addClass('hide');
+      }else{
+        $(this).parent().siblings('.error-msg').removeClass('hide');
+        $(this).parent().siblings('.valid-msg').addClass('hide');
+      }
+    });
     $(".mobile_number1").intlTelInput({
         allowDropdown: true,
       autoHideDialCode: false,
@@ -506,7 +524,7 @@
           callback(countryCode);
         });
       },
-      hiddenInput: "full_number",
+      hiddenInput: "full_number_mobile1",
       initialCountry: "auto",
       localizedCountries: { 'pk': 'Pakistan' },
       nationalMode: false,
@@ -516,87 +534,109 @@
       separateDialCode: true,
       utilsScript: "{{asset('js/utils.js')}}"
      });
-     $("#mobile-number").intlTelInput({
-            allowDropdown: true,
-        autoHideDialCode: false,
-        autoPlaceholder: "off",
-        dropdownContainer: "body",
-        formatOnDisplay: false,
-        geoIpLookup: function(callback) {
-            $.get("http://ipinfo.io", function() {}, "jsonp").always(function(resp) {
-            var countryCode = (resp && resp.country) ? resp.country : "";
-            callback(countryCode);
-            });
-        },
-        hiddenInput: "full_number",
-        initialCountry: "auto",
-        localizedCountries: { 'pk': 'Pakistan' },
-        nationalMode: false,
-        //   onlyCountries: ['us', 'gb', 'ch', 'ca', 'do'],
-        placeholderNumberType: "MOBILE",
-        //   preferredCountries: ['cn', 'jp'],
-        separateDialCode: true,
-        utilsScript: "{{asset('js/utils.js')}}"
-     });
-  
-    $("#phone").intlTelInput({
+    $("#mobile_number2").intlTelInput({
         allowDropdown: true,
-        autoHideDialCode: false,
-        autoPlaceholder: "off",
-        dropdownContainer: "body",
-        formatOnDisplay: false,
-        geoIpLookup: function(callback) {
-            $.get("http://ipinfo.io", function() {}, "jsonp").always(function(resp) {
-            var countryCode = (resp && resp.country) ? resp.country : "";
-            callback(countryCode);
-            });
-            },
-        hiddenInput: "full_number",
-        initialCountry: "auto",
-        localizedCountries: { 'pk': 'Pakistan' },
-        nationalMode: false,
-        //   onlyCountries: ['us', 'gb', 'ch', 'ca', 'do'],
-        placeholderNumberType: "PHONE",
-        //   preferredCountries: ['cn', 'jp'],
-        separateDialCode: true,
-        utilsScript: "{{asset('js/utils.js')}}"
-    });
-  
+      autoHideDialCode: false,
+      autoPlaceholder: "off",
+      dropdownContainer: "body",
+      formatOnDisplay: false,
+      geoIpLookup: function(callback) {
+        $.get("http://ipinfo.io", function() {}, "jsonp").always(function(resp) {
+          var countryCode = (resp && resp.country) ? resp.country : "";
+          callback(countryCode);
+        });
+      },
+      hiddenInput: "full_mobilenumber2",
+      initialCountry: "auto",
+      localizedCountries: { 'pk': 'Pakistan' },
+      nationalMode: false,
+    //   onlyCountries: ['us', 'gb', 'ch', 'ca', 'do'],
+      placeholderNumberType: "MOBILE",
+    //   preferredCountries: ['cn', 'jp'],
+      separateDialCode: true,
+      utilsScript: "{{asset('js/utils.js')}}"
+     });
+
+     $("#mobilenumber").intlTelInput({
+         allowDropdown: true,
+         autoHideDialCode: false,
+         autoPlaceholder: "off",
+         dropdownContainer: "body",
+         formatOnDisplay: false,
+         geoIpLookup: function(callback) {
+             $.get("http://ipinfo.io", function() {}, "jsonp").always(function(resp) {
+             var countryCode = (resp && resp.country) ? resp.country : "";
+             callback(countryCode);
+             });
+             },
+         hiddenInput: "full_mobilenumber1",
+         initialCountry: "auto",
+         localizedCountries: { 'pk': 'Pakistan' },
+         nationalMode: false,
+         //   onlyCountries: ['us', 'gb', 'ch', 'ca', 'do'],
+         placeholderNumberType: "PHONE",
+         //   preferredCountries: ['cn', 'jp'],
+         separateDialCode: true,
+         utilsScript: "{{asset('js/utils.js')}}"
+     });
+     $("#phone").intlTelInput({
+       allowDropdown: true,
+       autoHideDialCode: false,
+       autoPlaceholder: "on",
+       dropdownContainer: "body",
+       formatOnDisplay: false,
+       geoIpLookup: function(callback) {
+         $.get("http://ipinfo.io", function() {}, "jsonp").always(function(resp) {
+           var countryCode = (resp && resp.country) ? resp.country : "";
+           callback(countryCode);
+         });
+       },
+       hiddenInput: "full_phone",
+       initialCountry: "auto",
+       localizedCountries: { 'pk': 'Pakistan' },
+       nationalMode: false,
+       //   onlyCountries: ['us', 'gb', 'ch', 'ca', 'do'],
+       placeholderNumberType: "PHONE",
+       //   preferredCountries: ['cn', 'jp'],
+       separateDialCode: true,
+       utilsScript: "{{asset('js/utils.js')}}"
+     });
+
 </script>
 <script>
-    
+
         $('button#basic_info , .demographicsSection').on('click', function () {
-            
+
             $('section#cnicSection').hide(1000);
             $('section#experienceSection').hide(1000);
             $('section#designationSection').hide(1000);
             $('section#educationSection').hide(1000);
             $('#demographicsSection').show(1000);
-    
+
          });
-        
-        
+
+
          $('button#education, .educationSection').on('click', function () {
-    
+
             $('#demographicsSection').hide(1000);
             $('section#cnicSection').hide(1000);
             $('section#experienceSection').hide(1000);
             $('section#designationSection').hide(1000);
             $('section#educationSection').show(1000);
-    
-    
+
+
         });
-        
+
         $('button#go_demo, .demographicsSection').on('click', function () {
-    
+
             $('section#cnicSection').hide(1000);
             $('section#educationSection').hide(1000);
             $('section#experienceSection').hide(1000);
             $('section#designationSection').hide(1000);
             $('#demographicsSection').show(1000);
-    
+
         });
-        
+
         $('button#go_cnic,.cnicSection').on('click', function () {
             $('#demographicsSection').hide(1000);
             $('section#educationSection').hide(1000);
@@ -604,7 +644,7 @@
             $('section#experienceSection').hide(1000);
             $('section#cnicSection').show(1000);
         });
-    
+
         $('button#experience, .experienceSection').on('click', function () {
             $('#demographicsSection').hide(1000);
             $('section#cnicSection').hide(1000);
@@ -629,9 +669,9 @@
             $('section#designationSection').show(1000);
         });
 
-        $('button#go_exp, .experienceSection').on('click', function () {   
+        $('button#go_exp, .experienceSection').on('click', function () {
             $('#designationSection').hide(1000);
-            $('section#educationSection').hide(1000);         
+            $('section#educationSection').hide(1000);
             $('section#demographicsSection').hide(1000);
             $('section#cnicSection').hide(1000);
             $('section#experienceSection').show(1000);
@@ -642,51 +682,34 @@
 
             var total_marks = $("#t_marks").val();
             var achieved_marks = $("#a_marks").val();
-            
+
               var result = (achieved_marks/total_marks)*100;
              result= result.toFixed(2);
               $("#percentage").val(result);
 
-              if(result >=70 && result <=100)
+              if(result >=60)
               {
               $("#division").val('First');
-              
+
               }
-              else if(result >=60 && result <=69)
+              else if(result >=45 && result < 60)
               {
-              $("#division").val('Second'); 
-              
+              $("#division").val('Second');
+
               }
-              else if(result >=50 && result <=59)
+              else if(result >=33 && result < 45)
               {
               $("#division").val('Third');
-              
               }
-              else if(result >=40 && result <=49)
-              {
-              $("#division").val('Fourth');
-              
-              }
-              else if(result >=33 && result <=39)
-              {
-              $("#division").val('Fifth or Minimum Passing Marks');
-              
-              }
-              else if(result >=0 && result <=32)
-              {
-              $("#division").val('Fail');
-              
-              }
-           
        });
 
-       
+
        //college percentage and division
        $("#c_t_marks, #c_a_marks").keyup( function(){
 
         var total_marks = $("#c_t_marks").val();
         var achieved_marks = $("#c_a_marks").val();
-        
+
           var result = (achieved_marks/total_marks)*100;
          result= result.toFixed(2);
           $("#c_percentage").val(result);
@@ -694,30 +717,30 @@
           if(result >=60 && result <=100)
           {
           $("#c_division").val('First');
-          
+
           }
           else if(result >=36 && result <=59)
           {
           $("#c_division").val('Second');
-          
+
           }
           else if(result >=33 && result <=35)
           {
           $("#c_division").val('Third');
-          
+
           }
           else if(result >=0 && result <=32)
           {
           $("#c_division").val('Fail');
-          
+
           }
-       
+
      });
 
         $('.school_level').on('change', function () {
             if ($('.school_level').val() == 'Matric') {
                 $('.Grades_olevel').hide(1000);
-                
+
                 $('input[name="qualification"]').val("school")
                 $('.sch_name').show(1000);
                 $('.sch_board').show(1000);
@@ -727,7 +750,7 @@
                 $('.sch_percentage').show(1000);
                 $('.sch_div').show(1000);
                 $('.sch_dist').show(1000);
-    
+
             } else if ($('.school_level').val() == 'O-Level') {
                 $('input[name="qualification"]').val("olevel")
                 $('.sch_name').show(1000);
@@ -741,7 +764,7 @@
                 $('.sch_dist').show(1000);
             }
         });
-    
+
         $('.college_level').on('change', function () {
             if ($('.college_level').val() == 'Intermediate') {
                 $('.col_grades').hide(1000);
@@ -755,7 +778,7 @@
                 $('.col_percentage').show(1000);
                 $('.col_div').show(1000);
                 $('.col_dist').show(1000);
-    
+
             } else if ($('.college_level').val() == 'A-Level') {
                 $('input[name="college_qualification_type"]').val("Alevel")
                 $('.col_totalmarks').show(1000);
@@ -771,9 +794,9 @@
         });
 
 
-        
+
         $('button#add_grad_level').click(function(e){
-            
+
             var eduprogram ='<div class="row"  id="new_edurow[]">'
                             +'<div class="col-md-12" style="margin-bottom: 15px;margin-top: 15px;">'
                             +'<div class="col-md-2">Graduate Level'
@@ -790,46 +813,46 @@
           {  var eduprogram ='<div class="row" id="new_postgradrow[]">'
                         +'<div class="col-md-12" style="margin-bottom: 15px;margin-top: 15px;">'
                         +'<input type="hidden" name="qualification_postuniv[]" value="post_grad">'
-                        +'<div class="col-md-2 institute_name">Institution Name<input type="text" name="pg_Name" id="pg_Name" class="form-control"> </div>'    
+                        +'<div class="col-md-2 institute_name">Institution Name<input type="text" name="pg_Name" id="pg_Name" class="form-control"> </div>'
                         +'<div class="col-md-2 postgrad_subjects">Subjects<select class="form-control" name="post_grad_degree[]"><option value=""></option>'
-                        +'<option value="1">cs degree</option><option value="1">cs degree</option></select> </div>'
+                        +'<option val="1">1</option><option val="2" >2</option><option val="3" >3</option></select> </div>'
                         +'<div class="col-md-2 post_cgpa">CGPA<input type="number" step="0.01" name="pg_cgpa" id="pg_cgpa" class="form-control"></div>'
                         +'<div class="col-md-2 post_dmc">Final DMC Date<input type="date" name="pg_dmc_date" id="pg_dmc_date" class="form-control"></div>'
                         +'<div class="col-md-1 distinction">Distinction'
                         +'<select class="form-control" name="pg_distinction[]">'
                         +'<option value=""></option><option value="Yes">Yes</option><option value="No">No</option></select></div>'
                         +'<div class="col-md-1 remove_grad_level"><button type="button" id="remove_grad_level[]"  class="pull-left btn btn-danger btn-sm add" style=" margin-top: 19px;" onclick="remove_data(this)" ><span class="glyphicon glyphicon-minus"></span></button></div></div></div>';
-                
-                $('#postgradeducation').append(eduprogram);       
+
+                $('#postgradeducation').append(eduprogram);
         });
-         
-        
+
+
         $('button#add_phd_level').click(function(e){
             var eduprogram ='<div class="row" id="new_phdrow[]">'
                            +'<div class="col-md-12" style="margin-bottom: 15px;margin-top: 15px;">'
                            +'<input type="hidden" name="qualification_phduniv[]" value="phd">'
-                           +'<div class="col-md-2 phd_institute_name">Institution Name<input type="text" name="phd_Name[]" id="phd_Name[]" class="form-control"> </div>'    
+                           +'<div class="col-md-2 phd_institute_name">Institution Name<input type="text" name="phd_Name[]" id="phd_Name[]" class="form-control"> </div>'
                            +'<div class="col-md-2 phd_thesis">Thesis Topic<input type="text" name="phd_thesis[]" id="phd_thesis[]" class="form-control">  </div>'
                            +'<div class="col-md-2 phd_dg">Date Of Graduation <input type="date" name="phd_date[]" id="phd_date[]" class="form-control"> </div>'
                            +'<div class="col-md-1 remove_phd_level"><button type="button" id="remove_phd_level[]"  class=" btn btn-danger btn-md remove_phd_level" style="margin-top:21px;" onclick="remove_data(this)" ><span class="glyphicon glyphicon-minus"></span></button></div></div></div>';
-                          
-               $('#phdeducation').append(eduprogram);     
-       }); 
+
+               $('#phdeducation').append(eduprogram);
+       });
 
 
         $('button#add_postdoc_level').click(function(e){
              var eduprogram ='<div class="row" id="new_postdocrow[]">'
                             +'<div class="col-md-12" style="margin-bottom: 15px;margin-top: 15px;">'
                             +'<input type="hidden" name="qualification_postdocuniv[]" value="post_graddoc">'
-                            +'<div class="col-md-2 pd_institute_name">Institution Name<input type="text" name="pd_Name[]" id="pd_Name[]" class="form-control"> </div>'    
+                            +'<div class="col-md-2 pd_institute_name">Institution Name<input type="text" name="pd_Name[]" id="pd_Name[]" class="form-control"> </div>'
                             +'<div class="col-md-2 postdoc_thesis">Thesis Topic<input type="text" name="pd_thesis[]" id="pd_thesis[]" class="form-control"> </div>'
                             +'<div class="col-md-2 postdoc_dg">Date Of Graduation <input type="date" name="pd_date[]" id="pd_date[]" class="form-control"> </div>'
                             +'<div class="col-md-1 remove_graddoc_level"><button type="button" id="remove_graddoc_level[]"  class="btn btn-danger btn-md " style=" margin-top: 21px;" onclick="remove_data(this)" ><span class="glyphicon glyphicon-minus"></span></button></div></div></div>';
-                $('#postdoceducation').append(eduprogram);     
-        }); 
+                $('#postdoceducation').append(eduprogram);
+        });
 
         $('button#add_morecertifications').click(function(e){
-        
+
             var certifications_app ='<div class="row" id="new_cer[]" >'
                     +'<div class="col-md-12" style="margin-bottom: 15px;margin-top: 15px;">'
                     +'<div class="col-md-3"><b>Certification Name</b><input type="text" name="app_cer[]" id="app_cer[]" class="form-control"></div>'
@@ -839,11 +862,11 @@
                     +'<div class="col-md-2" style="margin-top: 21px;"><button type="button" id="remove_certification[]" onclick="remove_certification(this)" class="btn btn-sm btn-danger form-control">Remove</button></div>'
                     +'</div></div>';
                 $('#certifications').append(certifications_app);
-                
+
         });
-                
+
         $('button#add_moretrainings').click(function(e){
-    
+
             var training_app ='<div class="row" id="new_tr[]" >'
                     +'<div class="col-md-12" style="margin-bottom: 15px;margin-top: 15px;">'
                     +'<div class="col-md-3"> <b>Training Name</b> <input type="text" name="app_tr[]" id="app_tr[]" class="form-control"></div>'
@@ -851,11 +874,11 @@
                     +'<div class="col-md-3"><b>Duration</b><br><input type="text" name="tr_duration[]" id="tr_duration[]" class="form-control"></div>'
                     +'<div class="col-md-2" style="margin-top: 21px;"><button type="button" name="remove_training[]" id="remove_training[]" onclick="remove_training(this)" class="btn btn-sm btn-danger form-control">Remove</button></div>'
                     +'</div></div>';
-            
+
                 $('#trainings').append(training_app);
-                
+
         });
-                
+
         $('button#add_morerps').click(function(e){
 
             var research_app ='<div class="row" id="new_rp" >'
@@ -866,10 +889,10 @@
                     +' <option>Journal</option>'
                     +'<option>Conference</option>'
                     +'</select></div></div></div>';
-            
+
                 $('#researchpaper').append(research_app);
-                
-        }); 
+
+        });
 
         $('button#addmore_pro_member').click(function(e){
 
@@ -882,15 +905,15 @@
                     +'<div class="col-md-2"><b>Registeration # </b><br><input type="number" name="pm_reg[]" id="pm_reg[]" class="form-control"></div>'
                     +'<div class="col-md-1 " style="margin-top: 21px;"><button type="button" name="remove_membership[]" id="remove_membership[]" onclick="remove_member(this)" class="btn btn-sm btn-danger form-control">Remove</button></div>'
                     +'</div></div>';
-            
+
                 $('#professional_membership').append(professional_app);
-                
-        }); 
+
+        });
 
        function add_newresearch(e)
-        { 
+        {
             var researchtype = $(e).val();
-            
+
             var research="";
 
             if(researchtype=='Journal')
@@ -905,7 +928,7 @@
             {
                 research='<div class="col-md-2 research_paper">Research Paper<input type="text" name="app_rp[]" id="app_rp[]" class="form-control"></div>'
                 +'<div class="col-md-2 conf_pyear">Published Year<input type="number" name="conf_yr[]" id="conf_yr" class="form-control"></div>'
-                +'<div class="col-md-2 conf_name">Conference<input type="number" name="app_conf[]" id="app_conf[]" class="form-control"></div>'
+                +'<div class="col-md-2 conf_name">Conference<input type="text" name="app_conf[]" id="app_conf[]" class="form-control"></div>'
                 +'<div class="col-md-1 remove"><button type="button" id="remove[]"  class="pull-left btn btn-danger btn-md add" style=" margin-top: 21px;" onclick="remove_data(this)" ><span class="glyphicon glyphicon-minus"></span></button></div>';
             }
             $(e).parent().parent().find('.remove').remove();
@@ -915,52 +938,54 @@
             $(e).parent().parent().find('.research_paper').remove();
             $(e).parent().parent().find('.conf_pyear').remove();
             $(e).parent().parent().find('.conf_name').remove();
-            $(e).parent().parent().append(research); 
+            $(e).parent().parent().append(research);
     }
 
-        //experience section   
+        //experience section
         $('button#add_moreexp').click(function(e){
-            
+
             var exp_row = '';
             exp_row += '<tr>';
             exp_row += '<td><input type="text" name="org_Name[]" id="org_Name" placeholder="Enter Your Organization Name" class="form-control"></td>';
-            exp_row += '<td><select class="form-control" name="org_type[]"><option value="">Select Type:</option><option value="1">Private</option><option value="2">Public</option><option value="3">Government</option><option value="4">Self-Employed</option><option value="5">Own Business</option><option value="5">International</option></select></td>';
+            exp_row += '<td><select class="form-control" name="org_type[]"><option value="">Select Type:</option><option value="1">Private</option><option value="2">Public</option><option value="3">International/INGO</option><option value="4">Self-Employed</option><option value="5">Donor Agencies</option></select></td>';
             exp_row += '<td> <input type="date" name="start_date[]" id="start_date" class="form-control"></td>';
             exp_row +='<td><input type="date" name="end_date[]" id="end_date" class="form-control"></td>'
             exp_row +='<td><input type="text" name="role_name[]" class="form-control"></td>'
             exp_row += '<td style="text-align:center;"><button type="button" id="remove_exp[]" onclick="remove_exp(this)" class="btn btn-danger btn-sm remove" ><span class=" glyphicon glyphicon-minus"></span></button></td></tr>';
-            $('#exp_table').append(exp_row);    
-        });    
-        
+            $('#exp_table').append(exp_row);
+        });
+
         //designation
         var i=0;
         $('button#add_moredesignation').click(function(e){
-        
+
             var designation_row = '';
             designation_row += '<tr>';
             designation_row += '<td>1</td>';
-            designation_row += '<td><select class="form-control" name="app_designation[]"><option value="">Select Designation:</option><option value="1">Private</option><option value="2">Public</option><option value="3">Government</option><option value="4">Self-Employed</option><option value="5">Own Business</option><option value="5">International</option></select></td>';
+            designation_row += '<td><select class="form-control" name="app_designation[]"><option value="">Select Designation:</option><option value="1">DEPUTY DIRECTOR</option><option value="2">CODER</option><option value="3">CONSULTANT</option><option value="4">DPM</option><option value="5">ANALYST</option><option value="5">ok</option></select></td>';
             designation_row += '<td style="text-align:center;"><button type="button" id="remove_designation[]" onclick="remove_designation(this)" class="btn btn-danger btn-sm remove" style="text-align:center;"><span class=" glyphicon glyphicon-minus"></span></button></td></tr>';
-            $('#designation_table').append(designation_row);    
-        }); 
+            $('#designation_table').append(designation_row);
+        });
 
         //documents
         $('button#add_moredocuments').click(function(e){
-            
+
             var documents_row = '';
             documents_row += '<tr>';
             documents_row +='<td> <input type="file" name="picture[]" class="form-control" multiple></td>'
             documents_row += '<td> <input type="file" name="cv[]" class="form-control" multiple></td>';
             documents_row += '<td style="text-align:center;"><button type="button" name="remove_documents[]" id="remove_documents[]" onclick="remove_documents(this)" class="btn btn-danger btn-sm remove" style="text-align:center;"><span class=" glyphicon glyphicon-minus"></span></button></td></tr>';
-            $('#attach_documents').append(documents_row);    
-        }); 
-        
+            $('#attach_documents').append(documents_row);
+        });
+
     function add_newdata(e)
-        { 
+        {
             var education_y = $(e).val();
-            
+
             var add_year_fields="";
-            
+            var bachelorSubjects=[];
+            var secndvar='';
+            var thirdvar='';
             if(education_y=='2 years')
             {
                 add_year_fields='<div class="col-md-2 years">'
@@ -974,15 +999,13 @@
                         +'<option value="other">other</option>'
                         +'</select><br><input type="hidden" id="real_college_university_names"/>'
                         +'<div id="other_college_univ" style=" margin-top: -20px; display:none;">'
-                        +'<input type="text"   name="other_collegebox[]" id="other_univbox[]" class="form-control"/>'
+                        +'<input type="text"   name="other_collegebox[]" id="other_collegebox[]" class="form-control"/>'
                         +' </div></span></div>'
                         +'<div class="col-md-1 subjects">'
                         +'<span class="univsubjects">'
                         +'Subjects<select class="form-control" name="u_subjects[]">'
-                        +'<option ></option>'
-                        +'<option >ICS</option>'
-                        +'<option >Maths</option>'
-                        +'<option >science</option>'
+                        +'<option val="">Select </option>'
+                        +'<option val="1">1</option><option val="2" >2</option><option val="3" >3</option>'
                         +'</select></span></div>'
                         +'<div class="col-md-1 marks">Total Marks<input type="number" name="twoyear_t_marks[]"  class="form-control twoyear_t_marks"/></div>'
                         +'<div class="col-md-2 achievedmarks">Achieved Marks<input type="number" onkeyup="calculatePercentage(this)" name="twoyear_a_marks[]"  class="form-control twoyear_a_marks"></div>'
@@ -1017,9 +1040,7 @@
                     +'<span class="univsubjects" >'
                     +'Subjects<select class="form-control" name="u_subjects[]">'
                     +'<option value=""></option>'
-                    +'<option value="1">ICS</option>'
-                    +'<option value="2">Maths</option>'
-                    +'<option value="3">science</option>'
+                    +'<option val="1">1</option><option val="2" >2</option><option val="3" >3</option>'
                     +'</select></span></div>'
                     +'<div class="col-md-1 cgpamarks">CGPA/4<input type="number" step="0.01" name="cgpa[]" id="cgpa" class="form-control"></div>'
                     +'<div class="col-md-1 marks">Total Marks<input type="number" name="foury_t_marks[]" class="form-control foury_t_marks"/></div>'
@@ -1042,10 +1063,28 @@
             $(e).parent().parent().find('.division').remove();
             $(e).parent().parent().find('.dmc').remove();
             $(e).parent().parent().find('.distinction').remove();
-            $(e).parent().parent().append(add_year_fields); 
+            $(e).parent().parent().append(add_year_fields);
+
+            //  // FEtching data from DB
+            //  axios.get('/higherSubject',
+            //             {
+            //                 "_token": "{{ csrf_token() }}",
+            //                 "type" : "bachelor2yr"
+            //             })
+            //             .then(response => {
+            //             console.log(response);
+            //             console.log("i am here");
+                       
+            //                 // secndvar +='<option value="'+response[i].id+'">'+response[i].subject_name+'</option>';
+                       
+            //             })
+            //             .catch(error => console.log(error.response));
+            //             console.log("okkkkk");
+            //             console.log(secndvar);
+                       
     }
-            
-    
+
+
 
     function add_newUC(e)
      {
@@ -1058,26 +1097,26 @@
             $(e).next().next().next().hide()
         }
     }
-    
+
       //2year graduation
       function calculatePercentage(e){
         var total_marks=0;var achieved_marks=0;
         if($(e).hasClass("twoyear_t_marks"))
-            { 
+            {
                 achieved_marks = $(e).parent().siblings('.achievedmarks').children('input[name="twoyear_a_marks[]"]').val();
                 total_marks=$(e).val();
             }
         else if($(e).hasClass("twoyear_a_marks"))
              {
                  total_marks = $(e).parent().siblings('.marks').children('input[name="twoyear_t_marks[]"]').val();
-                 achieved_marks=$(e).val();                
+                 achieved_marks=$(e).val();
              }
-        
+
           var percntgInput= $(e).parent().siblings('.Percentage').children('input[name="percentage[]"]');
           var result = (achieved_marks/total_marks)*100;
           result= result.toFixed(2);
           percntgInput.val(result);
-          
+
           if(result >=60 && result <=100)
           {
               console.log('ddsdd');
@@ -1086,72 +1125,72 @@
           else if(result >=36 && result <=59)
           {
             $(e).parent().siblings('.division').children('input[name="division[]"]').val('Second');
-          
+
           }
           else if(result >=33 && result <=35)
           {
             $(e).parent().siblings('.division').children('input[name="division[]"]').val('Third');
-          
+
           }
           else if(result >=0 && result <=32)
           {
             $(e).parent().siblings('.division').children('input[name="division[]"]').val('Fail');
-          
+
           }
-       
+
      }
 
       //4year graduation
       function calculate4Percentage(e){
         var total_marks=0;var achieved_marks=0;
         if($(e).hasClass("foury_t_marks"))
-            { 
+            {
                 achieved_marks = $(e).parent().siblings('.achievedmarks').children('input[name="foury_a_marks[]"]').val();
                 total_marks=$(e).val();
             }
         else if($(e).hasClass("foury_a_marks"))
              {
                  total_marks = $(e).parent().siblings('.marks').children('input[name="foury_t_marks[]"]').val();
-                 achieved_marks=$(e).val();                
+                 achieved_marks=$(e).val();
              }
-        
+
           var percntgInput= $(e).parent().siblings('.Percentage').children('input[name="univ_per[]"]');
           var result = (achieved_marks/total_marks)*100;
           result= result.toFixed(2);
           percntgInput.val(result);
-          
+
           if(result >=60 && result <=100)
           {
-              
+
             $(e).parent().siblings('.division').children('input[name="division[]"]').val('First');
           }
           else if(result >=36 && result <=59)
           {
             $(e).parent().siblings('.division').children('input[name="division[]"]').val('Second');
-          
+
           }
           else if(result >=33 && result <=35)
           {
             $(e).parent().siblings('.division').children('input[name="division[]"]').val('Third');
-          
+
           }
           else if(result >=0 && result <=32)
           {
             $(e).parent().siblings('.division').children('input[name="division[]"]').val('Fail');
-          
+
           }
-       
+
      }
 
      //exp duration
-    $("#start_date").datepicker({ 	});  
-     $("#end_date").datepicker({ 
-         onSelect: function () { 
-             var  duration_of_exp= duration();  
+    $("#start_date").datepicker({ 	});
+     $("#end_date").datepicker({
+         onSelect: function () {
+             var  duration_of_exp= duration();
             $('#expduration').val(duration_of_exp);
             }
-        }); 
-    
+        });
+
      function duration(){
         var start= $("#start_date").datepicker("getDate");
         var end= $("#end_date").datepicker("getDate");
@@ -1163,29 +1202,29 @@
 
 
      function remove_certification(e){
-            $(e).parent().parent().parent().remove(); 
+            $(e).parent().parent().parent().remove();
     }
 
     function remove_member(e){
-      $(e).parent().parent().parent().remove(); 
+      $(e).parent().parent().parent().remove();
      }
 
 
-   
+
      function remove_training(e){
-         $(e).parent().parent().parent().remove(); 
+         $(e).parent().parent().parent().remove();
     }
 
      function remove_researchpaper(e)
        {
-            $(e).parent().parent().parent().remove(); 
+            $(e).parent().parent().parent().remove();
     }
 
     function remove_data(e)
       {
      $(e).parent().parent().parent().remove();
     }
-   
+
     function remove_exp(e){
       $(e).closest('tr').remove();
     }

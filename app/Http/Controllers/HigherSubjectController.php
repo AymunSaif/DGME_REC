@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\HigherSubject;
 use Illuminate\Http\Request;
-
 class HigherSubjectController extends Controller
 {
     /**
@@ -14,9 +13,12 @@ class HigherSubjectController extends Controller
      */
     public function index()
     {
-        //
+        HigherSubject::where('status',1)->get();
     }
-
+    public function getCustom(Request $req){
+        return HigherSubject::where('type',$req->type)
+        ->get();
+    }
     /**
      * Show the form for creating a new resource.
      *
