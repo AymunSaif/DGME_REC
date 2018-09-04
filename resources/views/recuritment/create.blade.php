@@ -159,7 +159,7 @@
         <button type="button" class="btn btn-lg btn-danger " style=" width: 252px;" id="go_cnic"> Back</button>
         <button type="button" class="btn btn-lg btn-success pull-right" style="width: 252px;" id="education"> Next</button>
     </section>
-   
+
     <section id="educationSection" style="display:none">
         <h1 style="color:gray; text-align:center; "><b>Education</b> </h1>
 
@@ -324,7 +324,7 @@
                                 name="c_a_marks" id="c_a_marks" class="form-control"></span> </td>
 
                     <td> <span class="col_percentage" style="display:none">Percentage <br>
-                        <input type="number"  step="0.01" name="c_percentage" id="c_percentage" value="" class="form-control"> </span> 
+                        <input type="number"  step="0.01" name="c_percentage" id="c_percentage" value="" class="form-control"> </span>
                     </td>
 
                     <td><span class="col_div" style="display:none">Division <br><input type="text" name="c_div" value="" id="c_division" class="form-control">
@@ -806,9 +806,9 @@
                             +'<option>4 years</option>'
                             +'</select> </div></div></div>';
 
-            $('#gradeducation').append(eduprogram);     
-        }); 
-    
+            $('#gradeducation').append(eduprogram);
+        });
+
         $('button#add_postgrad_level').click(function(e)
           {  var eduprogram ='<div class="row" id="new_postgradrow[]">'
                         +'<div class="col-md-12" style="margin-bottom: 15px;margin-top: 15px;">'
@@ -1004,9 +1004,28 @@
                         +'<div class="col-md-1 subjects">'
                         +'<span class="univsubjects">'
                         +'Subjects<select class="form-control" name="u_subjects[]">'
-                        +'<option val="">Select </option>'
-                        +'<option val="1">1</option><option val="2" >2</option><option val="3" >3</option>'
-                        +'</select></span></div>'
+                        +'<option val="">Select </option>';
+                        $.ajax({
+                             type: "POST",
+                             url: '{{route("getCustomSubject")}}',
+                             async: false,
+                             data: {
+                              "_token": "{{ csrf_token() }}",
+                              'type' : 'bachelor2yr'},
+                             success: function(data){
+                               console.log(data);
+                              bachelorSubjects = data;
+                            },
+                            error: function(jqXHR, textStatus, errorThrown) { // What to do if we fail
+                              console.log(JSON.stringify(jqXHR));
+                              console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
+                            }
+                        });
+                        console.log(bachelorSubjects);//SSS
+                        for (var i = 0; i < bachelorSubjects.length; ++i) {
+                          secndvar=secndvar+'<option val="'+bachelorSubjects[i].id+'">'+bachelorSubjects[i].subject_name+'</option>';
+                        }
+                        thirdvar='</select></span></div>'
                         +'<div class="col-md-1 marks">Total Marks<input type="number" name="twoyear_t_marks[]"  class="form-control twoyear_t_marks"/></div>'
                         +'<div class="col-md-2 achievedmarks">Achieved Marks<input type="number" onkeyup="calculatePercentage(this)" name="twoyear_a_marks[]"  class="form-control twoyear_a_marks"></div>'
                         +'<div class="col-md-1 division"> Division'
@@ -1063,25 +1082,9 @@
             $(e).parent().parent().find('.division').remove();
             $(e).parent().parent().find('.dmc').remove();
             $(e).parent().parent().find('.distinction').remove();
-            $(e).parent().parent().append(add_year_fields);
+            $(e).parent().parent().append(add_year_fields+secndvar+thirdvar);
 
-            //  // FEtching data from DB
-            //  axios.get('/higherSubject',
-            //             {
-            //                 "_token": "{{ csrf_token() }}",
-            //                 "type" : "bachelor2yr"
-            //             })
-            //             .then(response => {
-            //             console.log(response);
-            //             console.log("i am here");
-                       
-            //                 // secndvar +='<option value="'+response[i].id+'">'+response[i].subject_name+'</option>';
-                       
-            //             })
-            //             .catch(error => console.log(error.response));
-            //             console.log("okkkkk");
-            //             console.log(secndvar);
-                       
+
     }
 
 
