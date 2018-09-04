@@ -343,6 +343,7 @@ class ComposerStaticInit240f0babe76c56c7db0e0178e03ff1fa
         'App\\Http\\Controllers\\ApplicantCertificationController' => __DIR__ . '/../..' . '/app/Http/Controllers/ApplicantCertificationController.php',
         'App\\Http\\Controllers\\ApplicantController' => __DIR__ . '/../..' . '/app/Http/Controllers/ApplicantController.php',
         'App\\Http\\Controllers\\ApplicantDetailController' => __DIR__ . '/../..' . '/app/Http/Controllers/ApplicantDetailController.php',
+        'App\\Http\\Controllers\\ApplicantDocumentController' => __DIR__ . '/../..' . '/app/Http/Controllers/ApplicantDocumentController.php',
         'App\\Http\\Controllers\\ApplicantExperienceController' => __DIR__ . '/../..' . '/app/Http/Controllers/ApplicantExperienceController.php',
         'App\\Http\\Controllers\\ApplicantHigherEducationController' => __DIR__ . '/../..' . '/app/Http/Controllers/ApplicantHigherEducationController.php',
         'App\\Http\\Controllers\\ApplicantResearchWorkController' => __DIR__ . '/../..' . '/app/Http/Controllers/ApplicantResearchWorkController.php',

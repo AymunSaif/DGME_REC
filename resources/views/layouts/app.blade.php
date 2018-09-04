@@ -10,6 +10,7 @@
 
     <title>{{ config('app.name', 'DGME_RECURITMENT') }}</title>
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/intlTelInput.css') }}" rel="stylesheet">
 </head>
 
 <body style="background-color:white;">

@@ -15,8 +15,10 @@ class CreateApplicantAppliedforTable extends Migration
     {
         Schema::create('applicant_appliedfor', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('applicant_id')->unsigned()->index()->nullable();
+            $table->foreign('applicant_id')->references('id')->on('applicants')->onDelete('cascade');
             $table->string('position_name')->nullable();
-            $table->boolean('status')->default(1)->nullable();
+            $table->boolean('status')->default(1);
             $table->timestamps();
         });
     }

@@ -151,12 +151,13 @@
                 </div> --}}
                 <div class="form-group">
                     <b>Cell Number (1)</b>
-                     <input id="mobile-number" name="mobile-number" type="tel" class="form-control"></br>
-                     <b>Cell Number (2)</b>
-                      <input id="mobile-number" name="mobile-number" type="tel" class="form-control">
+                     <input id="" name="mobile_number1" type="tel" class="form-control mobile_number1">
                 </div>
-               
-
+                <div class="form-group">
+                <b>Cell Number (2)</b>
+                <input id="mobile-number" name="mobile_number2" type="tel" class="form-control">
+                </div>
+                
             </div>
 
 
@@ -187,7 +188,7 @@
                 </tr>
                
                 <tr>
-                    <input type="hidden" name="school" value="school">
+                    <input type="hidden" name="qualification" value="">
                     <td>
                         <span class="sch_name" style="display:none;"> School Name
                             <br>
@@ -212,9 +213,11 @@
                                 <b> Subjects </b>
                                 <select class="form-control" name="s_subjects">
                                     <option value="">Select Subjects</option>
-                                    @foreach($sec_edu as $se) @if($se->type=='School')
+                                    @foreach($sec_edu as $se) 
+                                    
+                                    @if($se->type=='School')
                                     <option value="{{$se->id}}">{{$se->subject_name}}</option>
-                                    @elseif($se->type=='olevel')
+                                    @elseif($se->type=='Olevel')
                                     <option value="{{$se->id}}">{{$se->subject_name}}</option>
                                     @endif @endforeach
                                 </select>
@@ -279,7 +282,7 @@
                 </tr>
 
                 <tr >
-                    <input type="hidden" name="college" value="college">
+                    <input type="hidden" name="college_qualification_type" value="">
                     <td> <span class="col_name" style="display:none">College Name<br><input type="text" name="c_Name"
                                 id="c_Name" class="form-control"></span></td>
                     <td><span class="col_board" style="display:none"> <b> Board </b>
@@ -503,8 +506,80 @@
 </form>
 @endsection
 @section('scriptTags')
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="{{asset('js/intlTelInput.js')}}"></script>
+<script>
+  
+    $(".mobile_number1").intlTelInput({
+        allowDropdown: true,
+      autoHideDialCode: false,
+      autoPlaceholder: "off",
+      dropdownContainer: "body",
+      formatOnDisplay: false,
+      geoIpLookup: function(callback) {
+        $.get("http://ipinfo.io", function() {}, "jsonp").always(function(resp) {
+          var countryCode = (resp && resp.country) ? resp.country : "";
+          callback(countryCode);
+        });
+      },
+      hiddenInput: "full_number",
+      initialCountry: "auto",
+      localizedCountries: { 'pk': 'Pakistan' },
+      nationalMode: false,
+    //   onlyCountries: ['us', 'gb', 'ch', 'ca', 'do'],
+      placeholderNumberType: "MOBILE",
+    //   preferredCountries: ['cn', 'jp'],
+      separateDialCode: true,
+      utilsScript: "{{asset('js/utils.js')}}"
+     });
+     $("#mobile-number").intlTelInput({
+            allowDropdown: true,
+        autoHideDialCode: false,
+        autoPlaceholder: "off",
+        dropdownContainer: "body",
+        formatOnDisplay: false,
+        geoIpLookup: function(callback) {
+            $.get("http://ipinfo.io", function() {}, "jsonp").always(function(resp) {
+            var countryCode = (resp && resp.country) ? resp.country : "";
+            callback(countryCode);
+            });
+        },
+        hiddenInput: "full_number",
+        initialCountry: "auto",
+        localizedCountries: { 'pk': 'Pakistan' },
+        nationalMode: false,
+        //   onlyCountries: ['us', 'gb', 'ch', 'ca', 'do'],
+        placeholderNumberType: "MOBILE",
+        //   preferredCountries: ['cn', 'jp'],
+        separateDialCode: true,
+        utilsScript: "{{asset('js/utils.js')}}"
+     });
+  
+    $("#phone").intlTelInput({
+        allowDropdown: true,
+        autoHideDialCode: false,
+        autoPlaceholder: "off",
+        dropdownContainer: "body",
+        formatOnDisplay: false,
+        geoIpLookup: function(callback) {
+            $.get("http://ipinfo.io", function() {}, "jsonp").always(function(resp) {
+            var countryCode = (resp && resp.country) ? resp.country : "";
+            callback(countryCode);
+            });
+            },
+        hiddenInput: "full_number",
+        initialCountry: "auto",
+        localizedCountries: { 'pk': 'Pakistan' },
+        nationalMode: false,
+        //   onlyCountries: ['us', 'gb', 'ch', 'ca', 'do'],
+        placeholderNumberType: "PHONE",
+        //   preferredCountries: ['cn', 'jp'],
+        separateDialCode: true,
+        utilsScript: "{{asset('js/utils.js')}}"
+    });
+  
+</script>
 <script>
     
         $('button#basic_info , .demographicsSection').on('click', function () {
@@ -658,7 +733,8 @@
         $('.school_level').on('change', function () {
             if ($('.school_level').val() == 'Matric') {
                 $('.Grades_olevel').hide(1000);
-    
+                
+                $('input[name="qualification"]').val("school")
                 $('.sch_name').show(1000);
                 $('.sch_board').show(1000);
                 $('.sch_subjects').show(1000);
@@ -669,6 +745,7 @@
                 $('.sch_dist').show(1000);
     
             } else if ($('.school_level').val() == 'O-Level') {
+                $('input[name="qualification"]').val("olevel")
                 $('.sch_name').show(1000);
                 $('.sch_board').show(1000);
                 $('.sch_subjects').show(1000);
@@ -684,7 +761,8 @@
         $('.college_level').on('change', function () {
             if ($('.college_level').val() == 'Intermediate') {
                 $('.col_grades').hide(1000);
-    
+
+                $('input[name="college_qualification_type"]').val("Intermediate")
                 $('.col_name').show(1000);
                 $('.col_board').show(1000);
                 $('.col_subjects').show(1000);
@@ -695,6 +773,7 @@
                 $('.col_dist').show(1000);
     
             } else if ($('.college_level').val() == 'A-Level') {
+                $('input[name="college_qualification_type"]').val("Alevel")
                 $('.col_totalmarks').show(1000);
                 $('.col_achievedmarks').show(1000);
                 $('.col_grades').show(1000);
@@ -730,7 +809,6 @@
                         +'<div class="col-md-2 postgrad_subjects">Subjects<select class="form-control" name="post_grad_degree[]"><option value=""></option>'
                         +'<option value="1">cs degree</option><option value="1">cs degree</option></select> </div>'
                         +'<div class="col-md-2 post_cgpa">CGPA<input type="number" step="0.01" name="pg_cgpa" id="pg_cgpa" class="form-control"></div>'
-                        +'<div class="col-md-2 post_dg">Date Of Graduation <input type="date" name="pg_date" id="pg_date" class="form-control"> </div>'
                         +'<div class="col-md-2 post_dmc">Final DMC Date<input type="date" name="pg_dmc_date" id="pg_dmc_date" class="form-control"></div>'
                         +'<div class="col-md-1 distinction">Distinction'
                         +'<select class="form-control" name="pg_distinction[]">'
@@ -744,7 +822,7 @@
         $('button#add_phd_level').click(function(e){
             var eduprogram ='<div class="row" id="new_phdrow[]">'
                            +'<div class="col-md-12" style="margin-bottom: 15px;margin-top: 15px;">'
-                           +'<input type="hidden" name="qualification_phduniv[]" value="phd"">'
+                           +'<input type="hidden" name="qualification_phduniv[]" value="phd">'
                            +'<div class="col-md-2 phd_institute_name">Institution Name<input type="text" name="phd_Name[]" id="phd_Name[]" class="form-control"> </div>'    
                            +'<div class="col-md-2 phd_thesis">Thesis Topic<input type="text" name="phd_thesis[]" id="phd_thesis[]" class="form-control">  </div>'
                            +'<div class="col-md-2 phd_dg">Date Of Graduation <input type="date" name="phd_date[]" id="phd_date[]" class="form-control"> </div>'

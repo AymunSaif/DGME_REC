@@ -16,8 +16,8 @@ class CreateApplicantsTable extends Migration
         Schema::create('applicants', function (Blueprint $table) {
             $table->increments('id');
             
-            $table->integer('diary_num')->nullable();
-            $table->integer('uniqueNumber')->nullable();
+            $table->string('diary_num')->nullable();
+            $table->string('uniqueNumber')->nullable();
             $table->string('name')->nullable();
             $table->string('cnic')->unique()->nullable();
             $table->string('gender')->nullable();
@@ -48,10 +48,6 @@ class CreateApplicantsTable extends Migration
             $table->string('postal_add')->nullable();
             $table->string('cell_num')->nullable();
             $table->string('phone_num')->nullable();
-            
-            $table->integer('applicant_appliedfor_id')->unsigned()->index()->nullable();
-            $table->foreign('applicant_appliedfor_id')->references('id')->on('applicant_appliedfor')->onDelete('no action');
-
             $table->timestamps();
             $table->rememberToken();
         });

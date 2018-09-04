@@ -30,6 +30,7 @@ return array(
     'App\\Http\\Controllers\\ApplicantCertificationController' => $baseDir . '/app/Http/Controllers/ApplicantCertificationController.php',
     'App\\Http\\Controllers\\ApplicantController' => $baseDir . '/app/Http/Controllers/ApplicantController.php',
     'App\\Http\\Controllers\\ApplicantDetailController' => $baseDir . '/app/Http/Controllers/ApplicantDetailController.php',
+    'App\\Http\\Controllers\\ApplicantDocumentController' => $baseDir . '/app/Http/Controllers/ApplicantDocumentController.php',
     'App\\Http\\Controllers\\ApplicantExperienceController' => $baseDir . '/app/Http/Controllers/ApplicantExperienceController.php',
     'App\\Http\\Controllers\\ApplicantHigherEducationController' => $baseDir . '/app/Http/Controllers/ApplicantHigherEducationController.php',
     'App\\Http\\Controllers\\ApplicantResearchWorkController' => $baseDir . '/app/Http/Controllers/ApplicantResearchWorkController.php',
