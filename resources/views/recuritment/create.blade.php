@@ -30,7 +30,7 @@
                 <b style="font-size:20px;">Enter CNIC Number
                     <span style="color:red;font-size:12px;"> (required)</span>
                 </b>
-                </br>
+                <br>
                 <input type="text" id="cnic" maxlength="15" name="cnic" placeholder="xxxxx-xxxxxxx-x" class="form-control" required>
             </div>
         </div>
@@ -38,9 +38,9 @@
         <button type="button" class="btn btn-sm btn-success " style=" margin-left: 43%;width: 200px;font-size:1.5em;"id="basic_info">Next</button>
     </section>
 
-    <sectioon id="demographicsSection"   style="display:none"   >
+    <section id="demographicsSection"   style="display:none"   >
         <div class="row">
-            <h3 align=center style="color:gray; font-weight:bold">
+            <h3  style="color:gray; text-align:center; font-weight:bold">
                 <b>Demographics Info</b>
             </h3>
             <hr />
@@ -48,24 +48,24 @@
             <div class="col-md-6">
             <div class="form-group">
                     <b>Diary Number</b>
-                    </br>
+                    <br>
                     <input type="number" name="d_num" id="d_num" class="form-control" >
                 </div>
                 <div class="form-group">
                     <b>Name
                         <span style="color:red;font-size:12px;"> (required)</span>
                     </b>
-                    </br>
+                    <br>
                     <input type="text" name="name" id="name" placeholder="Enter Your Full Name" class="form-control"    required>
                 </div>
                 <div class="form-group">
                     <b>Father / Husband Name </b>
-                    </br>
+                    <br>
                     <input type="text" name="f_name" id="f_name" placeholder="" class="form-control">
                 </div>
                 <div class="form-group">
                     <b>Gender </b>
-                    </br>
+                    <br>
 
                     Male
                     <input style="margin-left:6px;margin-right:5px;" type="radio" value="Male" name="gender"> Female
@@ -77,7 +77,7 @@
 
                 <div class="form-group">
                     <b>Date Of Birth </b>
-                    </br>
+                    <br>
                     <input type="date" name="dob" class="form-control">
                 </div>
                 <div class="form-group">
@@ -106,7 +106,7 @@
             <div class="col-md-6">
                 <div class="form-group">
                         <b>Postal Address </b>
-                        </br>
+                        <br>
                         <textarea type="text" name="address" class="form-control"></textarea>
                     </div>
                 <div class="form-group">
@@ -122,33 +122,16 @@
                 
                 <div class="form-group">
                     <b>Email Address : </b>
-                    </br>
+                    <br>
                     <input type="email" name="emailaddress" id="email" class="form-control">
                 </div>
 
                 <div class="form-group">
                     <b>Phone Number </b>
-                    </br>
+                    <br>
                     <input id="phone" name="phone" type="tel" class="form-control">
                     
                 </div>
-                {{--
-                <div class="form-group">
-                    <select name="countryCode" id="phonenum">
-                        <option data-countryCode="GB" value="44" Selected>UK (+44)</option>
-                        <option data-countryCode="US" value="1">USA (+1)</option>
-                        <optgroup label="Other countries">
-                            <option data-countryCode="DZ" value="213">Algeria (+213)</option>
-                            <option data-countryCode="AD" value="376">Andorra (+376)</option>
-                            <option data-countryCode="AO" value="244">Angola (+244)</option>
-                            <option data-countryCode="AI" value="1264">Anguilla (+1264)</option>
-                            <option data-countryCode="AG" value="1268">Antigua &amp; Barbuda (+1268)</option>
-                            <option data-countryCode="AR" value="54">Argentina (+54)</option>
-                        </optgroup>
-                    </select>
-
-
-                </div> --}}
                 <div class="form-group">
                     <b>Cell Number (1)</b>
                      <input id="" name="mobile_number1" type="tel" class="form-control mobile_number1">
@@ -157,7 +140,7 @@
                 <b>Cell Number (2)</b>
                 <input id="mobile-number" name="mobile_number2" type="tel" class="form-control">
                 </div>
-                
+
             </div>
 
 
@@ -166,10 +149,10 @@
 
         <button type="button" class="btn btn-lg btn-danger " style=" width: 252px;" id="go_cnic"> Back</button>
         <button type="button" class="btn btn-lg btn-success pull-right" style="width: 252px;" id="education"> Next</button>
-    </sectioon>
+    </section>
    
     <section id="educationSection" style="display:none">
-        <h1 align=center style="color:gray;"><b>Education</b> </h1>
+        <h1 style="color:gray; text-align:center; "><b>Education</b> </h1>
 
         <table class="table " id="secondaryeducation" >
             <tbody>
@@ -332,7 +315,7 @@
                                 name="c_a_marks" id="c_a_marks" class="form-control"></span> </td>
 
                     <td> <span class="col_percentage" style="display:none">Percentage <br>
-                        <input type="number" name="c_percentage" id="c_percentage" value="" class="form-control"> </span> 
+                        <input type="number"  step="0.01" name="c_percentage" id="c_percentage" value="" class="form-control"> </span> 
                     </td>
 
                     <td><span class="col_div" style="display:none">Division <br><input type="text" name="c_div" value="" id="c_division" class="form-control">
@@ -617,7 +600,8 @@
         $('button#go_cnic,.cnicSection').on('click', function () {
             $('#demographicsSection').hide(1000);
             $('section#educationSection').hide(1000);
-            $('#demographicsSection').hide(1000);
+            $('section#designationSection').hide(1000);
+            $('section#experienceSection').hide(1000);
             $('section#cnicSection').show(1000);
         });
     
@@ -798,6 +782,7 @@
                             +' <option>2 years</option>'
                             +'<option>4 years</option>'
                             +'</select> </div></div></div>';
+
             $('#gradeducation').append(eduprogram);     
         }); 
     
@@ -873,7 +858,7 @@
                 
         $('button#add_morerps').click(function(e){
 
-            var research_app ='<div class="row" id="new_rp[]" >'
+            var research_app ='<div class="row" id="new_rp" >'
                     +'<div class="col-md-12" style="margin-bottom: 15px;margin-top: 15px;">'
                     +'<div class="col-md-2">Research Type'
                     +'<select class="form-control researchType" name="researchType[]" onchange="add_newresearch(this)">'
@@ -888,7 +873,7 @@
 
         $('button#addmore_pro_member').click(function(e){
 
-            var professional_app ='<div class="row" id="new_pm[]" >'
+            var professional_app ='<div class="row" id="new_pm" >'
                     +'<div class="col-md-12" style="margin-bottom: 15px;margin-top: 15px;">'
                     +'<div class="col-md-3"> <b>Name</b> <input type="text" name="app_pmname[]" id="app_pmname[]" class="form-control"></div>'
                     +'<div class="col-md-2"><b>Membership Level</b><br> <input type="text" name="m_level[]" id="m_level[]" class="form-control"></div>'
@@ -911,15 +896,15 @@
             if(researchtype=='Journal')
             {
             research='<div class="col-md-2 J_name">Name Of Journal<input type="text" name="app_jr[]" id="app_jr[]" class="form-control"></div>'
-                +'<div class="col-md-2 J_pyear">Published Year<input type="number" name="app_yr[]" id="app_yr[]" class="form-control"></div>'
-                +'<div class="col-md-2 J_date">Date<input type="number" name="app_dt[]" id="app_dt[]" class="form-control"></div>'
+                +'<div class="col-md-2 J_pyear">Published Year<input type="number" name="journal_yr[]" id="app_yr[]" class="form-control"></div>'
+                +'<div class="col-md-2 J_date">Date<input type="date" name="journal_dt[]" id="journal_dt" class="form-control"></div>'
                 +'<div class="col-md-1 remove"><button type="button" id="remove[]"  class="pull-left btn btn-danger btn-md add" style=" margin-top: 21px;" onclick="remove_data(this)" ><span class="glyphicon glyphicon-minus"></span></button></div>';
 
             }
             else if(researchtype=='Conference')
             {
                 research='<div class="col-md-2 research_paper">Research Paper<input type="text" name="app_rp[]" id="app_rp[]" class="form-control"></div>'
-                +'<div class="col-md-2 conf_pyear">Published Year<input type="number" name="app_crp[]" id="app_cyr[]" class="form-control"></div>'
+                +'<div class="col-md-2 conf_pyear">Published Year<input type="number" name="conf_yr[]" id="conf_yr" class="form-control"></div>'
                 +'<div class="col-md-2 conf_name">Conference<input type="number" name="app_conf[]" id="app_conf[]" class="form-control"></div>'
                 +'<div class="col-md-1 remove"><button type="button" id="remove[]"  class="pull-left btn btn-danger btn-md add" style=" margin-top: 21px;" onclick="remove_data(this)" ><span class="glyphicon glyphicon-minus"></span></button></div>';
             }
@@ -938,7 +923,7 @@
             
             var exp_row = '';
             exp_row += '<tr>';
-            exp_row += '<td><input type="text" name="org_Name[]" id="org_Name[]" placeholder="Enter Your Organization Name" class="form-control"></td>';
+            exp_row += '<td><input type="text" name="org_Name[]" id="org_Name" placeholder="Enter Your Organization Name" class="form-control"></td>';
             exp_row += '<td><select class="form-control" name="org_type[]"><option value="">Select Type:</option><option value="1">Private</option><option value="2">Public</option><option value="3">Government</option><option value="4">Self-Employed</option><option value="5">Own Business</option><option value="5">International</option></select></td>';
             exp_row += '<td> <input type="date" name="start_date[]" id="start_date" class="form-control"></td>';
             exp_row +='<td><input type="date" name="end_date[]" id="end_date" class="form-control"></td>'
@@ -954,7 +939,7 @@
             var designation_row = '';
             designation_row += '<tr>';
             designation_row += '<td>1</td>';
-            designation_row += '<td><select class="form-control"><option value="">Select Designation:</option><option value="1">Private</option><option value="2">Public</option><option value="3">Government</option><option value="4">Self-Employed</option><option value="5">Own Business</option><option value="5">International</option></select></td>';
+            designation_row += '<td><select class="form-control" name="app_designation[]"><option value="">Select Designation:</option><option value="1">Private</option><option value="2">Public</option><option value="3">Government</option><option value="4">Self-Employed</option><option value="5">Own Business</option><option value="5">International</option></select></td>';
             designation_row += '<td style="text-align:center;"><button type="button" id="remove_designation[]" onclick="remove_designation(this)" class="btn btn-danger btn-sm remove" style="text-align:center;"><span class=" glyphicon glyphicon-minus"></span></button></td></tr>';
             $('#designation_table').append(designation_row);    
         }); 
@@ -964,8 +949,8 @@
             
             var documents_row = '';
             documents_row += '<tr>';
-            documents_row +='<td> <input type="file" name="documents[]" class="form-control" multiple></td>'
-            documents_row += '<td> <input type="file" name="documents[]" class="form-control" multiple></td>';
+            documents_row +='<td> <input type="file" name="picture[]" class="form-control" multiple></td>'
+            documents_row += '<td> <input type="file" name="cv[]" class="form-control" multiple></td>';
             documents_row += '<td style="text-align:center;"><button type="button" name="remove_documents[]" id="remove_documents[]" onclick="remove_documents(this)" class="btn btn-danger btn-sm remove" style="text-align:center;"><span class=" glyphicon glyphicon-minus"></span></button></td></tr>';
             $('#attach_documents').append(documents_row);    
         }); 
