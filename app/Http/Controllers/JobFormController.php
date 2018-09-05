@@ -424,7 +424,7 @@ class JobFormController extends Controller
 
             if($request->researchType[$i]=="Journal")
             {
-                $person_researchwork->researchwork=$app_rp;
+                $person_researchwork->name=$app_rp;
                 if(isset($request->journal_yr[$i]))
                 $person_researchwork->published_year=$request->journal_yr[$i];
                 if(isset($request->journal_dt[$i]))
@@ -433,7 +433,7 @@ class JobFormController extends Controller
             }
             else if($request->researchType[$i]=="Conference")
             {
-                $person_researchwork->researchwork=$app_rp;
+                $person_researchwork->name=$app_rp;
                 if(isset($request->conf_yr[$i]))
                 $person_researchwork->published_year=$request->conf_yr[$i];
                 if(isset($request->app_conf[$i]))
@@ -462,10 +462,10 @@ class JobFormController extends Controller
         $person_pcm->issued_by=$request->issued_name[$i];
 
         if(isset($request->pm_doi[$i]))
-        $person_pcm->registeration=$request->pm_doi[$i];
+        $person_pcm->issuance_date=$request->pm_doi[$i];
 
         if(isset($request->pm_reg[$i]))
-        $person_pcm->issuance_date=$request->pm_reg[$i];
+        $person_pcm->registeration=$request->pm_reg[$i];
         $person_pcm->save();
 
         $i++;
@@ -501,6 +501,7 @@ class JobFormController extends Controller
         //designation
 
        $i=0;
+       if($request->app_designation!=null)
        foreach($request->app_designation as $app_designation)
         {
           if($request->app_designation!=null){

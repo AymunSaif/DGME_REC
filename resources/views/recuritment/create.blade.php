@@ -1091,7 +1091,7 @@
                     +'<div class="col-md-2"><b>Membership Level</b><br> <input type="text" name="m_level[]" id="m_level[]" class="form-control"></div>'
                     +'<div class="col-md-2"><b>Issued By</b><br><input type="string" name="issued_name[]" id="issued_name[]" class="form-control"></div>'
                     +'<div class="col-md-2"><b>Issuance Date</b><br><input type="date" name="pm_doi[]" id="pm_doi[]" class="form-control"></div>'
-                    +'<div class="col-md-2"><b>Registeration # </b><br><input type="number" name="pm_reg[]" id="pm_reg[]" class="form-control"></div>'
+                    +'<div class="col-md-2"><b>Registeration # </b><br><input type="string" name="pm_reg[]" id="pm_reg[]" class="form-control"></div>'
                     +'<div class="col-md-1 " style="margin-top: 21px;"><button type="button" name="remove_membership[]" id="remove_membership[]" onclick="remove_member(this)" class="btn btn-sm btn-danger form-control">Remove</button></div>'
                     +'</div></div>';
 
