@@ -33,15 +33,18 @@ class JobFormController extends Controller
       $person=Applicant::where('cnic',$request->person_cnic)->first();
       if($person){ //if entry stored in Applicant Table
         $cniclog=CnicLog::where('applicant_id',$person->id)->first();
-        if($cniclog->status==1){ //Check Status if some-one working
+        if($cniclog->status==1 && $cniclog->user_id!=Auth::id()){ //Check Status if some-one working
           return redirect()->back()->with('error',ucfirst($cniclog->User->name).' is working on it.');
-        }else{
+        }else if($cniclog->status==1 && $cniclog->user_id==Auth::id()){
+          return redirect()->route('job_form_create',$person->id);
+        }
+        else{
             $cnicLog= new CnicLog();
             // $cnicLog->cnic=$person->cnic;
             $cnicLog->applicant_id=$person->id;
             $cnicLog->user_id=Auth::id();
             $cnicLog->save();
-            return redirect()->route('job_form.create');
+            return redirect()->route('job_form_create',$person->id);
         }
       }else{ //If applicant doesn't exist
         $person= new Applicant();
@@ -93,7 +96,7 @@ class JobFormController extends Controller
         return redirect()->back()->with('warning',$cnicLog->User->first_name.' is working on it.');
       } }
       else{
-      return redirect()->route('createCnic')->with('error',$id.' Not Found!');}
+      return redirect()->route('createCnic')->with('error','Not Found!');}
         $cities=City::all();
         $districts=District::all();
         $provinces=Province::all();
@@ -115,15 +118,15 @@ class JobFormController extends Controller
   public function store(Request $request)
     {
 
-        //   dd($request->all());
-        $person=Applicant::where('cnic',$request->person_cnic)->first();
+          // dd($request->all());
+        $person=Applicant::where('id',$request->person_id)->first();
         if($person){
           $cniclog=CnicLog::where('applicant_id',$person->id)->first();
           if($cniclog->status==1 && $cniclog->user_id!=Auth::id()){ //Check Status if some-one working
             return redirect()->back()->withMessage($cnicLog->User->first_name.' is working on it.');
           }
         }else{
-          return redirect()->route('createCnic')->with('error',$request->person_cnic.' Not Found!');
+          return redirect()->route('createCnic')->with('error',' Not Found!');
 
         }
 
@@ -145,7 +148,7 @@ class JobFormController extends Controller
        $person_detail->father_name=$request->f_name;
        $person_detail->province_id=$request->dom_province;
        $person_detail->district_id=$request->dom_district;
-       $person_detail->city_id=$request->city;
+       $person_detail->city=$request->city;
        $person_detail->postal_add=$request->address;
        $person_detail->phone_num=$request->full_phone;
        $person_detail->cell_num=$request->full_mobilenumber1;
@@ -307,9 +310,9 @@ class JobFormController extends Controller
         $person_higherEdu_grad->applicant_id=$person->id;
 
         if(isset($request->pg_Name[$i])) 
-        $person_higherEdu_grad->institute_name=$pg_Name[$i];
+        $person_higherEdu_grad->institute_name=$request->pg_Name[$i];
         elseif(isset($request->otherpost_univ[$i]))
-        $person_higherEdu_grad->institute_name=$otherpost_univ[$i];
+        $person_higherEdu_grad->institute_name=$request->otherpost_univ[$i];
 
         if(isset($request->qualification_postuniv[$i]))
         $person_higherEdu_grad->qualification_type=$qualification_postuniv;
@@ -318,13 +321,14 @@ class JobFormController extends Controller
         $person_higherEdu_grad->highersubject_id=$request->post_grad_degree[$i];
 
         if(isset($request->pg_cgpa[$i]))
-        $person_higherEdu_grad->cgpa=$request->pg_cgpa[$i];
-
+          $person_higherEdu_grad->cgpa=$request->pg_cgpa[$i];
+        
         if(isset($request->pg_dmc_date[$i]))
-        $person_higherEdu_grad->final_dmc_date=$request->pg_dmc_date[$i];
+          $person_higherEdu_grad->final_dmc_date=$request->pg_dmc_date[$i];
 
         if(isset($request->pg_distinction[$i]))
-        $person_higherEdu_grad->distinction=$request->pg_distinction[$i];
+          $person_higherEdu_grad->distinction=$request->pg_distinction[$i];
+          // dd($person_higherEdu_grad);
         $person_higherEdu_grad->save();
         $i++;
        }
@@ -497,14 +501,15 @@ class JobFormController extends Controller
         //designation
 
        $i=0;
-       if($request->app_designation!=null)
        foreach($request->app_designation as $app_designation)
-     {
-            $person_designation= new ApplicantAppliedFor();
-            $person_designation->applicant_id=$person->id;
-            $person_designation->position_name=$request->app_designation;
-            $person_designation->save();
-            $i++;
+        {
+          if($request->app_designation!=null){
+                $person_designation= new ApplicantAppliedFor();
+                $person_designation->applicant_id=$person->id;
+                $person_designation->position_name=$app_designation;
+                $person_designation->save();
+                $i++;
+            }
         }
 
        //documents
@@ -520,10 +525,10 @@ class JobFormController extends Controller
             $person_designation->save();
             $i++;
        }
-       // Stored so Change Pending status to 1
-           $cnicLog=CnicLog::where('cnic',$request->person_cnic)
+       // Stored so Change Pending status to 0
+           $cnicLog=CnicLog::where('applicant_id',$request->person_id)
             ->where('user_id',Auth::id())->first();
-           $cnicLog->status=1;
+           $cnicLog->status=0;
            $cnicLog->save();
        return redirect()->back()->with('success','New Recuritment Has Been Added!!');
     // return redirect()->route('job_form.index')->with('success','New Recuritment Has Been Added!!');

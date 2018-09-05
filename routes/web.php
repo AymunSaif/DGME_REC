@@ -14,7 +14,7 @@
 Route::get('/', function () {
     return view('welcome');
 });
-
+Route::group(['middleware' => ['role:dataentry','auth']], function () {
 Route::get('createCnic','JobFormController@createCnic')->name('createCnic');
 Route::post('storecnic','JobFormController@storeCnic')->name('storeCnic');
 Route::get('/summary','JobFormController@showsummary')->name('summary');
@@ -25,4 +25,5 @@ Route::post('/higherSubject','HigherSubjectController@getCustom')->name('getCust
 Route::get('/univ','UniversityController@getuniv')->name('getuniv');
 Route::post('/district','DistrictController@getDistrict')->name('getDistrict');
 Route::get('/form', 'JobFormController@index')->name('index')->middleware('auth');
+});
 Auth::routes();

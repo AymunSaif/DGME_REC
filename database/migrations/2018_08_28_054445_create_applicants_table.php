@@ -47,7 +47,6 @@ class CreateApplicantsTable extends Migration
            
             $table->string('postal_add')->nullable();
             $table->string('cell_num')->nullable();
-            $table->string('cell_num2')->nullable();
             $table->string('phone_num')->nullable();
             $table->timestamps();
             $table->rememberToken();

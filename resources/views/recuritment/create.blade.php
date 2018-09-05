@@ -8,6 +8,7 @@
     <div class="row">
         <div class="col-md-12">
             <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <input type="hidden" name="person_id" value="{{$applicant->id}}">
                 {{-- <li class="nav-item">
                     <a class="nav-link active cnicSection " style="color:black;!important" data-toggle="tab" href="#cnicSection" role="tab" aria-controls="home" aria-selected="true">CNIC</a>
                 </li> --}}
@@ -974,7 +975,7 @@
                             }
                         });
                         for (var i = 0; i < univ.length; ++i) {
-                            uniname_start=uniname_start+'<option val="'+univ[i].id+'">'+univ[i].name+'</option>';
+                            uniname_start=uniname_start+'<option value="'+univ[i].id+'">'+univ[i].name+'</option>';
                         }
                         uniname_end='</select> <br>'
                         +'<input type="hidden" id="university_n[]"/>'
@@ -1001,11 +1002,11 @@
                             }
                         });
                         for (var i = 0; i < masterSubjects.length; ++i) {
-                          secndvar=secndvar+'<option val="'+masterSubjects[i].id+'">'+masterSubjects[i].subject_name+'</option>';
+                          secndvar=secndvar+'<option value="'+masterSubjects[i].id+'">'+masterSubjects[i].subject_name+'</option>';
                         }
                         thirdvar='</select></span></div>'
-                        +'<div class="col-md-2 post_cgpa">CGPA<input type="number" step="0.01" name="pg_cgpa" id="pg_cgpa" class="form-control"></div>'
-                        +'<div class="col-md-2 post_dmc">Final DMC Date<input type="date" name="pg_dmc_date" id="pg_dmc_date" class="form-control"></div>'
+                        +'<div class="col-md-2 post_cgpa">CGPA<input type="number" step="0.01" name="pg_cgpa[]" id="pg_cgpa" class="form-control"></div>'
+                        +'<div class="col-md-2 post_dmc">Final DMC Date<input type="date" name="pg_dmc_date[]" id="pg_dmc_date" class="form-control"></div>'
                         +'<div class="col-md-1 distinction">Distinction'
                         +'<select class="form-control" name="pg_distinction[]">'
                         +'<option value=""></option><option value="Yes">Yes</option><option value="No">No</option></select></div>'
@@ -1199,7 +1200,7 @@
                             }
                         });
                         for (var i = 0; i < univ.length; ++i) {
-                            uniname_start=uniname_start+'<option val="'+univ[i].id+'">'+univ[i].name+'</option>';
+                            uniname_start=uniname_start+'<option value="'+univ[i].id+'">'+univ[i].name+'</option>';
                         }
                         uniname_end='</select> <br>'
                         +'<input type="hidden" id="real_college_university_names"/>'
@@ -1209,7 +1210,7 @@
                         +'<div class="col-md-1 subjects">'
                         +'<span class="univsubjects">'
                         +'Subjects<select class="form-control" name="u_subjects[]">'
-                        +'<option val="">Select </option>';
+                        +'<option value="">Select </option>';
                         $.ajax({
                              type: "POST",
                              url: '{{route("getCustomSubject")}}',
@@ -1228,7 +1229,7 @@
                         });
                         console.log(bachelorSubjects);//SSS
                         for (var i = 0; i < bachelorSubjects.length; ++i) {
-                          secndvar=secndvar+'<option val="'+bachelorSubjects[i].id+'">'+bachelorSubjects[i].subject_name+'</option>';
+                          secndvar=secndvar+'<option value="'+bachelorSubjects[i].id+'">'+bachelorSubjects[i].subject_name+'</option>';
                         }
                         thirdvar='</select></span></div>'
                         +'<div class="col-md-1 marks">Total Marks<input type="number" name="twoyear_t_marks[]"  class="form-control twoyear_t_marks"/></div>'
@@ -1266,7 +1267,7 @@
                             }
                         });
                         for (var i = 0; i < univ.length; ++i) {
-                            uniname_start=uniname_start+'<option val="'+univ[i].id+'">'+univ[i].name+'</option>';
+                            uniname_start=uniname_start+'<option value="'+univ[i].id+'">'+univ[i].name+'</option>';
                         }
                         uniname_end='</select> <br>'
                     +'<input type="hidden" id="real_university_names[]"/>'
@@ -1295,7 +1296,7 @@
                         });
                         console.log(bachelorSubjects);//SSS
                         for (var i = 0; i < bachelorSubjects.length; ++i) {
-                          secndvar=secndvar+'<option val="'+bachelorSubjects[i].id+'">'+bachelorSubjects[i].subject_name+'</option>';
+                          secndvar=secndvar+'<option value="'+bachelorSubjects[i].id+'">'+bachelorSubjects[i].subject_name+'</option>';
                         }
                      thirdvar='</select></span></div>'
                     +'<div class="col-md-1 cgpamarks">CGPA/4<input type="number" step="0.01" name="cgpa[]" id="cgpa" class="form-control"></div>'
@@ -1315,6 +1316,7 @@
             $(e).parent().parent().find('.cgpamarks').remove();
             $(e).parent().parent().find('.marks').remove();
             $(e).parent().parent().find('.univsubjects').remove();
+            $(e).parent().parent().find('.fouryear_grad').remove();
             $(e).parent().parent().find('.achievedmarks').remove();
             $(e).parent().parent().find('.grad_date').remove();
             $(e).parent().parent().find('.division').remove();
