@@ -18,12 +18,45 @@ use App\HigherSubject;
 use App\SecondarySubject;
 use App\Province;
 use App\User;
+use App\CnicLog;
 use Illuminate\Http\Request;
 use App\ApplicantTraining;
 use App\ApplicantResearchWork;
 use App\ProfessionalCertificationMember;
 class JobFormController extends Controller
 {
+    public function createCnic(){
+      return view('recuritment.storeCnic');
+    }
+    public function storeCnic(Request $request){
+      // dd($request->all());
+      $person=Applicant::where('cnic',$request->person_cnic)->first();
+      if($person){ //if entry stored in Applicant Table
+        $cniclog=CnicLog::where('applicant_id',$person->id)->first();
+        if($cniclog->status==1){ //Check Status if some-one working
+          return redirect()->back()->with('error',ucfirst($cniclog->User->name).' is working on it.');
+        }else{
+            $cnicLog= new CnicLog();
+            // $cnicLog->cnic=$person->cnic;
+            $cnicLog->applicant_id=$person->id;
+            $cnicLog->user_id=Auth::id();
+            $cnicLog->save();
+            return redirect()->route('job_form.create');
+        }
+      }else{ //If applicant doesn't exist
+        $person= new Applicant();
+        $person->cnic=$request->person_cnic;
+        $person->created_by=Auth::id();
+        $person->save();
+        // Setting status
+        $cnicLog= new CnicLog();
+        // $cnicLog->cnic=$person->cnic;
+        $cnicLog->applicant_id=$person->id;
+        $cnicLog->user_id=Auth::id();
+        $cnicLog->save();
+        return redirect()->route('job_form_create',$person->id);
+      }
+    }
     /**
      * Display a listing of the resource.
      *
@@ -51,8 +84,18 @@ class JobFormController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id)
     {
+      $applicant=Applicant::where('id',$id)->first();
+      if($applicant){
+      $cniclog=CnicLog::where('applicant_id',$applicant->id)->first();
+      if($cniclog->status==1 && $cniclog->user_id!=Auth::id()){ //Check Status if some-one working
+        return redirect()->back()->with('warning',$cnicLog->User->first_name.' is working on it.');
+      }
+    }else{
+      return redirect()->route('createCnic')->with('error',$id.' Not Found!');
+
+    }
     $cities=City::all();
     $districts=District::all();
     $provinces=Province::all();
@@ -60,7 +103,7 @@ class JobFormController extends Controller
     $high_edu=HigherSubject::all();
     $certifications=Certification::all();
     $appliedposition=ApplicantAppliedFor::all();
-       return view('recuritment.create',['cities'=>$cities,'districts'=> $districts,'provinces'=>$provinces,
+       return view('recuritment.create',['applicant'=>$applicant,'cities'=>$cities,'districts'=> $districts,'provinces'=>$provinces,
                       'sec_edu'=>$sec_edu,'high_edu'=>$high_edu
                       ,'certifications'=> $certifications,'appliedposition'=> $appliedposition]);
     }
@@ -73,15 +116,25 @@ class JobFormController extends Controller
      */
     public function store(Request $request)
     {
-        
+
         //   dd($request->all());
+        $person=Applicant::where('cnic',$request->person_cnic)->first();
+        if($person){
+          $cniclog=CnicLog::where('applicant_id',$person->id)->first();
+          if($cniclog->status==1 && $cniclog->user_id!=Auth::id()){ //Check Status if some-one working
+            return redirect()->back()->withMessage($cnicLog->User->first_name.' is working on it.');
+          }
+        }else{
+          return redirect()->route('createCnic')->with('error',$request->person_cnic.' Not Found!');
+
+        }
 
     // Applicant Details
-       $person= new Applicant();
+       // $person= new Applicant();
        $person->diary_num=$request->d_num;
     //    $person->uniqueNumber="HIS_2018_0001";
        $person->name= $request->name;
-       $person->cnic= $request->person_cnic;
+       // $person->cnic= $request->person_cnic;
        $person->gender= $request->gender;
        $person->dob= $request->dob;
        $person->email= $request->emailaddress;
@@ -176,32 +229,32 @@ class JobFormController extends Controller
 
             if(isset($request->college_university_names[$i]))
             $person_higherEdu_2yr->institute_name=$request->college_university_names[$i];
-            elseif(isset($request->other_collegebox[$i])) 
+            elseif(isset($request->other_collegebox[$i]))
             $person_higherEdu_2yr->institute_name=$request->other_collegebox[$i];
-            
+
             if(isset($request->qualification_univ[$i]))
             $person_higherEdu_2yr->qualification_type=$request->qualification_univ[$i];
-            
+
             $person_higherEdu_2yr->bach_year=$by;
-            
+
             if(isset($request->u_subjects[$i]))
             $person_higherEdu_2yr->highersubject_id=$request->u_subjects[$i];
-            
+
             if(isset($request->twoy_t_marks[$i]))
             $person_higherEdu_2yr->total_marks=$request->twoyear_t_marks[$i];
-            
+
             if(isset($request->twoy_a_marks[$i]))
             $person_higherEdu_2yr->achieved_marks=$request->twoyear_a_marks[$i];
-            
+
             if(isset($request->percentage[$i]))
             $person_higherEdu_2yr->percentage=$request->percentage[$i];
 
             if(isset($request->division[$i]))
             $person_higherEdu_2yr->division=$request->division[$i];
-            
+
             if(isset($request->distinction[$i]))
             $person_higherEdu_2yr->distinction=$request->distinction[$i];
-            
+
             $person_higherEdu_2yr->save();
         }
          elseif ($by=="4 years"){
@@ -255,13 +308,13 @@ class JobFormController extends Controller
         $person_higherEdu_grad->applicant_id=$person->id;
 
         $person_higherEdu_grad->institute_name=$pg_name;
-        
+
         if(isset($request->qualification_postuniv[$i]))
         $person_higherEdu_grad->qualification_type=$request->qualification_postuniv[$i];
-        
+
         if(isset($request->post_grad_degree[$i]))
         $person_higherEdu_grad->highersubject_id=$request->post_grad_degree[$i];
-        
+
         if(isset($request->pg_cgpa[$i]))
         $person_higherEdu_grad->cgpa=$request->pg_cgpa[$i];
 
@@ -275,7 +328,7 @@ class JobFormController extends Controller
        }
 
        //phd education
-      
+
        $i=0;
        if($request->cv!=null)
       foreach($request->phd_Name as $phd_name)
@@ -296,16 +349,16 @@ class JobFormController extends Controller
 
         //postdoc education
       $i=0;
-      if($request->pd_Name!=null)      
+      if($request->pd_Name!=null)
       foreach($request->pd_Name as $pd_name){
         $person_higherEdu_postgrad = new ApplicantHigherEducation();
         $person_higherEdu_postgrad->applicant_id=$person->id;
 
         $person_higherEdu_postgrad->institute_name=$pd_name;
-        
+
         if(isset($request->qualification_postdocuniv[$i]))
         $person_higherEdu_postgrad->qualification_type=$request->qualification_postdocuniv[$i];
-        
+
         if(isset($request->pd_thesis[$i]))
         $person_higherEdu_postgrad->thesis_topic=$request->pd_thesis[$i];
 
@@ -321,15 +374,15 @@ class JobFormController extends Controller
        $i=0;
        if($request->app_cer!=null)
      foreach($request->app_cer as $app_cer)
-       { 
+       {
        $person_certificate= new ApplicantCertification();
        $person_certificate->applicant_id=$person->id;
        $person_certificate->name_certifictaion=$app_cer;
-       if(isset($request->cer_num[$i]))       
+       if(isset($request->cer_num[$i]))
        $person_certificate->certification_number=$request->cer_num[$i];
-       if(isset($request->certificate_i[$i]))       
+       if(isset($request->certificate_i[$i]))
        $person_certificate->issued_by=$request->certificate_i[$i];
-       if(isset($request->i_date[$i]))       
+       if(isset($request->i_date[$i]))
        $person_certificate->date_of_issuance=$request->i_date[$i];
        $person_certificate->save();
        $i++;
@@ -340,13 +393,13 @@ class JobFormController extends Controller
        $i=0;
        if($request->app_tr!=null)
      foreach($request->app_tr as $app_tr)
-       { 
+       {
        $person_training= new ApplicantTraining();
        $person_training->applicant_id=$person->id;
        $person_training->training_name=$app_tr;
-       if(isset($request->tr_by[$i]))       
+       if(isset($request->tr_by[$i]))
        $person_training->by_name=$request->tr_by[$i];
-       if(isset($request->tr_duration[$i]))       
+       if(isset($request->tr_duration[$i]))
        $person_training->duration=$request->tr_duration[$i];
        $person_training->save();
        $i++;
@@ -356,15 +409,15 @@ class JobFormController extends Controller
 
        $i=0;
        if($request->app_rp!=null)
-     foreach($request->app_rp as $app_rp){ 
-       
+     foreach($request->app_rp as $app_rp){
+
         $person_researchwork= new ApplicantResearchWork();
         $person_researchwork->applicant_id=$person->id;
         if(isset($request->researchType[$i]))
         $person_researchwork->researchwork=$request->researchType[$i];
-        
+
             if($request->researchType[$i]=="Journal")
-            {  
+            {
                 $person_researchwork->researchwork=$app_rp;
                 if(isset($request->journal_yr[$i]))
                 $person_researchwork->published_year=$request->journal_yr[$i];
@@ -384,7 +437,7 @@ class JobFormController extends Controller
                 $i++;
         }
 
-    
+
      //master education
 
        $i=0;
@@ -393,18 +446,18 @@ class JobFormController extends Controller
       {
        $person_pcm= new ProfessionalCertificationMember();
        $person_pcm->applicant_id=$person->id;
-       
+
         $person_pcm->name=$app_pmname;
-       
+
         if(isset($request->m_level[$i]))
         $person_pcm->membership_level=$request->m_level[$i];
-        
+
         if(isset($request->issued_name[$i]))
         $person_pcm->issued_by=$request->issued_name[$i];
 
         if(isset($request->pm_doi[$i]))
         $person_pcm->registeration=$request->pm_doi[$i];
-        
+
         if(isset($request->pm_reg[$i]))
         $person_pcm->issuance_date=$request->pm_reg[$i];
         $person_pcm->save();
@@ -412,8 +465,8 @@ class JobFormController extends Controller
         $i++;
     }
 
-    //org 
-       
+    //org
+
        $i=0;
        if($request->org_Name!=null)
        foreach($request->org_Name as $org)
@@ -425,13 +478,13 @@ class JobFormController extends Controller
 
             if(isset($request->org_type[$i]))
             $person_exp->org_type=$request->org_type[$i];
-                
+
             if(isset($request->start_dob[$i]))
             $person_exp->start_date=$request->start_date[$i];
-            
+
             if(isset($request->end_dob[$i]))
             $person_exp->end_date=$request->end_date[$i];
-            
+
             if(isset($request->role_name[$i]))
             $person_exp->role=$request->role_name[$i];
 
@@ -465,7 +518,11 @@ class JobFormController extends Controller
             $person_designation->save();
             $i++;
        }
-
+       // Stored so Change Pending status to 1
+           $cnicLog=CnicLog::where('cnic',$request->person_cnic)
+            ->where('user_id',Auth::id())->first();
+           $cnicLog->status=1;
+           $cnicLog->save();
        return redirect()->back()->with('success','New Recuritment Has Been Added!!');
     // return redirect()->route('job_form.index')->with('success','New Recuritment Has Been Added!!');
 }

@@ -8,9 +8,9 @@
     <div class="row">
         <div class="col-md-12">
             <ul class="nav nav-tabs" id="myTab" role="tablist">
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a class="nav-link active cnicSection " style="color:black;!important" data-toggle="tab" href="#cnicSection" role="tab" aria-controls="home" aria-selected="true">CNIC</a>
-                </li>
+                </li> --}}
                 <li class="nav-item">
                         <a class="nav-link active demographicsSection " style="color:black;!important" data-toggle="tab" href="#demographicsSection" role="tab" aria-controls="home" aria-selected="true">Demographics</a>
                     </li>
@@ -26,7 +26,7 @@
             </ul>
         </div>
     </div>
-    <section id="cnicSection" >
+    {{-- <section id="cnicSection" >
         <div class="col-md-3"></div>
         <div class="col-md-6" style="margin-top:20%;">
             <div class="form-group">
@@ -39,9 +39,9 @@
         </div>
         <div class="col-md-3"></div>
         <button type="button" class="btn btn-sm btn-success " style=" margin-left: 43%;width: 200px;font-size:1.5em;"id="basic_info">Next</button>
-    </section>
+    </section> --}}
 
-    <section id="demographicsSection"   style="display:none"   >
+    <section id="demographicsSection">
         <div class="row">
             <h3  style="color:gray; text-align:center; font-weight:bold">
                 <b>Demographics Info</b>
