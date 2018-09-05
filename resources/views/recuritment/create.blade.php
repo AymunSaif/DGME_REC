@@ -84,8 +84,13 @@
                     <input type="date" name="dob" class="form-control">
                 </div>
                 <div class="form-group">
+                    <b>Religion</b>
+                    <br>
+                    <input type="text" name="religion" class="form-control">
+                </div>
+                <div class="form-group">
                     <b>Domicile Province</b>
-                    <select class="form-control" name="dom_province">
+                    <select class="form-control dom_province" name="dom_province">
                         <option value="">Select Province</option>
                         @foreach($provinces as $province)
                         <option value="{{$province->id}}">{{$province->name}}</option>
@@ -93,34 +98,25 @@
 
                     </select>
                 </div>
-                <div class="form-group">
-                    <b>Domicile Districts </b>
-                    <select class="form-control" name="dom_district">
-                        <option value="">Select Districts</option>
-                        @foreach($districts as $dist)
-                        <option value="{{$dist->id}}">{{$dist->name}}</option>
-                        @endforeach
-
-
-                    </select>
-                </div>
+               
 
             </div>
             <div class="col-md-6">
+                <div class="form-group">
+                    <b>Domicile Districts </b>
+                    <select class="form-control dom_district " name="dom_district">
+                        <option value="">Select Districts</option>
+                    
+                    </select>
+                </div>
                 <div class="form-group">
                         <b>Postal Address </b>
                         <br>
                         <textarea type="text" name="address" class="form-control"></textarea>
                     </div>
                 <div class="form-group">
-                    <b>City </b>
-                    <select class="form-control" name="dom_city">
-                        <option value="">Select City:</option>
-                        @foreach($cities as $city)
-                        <option value="{{$city->id}}">{{$city->name}}</option>
-                        @endforeach
-
-                    </select>
+                    <b>City </b>  <input type="text" name="city" id="city" class="form-control">
+          
                 </div>
 
                 <div class="form-group">
@@ -192,8 +188,38 @@
                          <div>
                             <select class="form-control" name="b_Name">
                                 <option value="">Select Board</option>
-                                <option value="">Lhr Board</option>
-                                <option value="">grw Board</option>
+                                <option value="">IGCSE </option>
+                                <option value="">Federal BISE</option>
+                                <option value="">Mirpur AJK BISE</option>
+                                <option value="">Faisalabad BISE</option>
+                                <option value="">Gujranwala BISE</option>
+                                <option value="">Lahore BISE</option>
+                                <option value="">Bahawalpur BISE</option>
+                                <option value="">Multan BISE</option>
+                                <option value="">Rawalpindi BISE</option>
+                                <option value="">Faisalabad BISE</option>
+                                <option value="">Sahiwal BISE</option>
+                                <option value="">Sargodha BISE</option>
+                                <option value="">Dera Ghazi Khan BISE</option>
+                                <option value="">Karachi BISE</option>
+                                <option value="">Sukkur BISE</option>
+                                <option value="">Hyderabad BISE</option>
+                                <option value="">Larkana BISE</option>
+                                <option value="">Mirpur Khas BISE</option>
+                                <option value="">Abbottabad BISE</option>
+                                <option value="">Bannu BISE</option>
+                                <option value="">Malakand BISE</option>
+                                <option value="">Peshawar BISE</option>
+                                <option value="">Kohat BISE</option>
+                                <option value="">Mardan BISE</option>
+                                <option value="">Swat BISE</option>
+                                <option value="">Dera Ismail Khan BISE</option>
+                                <option value="">Quetta BISE</option>
+                                <option value="">Turbat BISE</option>
+                                <option value="">Loralai BISE</option>
+                                <option value="">Khuzdar BISE</option>
+                                <option value="">Dera Murad Jamali BISE</option>
+
 
                             </select>
                                 </div>
@@ -203,15 +229,8 @@
                         <span class="sch_subjects" style="display:none;">
                             <div>
                                 <b> Subjects </b>
-                                <select class="form-control" name="s_subjects">
+                                <select class="form-control subjects_school" name="s_subjects">
                                     <option value="">Select Subjects</option>
-                                    @foreach($sec_edu as $se)
-
-                                    @if($se->type=='School')
-                                    <option value="{{$se->id}}">{{$se->subject_name}}</option>
-                                    @elseif($se->type=='Olevel')
-                                    <option value="{{$se->id}}">{{$se->subject_name}}</option>
-                                    @endif @endforeach
                                 </select>
                             </div>
                         </span>
@@ -280,23 +299,44 @@
                     <td><span class="col_board" style="display:none"> <b> Board </b>
                         <select class="form-control" name="c_b_Name">
                             <option value="">Select Board</option>
-                            <option value="">Lhr Board</option>
-                            <option value="">grw Board</option>
-
+                            <option value="">IGCSE </option>
+                            <option value="">Federal BISE</option>
+                            <option value="">Mirpur AJK BISE</option>
+                            <option value="">Faisalabad BISE</option>
+                            <option value="">Gujranwala BISE</option>
+                            <option value="">Lahore BISE</option>
+                            <option value="">Bahawalpur BISE</option>
+                            <option value="">Multan BISE</option>
+                            <option value="">Rawalpindi BISE</option>
+                            <option value="">Faisalabad BISE</option>
+                            <option value="">Sahiwal BISE</option>
+                            <option value="">Sargodha BISE</option>
+                            <option value="">Dera Ghazi Khan BISE</option>
+                            <option value="">Karachi BISE</option>
+                            <option value="">Sukkur BISE</option>
+                            <option value="">Hyderabad BISE</option>
+                            <option value="">Larkana BISE</option>
+                            <option value="">Mirpur Khas BISE</option>
+                            <option value="">Abbottabad BISE</option>
+                            <option value="">Bannu BISE</option>
+                            <option value="">Malakand BISE</option>
+                            <option value="">Peshawar BISE</option>
+                            <option value="">Kohat BISE</option>
+                            <option value="">Mardan BISE</option>
+                            <option value="">Swat BISE</option>
+                            <option value="">Dera Ismail Khan BISE</option>
+                            <option value="">Quetta BISE</option>
+                            <option value="">Turbat BISE</option>
+                            <option value="">Loralai BISE</option>
+                            <option value="">Khuzdar BISE</option>
+                            <option value="">Dera Murad Jamali BISE</option>
                         </select>
                         </span></td>
                     <td><span class="col_subjects" style="display:none">
                             <div>
-                                <b> Degree </b>
-                                <select class="form-control" name="c_subjects">
+                                <b> Subjects </b>
+                                <select class="form-control college_subjects " name="c_subjects">
                                     <option value="">Select degree:</option>
-                                    @foreach($sec_edu as $se)
-                                    @if($se->type=="Intermediate")
-                                    <option value="{{$se->id}}">{{$se->subject_name}}</option>
-                                    @elseif($se->type=="Alevel")
-                                    <option value="{{$se->id}}">{{$se->subject_name}}</option>
-                                    @endif
-                                    @endforeach
 
                                 </select>
                             </div>
@@ -461,7 +501,7 @@
     </section>
 
     <section id="designationSection" style="display:none">
-            <h1 style="text-align:center;">Designation</h1>
+            <h1 style="text-align:center;">Position Applied</h1>
             <table class="table table-bordered" id="designation_table">
                 <tr >
                     <th style="text-align:center;">Serial No </th>
@@ -736,11 +776,49 @@
           }
 
      });
+     $('.dom_province').on('change', function () {
+        //  $(this).val();
+         $.ajax({
+                    type: "POST",
+                    url: '{{route("getDistrict")}}',
+                    data: {
+                    "_token": "{{ csrf_token() }}",
+                    'province_id' : $(this).val()},
+                    success: function(data){
+                        console.log(data);
+                    for (let index = 0; index < data.length; index++) {
+                        $('.dom_district').append('<option value="'+data[index].id+'" selected="selected">'+data[index].name+'</option>');
+                    }
+                },
+                error: function(jqXHR, textStatus, errorThrown) { // What to do if we fail
+                    console.log(JSON.stringify(jqXHR));
+                    console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
+                }
+            });
+     });
 
         $('.school_level').on('change', function () {
             if ($('.school_level').val() == 'Matric') {
                 $('.Grades_olevel').hide(1000);
-
+                $('.subjects_school').children().remove();
+                $('.subjects_school').append('<option>Select Subject</option>');
+                $.ajax({
+                             type: "POST",
+                             url: '{{route("getSecondaryCustomSubject")}}',
+                             data: {
+                              "_token": "{{ csrf_token() }}",
+                              'type' : $(this).val()},
+                             success: function(data){
+                                 console.log(data);
+                                for (let index = 0; index < data.length; index++) {
+                                    $('.subjects_school').append('<option value="'+data[index].id+'" selected="selected">'+data[index].subject_name+'</option>');
+                                }
+                            },
+                            error: function(jqXHR, textStatus, errorThrown) { // What to do if we fail
+                              console.log(JSON.stringify(jqXHR));
+                              console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
+                            }
+                        });
                 $('input[name="qualification"]').val("school")
                 $('.sch_name').show(1000);
                 $('.sch_board').show(1000);
@@ -752,7 +830,26 @@
                 $('.sch_dist').show(1000);
 
             } else if ($('.school_level').val() == 'O-Level') {
-                $('input[name="qualification"]').val("olevel")
+                $('input[name="qualification"]').val("olevel");
+                $('.subjects_school').children().remove();
+                $('.subjects_school').append('<option>Select Subject</option>');
+                $.ajax({
+                             type: "POST",
+                             url: '{{route("getSecondaryCustomSubject")}}',
+                             data: {
+                              "_token": "{{ csrf_token() }}",
+                              'type' : $(this).val()},
+                             success: function(data){
+                                 console.log(data);
+                                for (let index = 0; index < data.length; index++) {
+                                    $('.subjects_school').append('<option value="'+data[index].id+'" selected="selected">'+data[index].subject_name+'</option>');
+                                }
+                            },
+                            error: function(jqXHR, textStatus, errorThrown) { // What to do if we fail
+                              console.log(JSON.stringify(jqXHR));
+                              console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
+                            }
+                        });
                 $('.sch_name').show(1000);
                 $('.sch_board').show(1000);
                 $('.sch_subjects').show(1000);
@@ -770,6 +867,25 @@
                 $('.col_grades').hide(1000);
 
                 $('input[name="college_qualification_type"]').val("Intermediate")
+                $('.college_subjects').children().remove();
+                $('.college_subjects').append('<option>Select Subject</option>');
+                $.ajax({
+                            type: "POST",
+                            url: '{{route("getSecondaryCustomSubject")}}',
+                            data: {
+                            "_token": "{{ csrf_token() }}",
+                            'type' : $(this).val()},
+                            success: function(data){
+                                console.log(data);
+                            for (let index = 0; index < data.length; index++) {
+                                $('.college_subjects').append('<option value="'+data[index].id+'" selected="selected">'+data[index].subject_name+'</option>');
+                            }
+                        },
+                        error: function(jqXHR, textStatus, errorThrown) { // What to do if we fail
+                            console.log(JSON.stringify(jqXHR));
+                            console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
+                        }
+                    });
                 $('.col_name').show(1000);
                 $('.col_board').show(1000);
                 $('.col_subjects').show(1000);
@@ -781,6 +897,25 @@
 
             } else if ($('.college_level').val() == 'A-Level') {
                 $('input[name="college_qualification_type"]').val("Alevel")
+                $('.college_subjects').children().remove();
+                $('.college_subjects').append('<option>Select Subject</option>');
+                $.ajax({
+                            type: "POST",
+                            url: '{{route("getSecondaryCustomSubject")}}',
+                            data: {
+                            "_token": "{{ csrf_token() }}",
+                            'type' : $(this).val()},
+                            success: function(data){
+                                console.log(data);
+                            for (let index = 0; index < data.length; index++) {
+                                $('.college_subjects').append('<option value="'+data[index].id+'" selected="selected">'+data[index].subject_name+'</option>');
+                            }
+                        },
+                        error: function(jqXHR, textStatus, errorThrown) { // What to do if we fail
+                            console.log(JSON.stringify(jqXHR));
+                            console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
+                        }
+                    });
                 $('.col_totalmarks').show(1000);
                 $('.col_achievedmarks').show(1000);
                 $('.col_grades').show(1000);
@@ -810,12 +945,65 @@
         });
 
         $('button#add_postgrad_level').click(function(e)
-          {  var eduprogram ='<div class="row" id="new_postgradrow[]">'
+          { var masterSubjects=[];
+            var secndvar='';
+            var thirdvar='';
+
+            var univ=[];
+            var uniname_start='';
+            var uniname_end='';
+
+              var eduprogram ='<div class="row" id="new_postgradrow[]">'
                         +'<div class="col-md-12" style="margin-bottom: 15px;margin-top: 15px;">'
                         +'<input type="hidden" name="qualification_postuniv[]" value="post_grad">'
-                        +'<div class="col-md-2 institute_name">Institution Name<input type="text" name="pg_Name" id="pg_Name" class="form-control"> </div>'
-                        +'<div class="col-md-2 postgrad_subjects">Subjects<select class="form-control" name="post_grad_degree[]"><option value=""></option>'
-                        +'<option val="1">1</option><option val="2" >2</option><option val="3" >3</option></select> </div>'
+                        +'<div class="col-md-2 institute_name">Institution Name'
+                        +'<select name="pg_Name" class="form-control" onchange="add_newUC(this)">'
+                        +'<option value=""></option>'
+                        +'<option value="other">other</option>';
+                        $.ajax({
+                             type: "get",
+                             url: '{{route("getuniv")}}',
+                             async: false,
+                             success: function(data){
+                               console.log(data);
+                               univ = data;
+                            },
+                            error: function(jqXHR, textStatus, errorThrown) { // What to do if we fail
+                              console.log(JSON.stringify(jqXHR));
+                              console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
+                            }
+                        });
+                        for (var i = 0; i < univ.length; ++i) {
+                            uniname_start=uniname_start+'<option val="'+univ[i].id+'">'+univ[i].name+'</option>';
+                        }
+                        uniname_end='</select> <br>'
+                        +'<input type="hidden" id="university_n[]"/>'
+                        +'<div id="otherpost_univ" style=" margin-top: -20px; display:none;">'
+                        +'<input type="text"  name="otherpost_univ[]" id="otherpost_univ" class="form-control"/>'
+                        +'</div></div>'
+                        +'<div class="col-md-2 postgrad_subjects">Subjects'
+                        +'<select class="form-control" name="post_grad_subject[]">'
+                        +'<option value=""></option>';
+                        $.ajax({
+                             type: "POST",
+                             url: '{{route("getCustomSubject")}}',
+                             async: false,
+                             data: {
+                              "_token": "{{ csrf_token() }}",
+                              'type' : 'masters'},
+                             success: function(data){
+                               console.log(data);
+                               masterSubjects = data;
+                            },
+                            error: function(jqXHR, textStatus, errorThrown) { // What to do if we fail
+                              console.log(JSON.stringify(jqXHR));
+                              console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
+                            }
+                        });
+                        for (var i = 0; i < masterSubjects.length; ++i) {
+                          secndvar=secndvar+'<option val="'+masterSubjects[i].id+'">'+masterSubjects[i].subject_name+'</option>';
+                        }
+                        thirdvar='</select></span></div>'
                         +'<div class="col-md-2 post_cgpa">CGPA<input type="number" step="0.01" name="pg_cgpa" id="pg_cgpa" class="form-control"></div>'
                         +'<div class="col-md-2 post_dmc">Final DMC Date<input type="date" name="pg_dmc_date" id="pg_dmc_date" class="form-control"></div>'
                         +'<div class="col-md-1 distinction">Distinction'
@@ -823,7 +1011,7 @@
                         +'<option value=""></option><option value="Yes">Yes</option><option value="No">No</option></select></div>'
                         +'<div class="col-md-1 remove_grad_level"><button type="button" id="remove_grad_level[]"  class="pull-left btn btn-danger btn-sm add" style=" margin-top: 19px;" onclick="remove_data(this)" ><span class="glyphicon glyphicon-minus"></span></button></div></div></div>';
 
-                $('#postgradeducation').append(eduprogram);
+                $('#postgradeducation').append(eduprogram+uniname_start+uniname_end+secndvar+thirdvar);
         });
 
 
@@ -947,7 +1135,7 @@
             var exp_row = '';
             exp_row += '<tr>';
             exp_row += '<td><input type="text" name="org_Name[]" id="org_Name" placeholder="Enter Your Organization Name" class="form-control"></td>';
-            exp_row += '<td><select class="form-control" name="org_type[]"><option value="">Select Type:</option><option value="1">Private</option><option value="2">Public</option><option value="3">International/INGO</option><option value="4">Self-Employed</option><option value="5">Donor Agencies</option></select></td>';
+            exp_row += '<td><select class="form-control" name="org_type[]"><option value="">Select Type:</option><option value="1">Private/NGO</option><option value="2">Government</option><option value="3">International/INGO</option><option value="4">Self-Employed</option><option value="5">Donor Agencies</option></select></td>';
             exp_row += '<td> <input type="date" name="start_date[]" id="start_date" class="form-control"></td>';
             exp_row +='<td><input type="date" name="end_date[]" id="end_date" class="form-control"></td>'
             exp_row +='<td><input type="text" name="role_name[]" class="form-control"></td>'
@@ -962,7 +1150,7 @@
             var designation_row = '';
             designation_row += '<tr>';
             designation_row += '<td>1</td>';
-            designation_row += '<td><select class="form-control" name="app_designation[]"><option value="">Select Designation:</option><option value="1">DEPUTY DIRECTOR</option><option value="2">CODER</option><option value="3">CONSULTANT</option><option value="4">DPM</option><option value="5">ANALYST</option><option value="5">ok</option></select></td>';
+            designation_row += '<td><select class="form-control" name="app_designation[]"><option value="">Select Designation:</option><option value="">Deputy Director (Admin/HR)</option><option value="">Deputy Director (Finance & Accounts)</option><option value="">Deputy Director (IT)</option><option value="">Communication Specialist</option><option value="">Assistant Director IT</option><option value="">Assistant Director (Programming)</option><option value="">Assistant Director (Database)</option><option value="">Admin/Hr Officer </option><option value="">Finance Officer</option><option value="">Audit Officer</option><option value="">Research Associates</option><option value="">M & E Expert</option><option value="">Socio Economic Development Specialist</option><option value="">Evaluation Specialist </option><option value="">Project Management Specialist</option><option value="">Financial Management Specialist</option><option value="">Procurement Specialist</option></select></td>';
             designation_row += '<td style="text-align:center;"><button type="button" id="remove_designation[]" onclick="remove_designation(this)" class="btn btn-danger btn-sm remove" style="text-align:center;"><span class=" glyphicon glyphicon-minus"></span></button></td></tr>';
             $('#designation_table').append(designation_row);
         });
@@ -986,6 +1174,9 @@
             var bachelorSubjects=[];
             var secndvar='';
             var thirdvar='';
+            var  univ=[];
+            var uniname_start='';
+            var uniname_end='';
             if(education_y=='2 years')
             {
                 add_year_fields='<div class="col-md-2 years">'
@@ -993,14 +1184,28 @@
                 +'<span class="twoyear_grad" id="twoyear_grad" >'
             +'Institution Name<select class="form-control"  id="college_university_names[]" name="college_university_names[]" onchange="add_newUC(this)">'
                         +'<option value=""></option>'
-                        +'<option >punjab college</option>'
-                        +'<option >gujranwala college</option>'
-                        +'<option >lahore college</option>'
-                        +'<option value="other">other</option>'
-                        +'</select><br><input type="hidden" id="real_college_university_names"/>'
+                        +'<option value="other">other</option>';
+                        $.ajax({
+                             type: "get",
+                             url: '{{route("getuniv")}}',
+                             async: false,
+                             success: function(data){
+                               console.log(data);
+                               univ = data;
+                            },
+                            error: function(jqXHR, textStatus, errorThrown) { // What to do if we fail
+                              console.log(JSON.stringify(jqXHR));
+                              console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
+                            }
+                        });
+                        for (var i = 0; i < univ.length; ++i) {
+                            uniname_start=uniname_start+'<option val="'+univ[i].id+'">'+univ[i].name+'</option>';
+                        }
+                        uniname_end='</select> <br>'
+                        +'<input type="hidden" id="real_college_university_names"/>'
                         +'<div id="other_college_univ" style=" margin-top: -20px; display:none;">'
                         +'<input type="text"   name="other_collegebox[]" id="other_collegebox[]" class="form-control"/>'
-                        +' </div></span></div>'
+                        +' </div></span></div>' 
                         +'<div class="col-md-1 subjects">'
                         +'<span class="univsubjects">'
                         +'Subjects<select class="form-control" name="u_subjects[]">'
@@ -1046,11 +1251,24 @@
                     +'Institute <input type="hidden" name="qualification_univ[]" value="four_year">'
                    +'<select class="form-control"  id="university_names[]" name="university_names[]" onchange="add_newUC(this)">'
                     +'<option value=""></option>'
-                    +'<option value="1">umt</option>'
-                    +'<option value="2">ucp</option>'
-                    +'<option value="3">gcu</option>'
-                    +'<option value="other">other</option>'
-                    +'</select><br>'
+                    +'<option value="other">other</option>';
+                        $.ajax({
+                             type: "get",
+                             url: '{{route("getuniv")}}',
+                             async: false,
+                             success: function(data){
+                               console.log(data);
+                               univ = data;
+                            },
+                            error: function(jqXHR, textStatus, errorThrown) { // What to do if we fail
+                              console.log(JSON.stringify(jqXHR));
+                              console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
+                            }
+                        });
+                        for (var i = 0; i < univ.length; ++i) {
+                            uniname_start=uniname_start+'<option val="'+univ[i].id+'">'+univ[i].name+'</option>';
+                        }
+                        uniname_end='</select> <br>'
                     +'<input type="hidden" id="real_university_names[]"/>'
                     +'<div id="other_univ" style=" margin-top: -20px; display:none;">'
                     +'<input type="text"  name="other_univbox[]" id="other_univbox[]" class="form-control"/>'
@@ -1059,8 +1277,27 @@
                     +'<span class="univsubjects" >'
                     +'Subjects<select class="form-control" name="u_subjects[]">'
                     +'<option value=""></option>'
-                    +'<option val="1">1</option><option val="2" >2</option><option val="3" >3</option>'
-                    +'</select></span></div>'
+                    $.ajax({
+                             type: "POST",
+                             url: '{{route("getCustomSubject")}}',
+                             async: false,
+                             data: {
+                              "_token": "{{ csrf_token() }}",
+                              'type' : 'bachelor2yr'},
+                             success: function(data){
+                               console.log(data);
+                              bachelorSubjects = data;
+                            },
+                            error: function(jqXHR, textStatus, errorThrown) { // What to do if we fail
+                              console.log(JSON.stringify(jqXHR));
+                              console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
+                            }
+                        });
+                        console.log(bachelorSubjects);//SSS
+                        for (var i = 0; i < bachelorSubjects.length; ++i) {
+                          secndvar=secndvar+'<option val="'+bachelorSubjects[i].id+'">'+bachelorSubjects[i].subject_name+'</option>';
+                        }
+                     thirdvar='</select></span></div>'
                     +'<div class="col-md-1 cgpamarks">CGPA/4<input type="number" step="0.01" name="cgpa[]" id="cgpa" class="form-control"></div>'
                     +'<div class="col-md-1 marks">Total Marks<input type="number" name="foury_t_marks[]" class="form-control foury_t_marks"/></div>'
                     +'<div class="col-md-1 achievedmarks">Achieved  <input type="number" name="foury_a_marks[]" onkeyup="calculate4Percentage(this)"  class="form-control foury_a_marks"></div>'
@@ -1077,12 +1314,13 @@
             $(e).parent().parent().find('.subjects').remove();
             $(e).parent().parent().find('.cgpamarks').remove();
             $(e).parent().parent().find('.marks').remove();
+            $(e).parent().parent().find('.univsubjects').remove();
             $(e).parent().parent().find('.achievedmarks').remove();
             $(e).parent().parent().find('.grad_date').remove();
             $(e).parent().parent().find('.division').remove();
             $(e).parent().parent().find('.dmc').remove();
             $(e).parent().parent().find('.distinction').remove();
-            $(e).parent().parent().append(add_year_fields+secndvar+thirdvar);
+            $(e).parent().parent().append(add_year_fields+uniname_start+uniname_end+secndvar+thirdvar);
 
 
     }
@@ -1091,13 +1329,19 @@
 
     function add_newUC(e)
      {
-        if($(e).val()=="other")
-        {
-            $(e).next().next().next().show()
-        }
-        else
-        {
-            $(e).next().next().next().hide()
+         console.log();
+         if($(e).attr('name')=="pg_Name"){
+             $('#otherpost_univ').show();
+         }else{
+            $('#otherpost_univ').hide();
+            if($(e).val()=="other")
+            {
+                $(e).next().next().next().show()
+            }
+            else
+            {
+                $(e).next().next().next().hide()
+            }
         }
     }
 

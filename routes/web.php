@@ -17,8 +17,12 @@ Route::get('/', function () {
 
 Route::get('createCnic','JobFormController@createCnic')->name('createCnic');
 Route::post('storecnic','JobFormController@storeCnic')->name('storeCnic');
+Route::get('/summary','JobFormController@showsummary')->name('summary');
 Route::get('/job_form_create/{cnic}','JobFormController@create')->name('job_form_create');
 Route::resource('job_form','JobFormController',['except' =>['create']])->middleware('auth');
+Route::post('/secondarySubject','SecondarySubjectController@getCustom')->name('getSecondaryCustomSubject');
 Route::post('/higherSubject','HigherSubjectController@getCustom')->name('getCustomSubject');
+Route::get('/univ','UniversityController@getuniv')->name('getuniv');
+Route::post('/district','DistrictController@getDistrict')->name('getDistrict');
 Route::get('/form', 'JobFormController@index')->name('index')->middleware('auth');
 Auth::routes();

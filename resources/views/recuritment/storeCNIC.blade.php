@@ -14,7 +14,7 @@
           </div>
       </div>
       <div class="col-md-3"></div>
-      <button type="submit" class="btn btn-sm btn-success " style=" margin-left: 43%;width: 200px;font-size:1.5em;"id="basic_info">Save</button>
+      <button type="submit" class="btn btn-sm btn-success " style=" margin-left: 43%;width: 200px;font-size:1.5em;"id="basic_info">Next</button>
   </section>
 </form>
 @endsection

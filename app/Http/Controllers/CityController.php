@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 
 class CityController extends Controller
 {
+    public function getCity(Request $request){
+        return City::where('district_id',$request->district_id)->first()->Districts;
+    }
     /**
      * Display a listing of the resource.
      *
