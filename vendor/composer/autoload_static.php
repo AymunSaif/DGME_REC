@@ -332,6 +332,7 @@ class ComposerStaticInit240f0babe76c56c7db0e0178e03ff1fa
         'App\\Certification' => __DIR__ . '/../..' . '/app/Certification.php',
         'App\\City' => __DIR__ . '/../..' . '/app/City.php',
         'App\\CityCode' => __DIR__ . '/../..' . '/app/CityCode.php',
+        'App\\CnicLog' => __DIR__ . '/../..' . '/app/CnicLog.php',
         'App\\CnicStore' => __DIR__ . '/../..' . '/app/CnicStore.php',
         'App\\College' => __DIR__ . '/../..' . '/app/College.php',
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',

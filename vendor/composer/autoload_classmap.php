@@ -19,6 +19,7 @@ return array(
     'App\\Certification' => $baseDir . '/app/Certification.php',
     'App\\City' => $baseDir . '/app/City.php',
     'App\\CityCode' => $baseDir . '/app/CityCode.php',
+    'App\\CnicLog' => $baseDir . '/app/CnicLog.php',
     'App\\CnicStore' => $baseDir . '/app/CnicStore.php',
     'App\\College' => $baseDir . '/app/College.php',
     'App\\Console\\Kernel' => $baseDir . '/app/Console/Kernel.php',
