@@ -33,15 +33,18 @@ class JobFormController extends Controller
       $person=Applicant::where('cnic',$request->person_cnic)->first();
       if($person){ //if entry stored in Applicant Table
         $cniclog=CnicLog::where('applicant_id',$person->id)->first();
-        if($cniclog->status==1){ //Check Status if some-one working
+        if($cniclog->status==1 && $cniclog->user_id!=Auth::id()){ //Check Status if some-one working
           return redirect()->back()->with('error',ucfirst($cniclog->User->name).' is working on it.');
-        }else{
+        }else if($cniclog->status==1 && $cniclog->user_id==Auth::id()){
+          return redirect()->route('job_form_create',$person->id);
+        }
+        else{
             $cnicLog= new CnicLog();
             // $cnicLog->cnic=$person->cnic;
             $cnicLog->applicant_id=$person->id;
             $cnicLog->user_id=Auth::id();
             $cnicLog->save();
-            return redirect()->route('job_form.create');
+            return redirect()->route('job_form_create',$person->id);
         }
       }else{ //If applicant doesn't exist
         $person= new Applicant();
