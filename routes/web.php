@@ -16,6 +16,7 @@ Route::get('/', function () {
 });
 
 Route::resource('job_form','JobFormController')->middleware('auth');
+Route::get('job_form','JobFormController@showsummary')->name("summary")->middleware('auth');
 Route::get('/higherSubject','HigherSubjectController@getCustom')->name('getCustomSubject');
 Route::get('/form', 'JobFormController@index')->name('index')->middleware('auth');
 Auth::routes();

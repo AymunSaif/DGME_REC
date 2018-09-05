@@ -469,7 +469,11 @@ class JobFormController extends Controller
        return redirect()->back()->with('success','New Recuritment Has Been Added!!');
     // return redirect()->route('job_form.index')->with('success','New Recuritment Has Been Added!!');
 }
+public function showsummary(JobForm $jobForm)
+{
+    return view('recuritment.summary');
 
+}
     /**
      * Display the specified resource.
      *
