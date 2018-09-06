@@ -7,6 +7,7 @@
     {{csrf_field()}}
     <div class="row">
         <div class="col-md-12">
+          <input type="hidden" name="person_id" value="{{$applicant->id}}">
             <ul class="nav nav-tabs" id="myTab" role="tablist">
                 {{-- <li class="nav-item">
                     <a class="nav-link active cnicSection " style="color:black;!important" data-toggle="tab" href="#cnicSection" role="tab" aria-controls="home" aria-selected="true">CNIC</a>

@@ -14,6 +14,7 @@
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/email','MailController@email')->name('sendEmail');
 Route::group(['middleware' => ['role:dataentry','auth']], function () {
   // Route::get('dashboard','JobFormController@createCnic')->name('createCnic');
 

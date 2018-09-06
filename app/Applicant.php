@@ -6,8 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Applicant extends Model
-
 {
+
+    protected $events = [
+      'updated' =>Events\NewApplicant::class
+    ];
     public function ApplicantDetail()
     {
         return $this->hasOne('App\ApplicantDetail');

@@ -120,15 +120,15 @@ class JobFormController extends Controller
     public function store(Request $request)
     {
 
-        //   dd($request->all());
-        $person=Applicant::where('cnic',$request->person_cnic)->first();
+          // dd($request->all());
+        $person=Applicant::find($request->person_id);
         if($person){
           $cniclog=CnicLog::where('applicant_id',$person->id)->first();
           if($cniclog->status==1 && $cniclog->user_id!=Auth::id()){ //Check Status if some-one working
-            return redirect()->back()->withMessage($cnicLog->User->first_name.' is working on it.');
+            return redirect()->back()->withMessage($cniclog->User->first_name.' is working on it.');
           }
         }else{
-          return redirect()->route('createCnic')->with('error',$request->person_cnic.' Not Found!');
+          return redirect()->route('createCnic')->with('error',' Not Found!');
 
         }
 
