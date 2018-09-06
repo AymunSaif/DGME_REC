@@ -4,9 +4,13 @@ namespace App\Http\Controllers;
 
 use App\District;
 use Illuminate\Http\Request;
-
+use App\City;
+use App\Province;
 class DistrictController extends Controller
 {
+    public function getDistrict(Request $request){
+        return District::where('province_id',$request->province_id)->get();
+    }
     /**
      * Display a listing of the resource.
      *

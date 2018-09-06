@@ -66,7 +66,7 @@ class JobFormController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
+     {
       if(Auth::user()->email == "admin@dgme.gov.pk"){
         $person=Applicant::all();
         $person_detail= ApplicantDetail::all();
@@ -88,27 +88,25 @@ class JobFormController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create($id)
-    {
+     {
       $applicant=Applicant::where('id',$id)->first();
       if($applicant){
       $cniclog=CnicLog::where('applicant_id',$applicant->id)->first();
       if($cniclog->status==1 && $cniclog->user_id!=Auth::id()){ //Check Status if some-one working
         return redirect()->back()->with('warning',$cnicLog->User->first_name.' is working on it.');
-      }
-    }else{
-      return redirect()->route('createCnic')->with('error',$id.' Not Found!');
-
-    }
-    $cities=City::all();
-    $districts=District::all();
-    $provinces=Province::all();
-    $sec_edu=SecondarySubject::all();
-    $high_edu=HigherSubject::all();
-    $certifications=Certification::all();
-    $appliedposition=ApplicantAppliedFor::all();
-       return view('recuritment.create',['applicant'=>$applicant,'cities'=>$cities,'districts'=> $districts,'provinces'=>$provinces,
-                      'sec_edu'=>$sec_edu,'high_edu'=>$high_edu
-                      ,'certifications'=> $certifications,'appliedposition'=> $appliedposition]);
+      } }
+      else{
+      return redirect()->route('createCnic')->with('error','Not Found!');}
+        $cities=City::all();
+        $districts=District::all();
+        $provinces=Province::all();
+        $sec_edu=SecondarySubject::all();
+        $high_edu=HigherSubject::all();
+        $certifications=Certification::all();
+        $appliedposition=ApplicantAppliedFor::all();
+          return view('recuritment.create',['applicant'=>$applicant,'cities'=>$cities,'districts'=> $districts,'provinces'=>$provinces,
+                          'sec_edu'=>$sec_edu,'high_edu'=>$high_edu
+                          ,'certifications'=> $certifications,'appliedposition'=> $appliedposition]);
     }
 
     /**
@@ -117,7 +115,7 @@ class JobFormController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+  public function store(Request $request)
     {
 
           // dd($request->all());
@@ -140,6 +138,7 @@ class JobFormController extends Controller
        // $person->cnic= $request->person_cnic;
        $person->gender= $request->gender;
        $person->dob= $request->dob;
+       $person->religion=$request->religion;
        $person->email= $request->emailaddress;
        $person->created_by=Auth::id();
        $person->save();
@@ -149,7 +148,7 @@ class JobFormController extends Controller
        $person_detail->father_name=$request->f_name;
        $person_detail->province_id=$request->dom_province;
        $person_detail->district_id=$request->dom_district;
-       $person_detail->city_id=$request->dom_city;
+       $person_detail->city=$request->city;
        $person_detail->postal_add=$request->address;
        $person_detail->phone_num=$request->full_phone;
        $person_detail->cell_num=$request->full_mobilenumber1;
@@ -305,27 +304,31 @@ class JobFormController extends Controller
       //postgraduation
 
        $i=0;
-      if($request->pg_Name!=null)
-       foreach($request->pg_Name as $pg_name){
+      if($request->qualification_postuniv!=null)
+       foreach($request->qualification_postuniv as $qualification_postuniv){
         $person_higherEdu_grad = new ApplicantHigherEducation();
         $person_higherEdu_grad->applicant_id=$person->id;
 
-        $person_higherEdu_grad->institute_name=$pg_name;
+        if(isset($request->pg_Name[$i]))
+        $person_higherEdu_grad->institute_name=$request->pg_Name[$i];
+        elseif(isset($request->otherpost_univ[$i]))
+        $person_higherEdu_grad->institute_name=$request->otherpost_univ[$i];
 
         if(isset($request->qualification_postuniv[$i]))
-        $person_higherEdu_grad->qualification_type=$request->qualification_postuniv[$i];
+        $person_higherEdu_grad->qualification_type=$qualification_postuniv;
 
         if(isset($request->post_grad_degree[$i]))
         $person_higherEdu_grad->highersubject_id=$request->post_grad_degree[$i];
 
         if(isset($request->pg_cgpa[$i]))
-        $person_higherEdu_grad->cgpa=$request->pg_cgpa[$i];
+          $person_higherEdu_grad->cgpa=$request->pg_cgpa[$i];
 
         if(isset($request->pg_dmc_date[$i]))
-        $person_higherEdu_grad->final_dmc_date=$request->pg_dmc_date[$i];
+          $person_higherEdu_grad->final_dmc_date=$request->pg_dmc_date[$i];
 
         if(isset($request->pg_distinction[$i]))
-        $person_higherEdu_grad->distinction=$request->pg_distinction[$i];
+          $person_higherEdu_grad->distinction=$request->pg_distinction[$i];
+          // dd($person_higherEdu_grad);
         $person_higherEdu_grad->save();
         $i++;
        }
@@ -421,7 +424,7 @@ class JobFormController extends Controller
 
             if($request->researchType[$i]=="Journal")
             {
-                $person_researchwork->researchwork=$app_rp;
+                $person_researchwork->name=$app_rp;
                 if(isset($request->journal_yr[$i]))
                 $person_researchwork->published_year=$request->journal_yr[$i];
                 if(isset($request->journal_dt[$i]))
@@ -430,7 +433,7 @@ class JobFormController extends Controller
             }
             else if($request->researchType[$i]=="Conference")
             {
-                $person_researchwork->researchwork=$app_rp;
+                $person_researchwork->name=$app_rp;
                 if(isset($request->conf_yr[$i]))
                 $person_researchwork->published_year=$request->conf_yr[$i];
                 if(isset($request->app_conf[$i]))
@@ -459,10 +462,10 @@ class JobFormController extends Controller
         $person_pcm->issued_by=$request->issued_name[$i];
 
         if(isset($request->pm_doi[$i]))
-        $person_pcm->registeration=$request->pm_doi[$i];
+        $person_pcm->issuance_date=$request->pm_doi[$i];
 
         if(isset($request->pm_reg[$i]))
-        $person_pcm->issuance_date=$request->pm_reg[$i];
+        $person_pcm->registeration=$request->pm_reg[$i];
         $person_pcm->save();
 
         $i++;
@@ -500,12 +503,14 @@ class JobFormController extends Controller
        $i=0;
        if($request->app_designation!=null)
        foreach($request->app_designation as $app_designation)
-     {
-            $person_designation= new ApplicantAppliedFor();
-            $person_designation->applicant_id=$person->id;
-            $person_designation->position_name=$request->app_designation;
-            $person_designation->save();
-            $i++;
+        {
+          if($request->app_designation!=null){
+                $person_designation= new ApplicantAppliedFor();
+                $person_designation->applicant_id=$person->id;
+                $person_designation->position_name=$app_designation;
+                $person_designation->save();
+                $i++;
+            }
         }
 
        //documents
@@ -521,15 +526,20 @@ class JobFormController extends Controller
             $person_designation->save();
             $i++;
        }
-       // Stored so Change Pending status to 1
-           $cnicLog=CnicLog::where('cnic',$request->person_cnic)
+       // Stored so Change Pending status to 0
+           $cnicLog=CnicLog::where('applicant_id',$request->person_id)
             ->where('user_id',Auth::id())->first();
-           $cnicLog->status=1;
+           $cnicLog->status=0;
            $cnicLog->save();
        return redirect()->back()->with('success','New Recuritment Has Been Added!!');
     // return redirect()->route('job_form.index')->with('success','New Recuritment Has Been Added!!');
 }
 
+public function showsummary(JobForm $jobForm)
+{
+    return view('recuritment.summary');
+
+}
     /**
      * Display the specified resource.
      *

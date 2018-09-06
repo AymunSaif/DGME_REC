@@ -10,4 +10,11 @@ class District extends Model
     {   
         return $this->hasMany('App\ApplicantDetail');
     }
-   }
+    public function Cities(){
+        return $this->hasMany('App\City');
+    }
+    public function Province()
+    {   
+        return $this->belongsTo('App\Province');
+    }
+}

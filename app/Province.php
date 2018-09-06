@@ -10,4 +10,8 @@ class Province extends Model
     {   
         return $this->hasMany('App\ApplicantDetail');
     }
-   }
+    public function Districts()
+    {   
+        return $this->hasMany('App\District');
+    }
+}

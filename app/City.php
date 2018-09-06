@@ -10,5 +10,9 @@ class City extends Model
     {   
         return $this->hasMany('App\ApplicantDetail');
     }
+    public function District()
+    {   
+        return $this->belongsTo('App\District');
+    }
    
 }

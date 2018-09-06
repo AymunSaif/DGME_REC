@@ -12,9 +12,14 @@ class SecondarySubjectController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+ 
+    public function getCustom(Request $req){
+        return SecondarySubject::where('type',$req->type)
+        ->get();
+    }
     public function index()
     {
-        //
+        SecondarySubject::where('status',1)->get();
     }
 
     /**
