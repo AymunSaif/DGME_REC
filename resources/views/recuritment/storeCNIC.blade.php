@@ -10,7 +10,7 @@
                   <span style="color:red;font-size:12px;"> (required)</span>
               </b>
               <br>
-              <input type="text" id="cnic" maxlength="15" name="person_cnic" placeholder="xxxxx-xxxxxxx-x" class="form-control" required>
+              <input autocompleteoff type="text" id="cnic" maxlength="15" name="person_cnic" placeholder="xxxxx-xxxxxxx-x" class="form-control" required>
           </div>
       </div>
       <div class="col-md-3"></div>

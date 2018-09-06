@@ -14,6 +14,10 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/new', function () {
+    return view('newlogin');
+});
 Route::group(['middleware' => ['role:dataentry','auth']], function () {
 Route::get('createCnic','JobFormController@createCnic')->name('createCnic');
 Route::post('storecnic','JobFormController@storeCnic')->name('storeCnic');
