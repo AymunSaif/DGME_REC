@@ -28,7 +28,7 @@
     <script src="{{ asset('js/app.js') }}"></script>
     <script>
         $(document).ready(function(){
-            $(".alert").delay(500).slideUp(500);
+            $(".alert").delay(500).slideUp(2000);
         });
     </script>
     @yield('scriptTags')

@@ -33,5 +33,10 @@ class Applicant extends Model
     {
         return $this->hasMany('App\ApplicantSecondaryEducation');
     }
+    public function ApplicantAppliedFor()
+    {
+        return $this->hasMany('App\ApplicantAppliedFor');
+    }
+    
 
 }

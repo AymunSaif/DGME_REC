@@ -655,6 +655,16 @@
 
     </script>
     <script>
+            $(document).ready(function() {
+
+                $(document).keypress(function(event){
+                
+                if (event.keyCode == 10 || event.keyCode == 13) 
+                {
+                    event.preventDefault();
+                }
+                });
+                });
 
             $('button#basic_info , .demographicsSection').on('click', function () {
 
@@ -1027,7 +1037,7 @@
                             +'<div class="col-md-12" style="margin-bottom: 15px;margin-top: 15px;">'
                             +'<input type="hidden" name="qualification_postuniv[]" value="post_grad">'
                             +'<div class="col-md-5 institute_name">Institution Name'
-                            +'<select name="pg_Name" class="form-control" onchange="add_newUC(this)">'
+                            +'<select name="pg_Name[]" class="form-control" onchange="add_newUC(this)">'
                             +'<option value=""></option>'
                             +'<option value="other">other</option>';
                             $.ajax({
@@ -1330,13 +1340,10 @@
                         +'Institute <select class="form-control"  id="university_names[]" name="university_names[]" onchange="add_newUC(this)">'
                         +'<option value=""></option>'
                         +'<option value="other">other</option>';
-                            $.ajax({
+                        $.ajax({
                                 type: "get",
                                 url: '{{route("getuniv")}}',
                                 async: false,
-                                data: {
-                                "_token": "{{ csrf_token() }}",
-                                'type' : 'bachelor'},
                                 success: function(data){
                                 console.log(data);
                                 univ = data;
@@ -1353,7 +1360,7 @@
                         +'<input type="hidden" id="real_university_names[]"/>'
                         +'<div id="other_univ" style=" margin-top: -20px; display:none;">'
                         +'<input type="text"  name="other_univbox[]" id="other_univbox[]" class="form-control"/>'
-                        +'</div> </span></div></div>'
+                        +'</div> </span></div>'
                         +'<div class="col-md-4  subjects">'
                         +'<span class="univsubjects" >'
                         +'Subjects<select class="form-control" name="u_subjects[]">'
@@ -1418,6 +1425,7 @@
             else
             {
                 $('#otherpost_univ').hide();
+                
                 if($(e).val()=="other")
                 {
                     $(e).next().next().next().show()

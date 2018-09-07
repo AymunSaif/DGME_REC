@@ -6,23 +6,23 @@ use Illuminate\Database\Eloquent\Model;
 
 class ApplicantDetail extends Model
 {
-    public function applicant()
+    public function Applicant()
     {   
         return $this->belongsTo('App\Applicant');
     }
-    public function applicantAppliedfor()
+    public function ApplicantAppliedfor()
     {   
         return $this->belongsTo('App\ApplicantAppliedFor');
     }
-    public function district()
+    public function District()
     {   
         return $this->belongsTo('App\District');
     }
-    public function city()
+    public function City()
     {   
         return $this->belongsTo('App\City');
     }
-    public function province()
+    public function Province()
     {   
         return $this->belongsTo('App\Province');
     }

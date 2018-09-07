@@ -70,19 +70,14 @@ class JobFormController extends Controller
      */
     public function index() 
      {
-      if(Auth::user()->email == "admin@dgme.gov.pk"){
-        $person=Applicant::all();
-        $person_detail= ApplicantDetail::all();
-        $person_secondaryEdu = ApplicantSecondaryEducation::all();
-        $person_higherEdu =ApplicantHigherEducation::all();
-        $person_certificate=ApplicantCertification::all();
-        $person_exp=ApplicantExperience::all();
-        return view('recuritment.index');
-      }
-      else{
-        return redirect("/");
-      }
-
+      $persons=Applicant::all();
+      $person_detail= ApplicantDetail::all();
+      $person_secondaryEdu = ApplicantSecondaryEducation::all();
+      $person_higherEdu =ApplicantHigherEducation::all();
+      $person_certificate=ApplicantCertification::all();
+      $person_exp=ApplicantExperience::all();
+      $person_applied=ApplicantAppliedFor::all();
+      return view('recuritment.index',['persons'=>$persons,'person_applied'=>$person_applied]);
     }
 
     /**
@@ -318,7 +313,7 @@ class JobFormController extends Controller
               $new_univ->name =$request->other_collegebox[$i];
               $new_univ->status= 'true';
               $new_univ->save();
-              $person_higherEdu_2yr->institute_name=$new_univ->name[$i];
+              $person_higherEdu_2yr->institute_name=$new_univ->name;
   
             }
 
@@ -356,11 +351,14 @@ class JobFormController extends Controller
           $person_higherEdu_univ->institute_name=$request->university_names[$i];
           else if(isset($request->other_univbox[$i])  && $request->other_univbox[$i] !=Null)
           {
+            // dd($request->other_univbox[$i]);
             $new_univ= new University();
             $new_univ->name = $request->other_univbox[$i];
             $new_univ->status= 'true';
             $new_univ->save();
-            $person_higherEdu_univ->institute_name=$new_univ->name[$i];
+            // dd('Saved');
+            $person_higherEdu_univ->institute_name=$new_univ->name;
+
 
           }
 
@@ -397,6 +395,7 @@ class JobFormController extends Controller
           $person_higherEdu_univ->distinction=$request->distinction[$i];
 
           $person_higherEdu_univ->save();
+          // dd('saved'.$person_higherEdu_univ);
             }
             $i++;
           }
@@ -412,15 +411,15 @@ class JobFormController extends Controller
           $person_higherEdu_grad = new ApplicantHigherEducation();
           $person_higherEdu_grad->applicant_id=$person->id;
 
-          if(isset($request->pg_Name[$i]) && $request->pg_Name[$i]!=Null) 
-          $person_higherEdu_grad->institute_name=$request->pg_Name[$i];
+          if(isset($request->pg_Name[$i]) && $request->pg_Name[$i]!=Null && $request->pg_Name[$i]!='other') 
+           $person_higherEdu_grad->institute_name=$request->pg_Name[$i];
           elseif(isset($request->otherpost_univ[$i]) && $request->otherpost_univ[$i]!=Null)
           {
             $new_univ= new University();
             $new_univ->name =$request->otherpost_univ[$i];
-            $new_univ->status= 'true';
+            $new_univ->status='true';
             $new_univ->save();
-            $person_higherEdu_grad->institute_name=$new_univ->name[$i];
+            $person_higherEdu_grad->institute_name=$new_univ->name;
 
           }
 
@@ -614,7 +613,7 @@ class JobFormController extends Controller
           $i++;
       }
 
-  
+      // dd($request->org_Name[0]!=);
      //---------------------->experience
       // }    
     // else if($request->data_type=='experience'){
@@ -625,16 +624,17 @@ class JobFormController extends Controller
             $person_exp= new ApplicantExperience();
             $person_exp->applicant_id=$person->id;
             
-            if(isset($request->org_name[$i]))
-            $person_exp->org_name=$org;
+            if(isset($request->org_Name[$i])){
+              $person_exp->org_name=$org;
+            }
 
             if(isset($request->org_type[$i]))
             $person_exp->org_type=$request->org_type[$i];
 
-            if(isset($request->start_dob[$i]))
+            if(isset($request->start_date[$i]))
             $person_exp->start_date=$request->start_date[$i];
 
-            if(isset($request->end_dob[$i]))
+            if(isset($request->end_date[$i]))
             $person_exp->end_date=$request->end_date[$i];
 
             if(isset($request->role_name[$i]))
@@ -692,7 +692,6 @@ class JobFormController extends Controller
 
 public function showsummary(JobForm $jobForm)
 {
-    return view('recuritment.summary');
 
 }
     /**
@@ -701,9 +700,10 @@ public function showsummary(JobForm $jobForm)
      * @param  \App\JobForm  $jobForm
      * @return \Illuminate\Http\Response
      */
-    public function show(JobForm $jobForm)
-    {
-        //
+    public function show($id)
+    { 
+      $applicant= Applicant::find($id);
+      return view('recuritment.show',['applicant'=>$applicant]);
     }
 
     /**
@@ -712,7 +712,7 @@ public function showsummary(JobForm $jobForm)
      * @param  \App\JobForm  $jobForm
      * @return \Illuminate\Http\Response
      */
-    public function edit(JobForm $jobForm)
+    public function edit(Applicant $applicant)
     {
         //
     }
@@ -724,7 +724,7 @@ public function showsummary(JobForm $jobForm)
      * @param  \App\JobForm  $jobForm
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, JobForm $jobForm)
+    public function update(Request $request, Applicant $applicant)
     {
         //
     }
@@ -735,7 +735,7 @@ public function showsummary(JobForm $jobForm)
      * @param  \App\JobForm  $jobForm
      * @return \Illuminate\Http\Response
      */
-    public function destroy(JobForm $jobForm)
+    public function destroy(Applicant $applicant)
     {
         //
     }

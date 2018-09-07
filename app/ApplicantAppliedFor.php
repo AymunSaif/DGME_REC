@@ -8,8 +8,8 @@ class ApplicantAppliedFor extends Model
 {
     protected $table= 'applicant_appliedfor';
 
-    public function ApplicantDetail()
+    public function Applicant()
     {   
-        return $this->hasOne('App\ApplicantDetail');
+        return $this->belongsTo('App\Applicant');
     }
 }
