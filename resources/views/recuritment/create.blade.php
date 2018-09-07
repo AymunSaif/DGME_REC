@@ -29,7 +29,7 @@
             </ul>
         </div>
     </div>
-  
+
     <section id="demographicsSection">
         <div class="row">
             <h3  style="color:gray; text-align:center; font-weight:bold">
@@ -77,7 +77,7 @@
                     <br>
                     <input type="text" name="religion" class="form-control">
                 </div>
-                
+
 
             </div>
             <div class="col-md-6">
@@ -91,12 +91,12 @@
 
                     </select>
                 </div>
-               
+
                 <div class="form-group">
                     <b>Domicile Districts </b>
                     <select class="form-control dom_district " name="dom_district">
                         <option value="">Select Districts</option>
-                    
+
                     </select>
                 </div>
                 <div class="form-group">
@@ -106,7 +106,7 @@
                     </div>
                 <div class="form-group">
                     <b>City </b>  <input type="text" name="city" id="city" class="form-control">
-          
+
                 </div>
 
                 <div class="form-group">
@@ -175,7 +175,7 @@
                     </td>
                     <td>
                         <span class="sch_board" style="display:none;">Board
-                         <div>  
+                         <div>
                             <select class="form-control b_Name" name="b_Name" >
                                 <option >Select Board</option>
                                 <option >Other</option>
@@ -384,12 +384,12 @@
 
         <div class="row" id="gradeducation">
             <div class="row container-fluid">
-                   
+
                 <div class="col-md-1">
                 <button type="button" id="add_grad_level"   class="btn btn-lg btn-success add_grad_level" style="width: 252px;" ><span
                      class="glyphicon glyphicon-plus"> Add Graduation Level</span></button>
             </div>
-           
+
         </div>
         </div>
 
@@ -553,6 +553,16 @@
     {{-- <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/js/bootstrap-select.min.js"></script> --}}
     <script src="{{asset('js/intlTelInput.js')}}"></script>
     <script>
+    $(document).ready(function() {
+
+      $(document).keypress(function(event){
+
+        if (event.keyCode == 10 || event.keyCode == 13)
+        {
+            event.preventDefault();
+        }
+      });
+    });
         $('#mobilenumber, #mobile_number2').on('blur',function(){
         if($(this).intlTelInput("isValidNumber"))
         {
@@ -727,10 +737,10 @@
                 $('section#cnicSection').hide(1000);
                 $('section#experienceSection').show(1000);
             });
-        
-            $('.b_Name').on('change', function () 
+
+            $('.b_Name').on('change', function ()
                 {
-                
+
                     if($('.b_Name').val()=="Other")
                     {
                         $('.sch_otherboard').show(1000);
@@ -738,12 +748,12 @@
                     else{
                         $('.sch_otherboard').hide(1000);
                         $('.b_Name').show(1000);
-                
-                }     
+
+                }
             });
 
         function add_newsub(e){
-            if($(e).hasClass("subjects_school")) 
+            if($(e).hasClass("subjects_school"))
             {
                 if($('.subjects_school :selected').text()=='Other')
                     {
@@ -754,8 +764,8 @@
                     $('.subjectsschool_other').hide(1000);
                     $('.subjects_school').show(1000);
                 }
-            } 
-            else if($(e).hasClass("college_subjects")) 
+            }
+            else if($(e).hasClass("college_subjects"))
             {
                 if($('.college_subjects :selected').text()=='Other')
                     {
@@ -768,7 +778,7 @@
                 }
 
             }
-        } 
+        }
 
         $('.c_b_Name').on('change', function () {
             if($('.c_b_Name').val()=="Other")
@@ -779,7 +789,7 @@
                 $('.college_otherboard').hide(1000);
                 $('.c_b_Name').show(1000);
             }
-                    
+
         });
 
             //school percentage and division
@@ -841,8 +851,8 @@
             }
 
         });
-        
-        
+
+
 
         $('.dom_province').on('change', function () {
             //  $(this).val();
@@ -1027,7 +1037,7 @@
                             +'<div class="col-md-12" style="margin-bottom: 15px;margin-top: 15px;">'
                             +'<input type="hidden" name="qualification_postuniv[]" value="post_grad">'
                             +'<div class="col-md-5 institute_name">Institution Name'
-                            +'<select name="pg_Name" class="form-control" onchange="add_newUC(this)">'
+                            +'<select name="pg_Name[]" class="form-control" onchange="add_newUC(this)">'
                             +'<option value=""></option>'
                             +'<option value="other">other</option>';
                             $.ajax({
@@ -1076,7 +1086,7 @@
                             thirdvar='</select></span></div></div></div>'
                             +'<div class="row">'
                             +'<div class="col-md-12"> <div class="col-md-2 post_cgpa">CGPA/4<input type="number" step="0.01" name="pg_cgpa[]" id="pg_cgpa" class="form-control pg_cgpa" onkeyup="calculatePercentagePostGrad(this)"></div>'
-                            +'<div class="col-md-2 post_percentage">Percentage<input type="number" step="0.01" name="pg_percentage[]" id="pg_percentage" class="form-control pg_percentage"></div>'                       
+                            +'<div class="col-md-2 post_percentage">Percentage<input type="number" step="0.01" name="pg_percentage[]" id="pg_percentage" class="form-control pg_percentage"></div>'
                             +'<div class="col-md-2 division"> Division'
                             +'<input type="string" name="postgrad_division[]" value="" class="form-control postgrad_division"></div>'
                             +'<div class="col-md-2 post_dmc">Final DMC Date<input type="date" name="pg_dmc_date[]" id="pg_dmc_date" class="form-control"></div>'
@@ -1282,7 +1292,7 @@
                             +'<input type="hidden" id="real_college_university_names"/>'
                             +'<div id="other_college_univ" style=" margin-top: -20px; display:none;">'
                             +'<input type="text"   name="other_collegebox[]" id="other_collegebox[]" class="form-control"/>'
-                            +' </div></span></div>' 
+                            +' </div></span></div>'
                             +'<div class="col-md-4 subjects">'
                             +'<span class="univsubjects">'
                             +'Subjects<select class="form-control" name="u_subjects[]">'
@@ -1319,7 +1329,7 @@
                             +'<select class="form-control" name="distinction[]">'
                             +'<option value=""></option><option value="Yes">Yes</option><option value="No">No</option></select></div>'
                             +'<div class="col-md-1 remove"><button type="button" id="remove[]"  class="pull-left btn btn-danger btn-md add" style=" margin-top: 19px;" onclick="remove_data(this,2)" ><span class="glyphicon glyphicon-minus"></span></button></div></div></div>';
-                            
+
 
                 }
                 else if(education_y=='4 years')
@@ -1378,7 +1388,7 @@
                             for (var i = 0; i < bachelorSubjects.length; ++i) {
                             secndvar=secndvar+'<option value="'+bachelorSubjects[i].id+'">'+bachelorSubjects[i].subject_name+'</option>';
                             }
-                        
+
                         thirdvar='</select></span></div>'
                         +'<div class="row "><div class="col-md-12"><div class="col-md-1 cgpamarks">CGPA/4<input type="number" step="0.01" name="cgpa[]" id="cgpa" class="form-control"></div>'
                         +'<div class="col-md-2 dmc">Final DMC Date<input type="date" name="dmc_date[]" id="dmc_date" class="form-control"></div>'
@@ -1427,13 +1437,13 @@
                     $(e).next().next().next().hide()
                 }
             }
-        } 
+        }
 
         //postgrad
         function calculatePercentagePostGrad(e)
         {    var total_marks=0;var achieved_marks=0;
             if($(e).hasClass("pg_cgpa"))
-                { 
+                {
                     achieved_marks=$(e).val();
                     total_marks=4;
                 }
@@ -1530,12 +1540,12 @@
 
                 $(e).parent().siblings('.division').children('input[name="division[]"]').val('First');
             }
-            else if(result >=36 && result <=59)
+            else if(result >=45 && result <=59)
             {
                 $(e).parent().siblings('.division').children('input[name="division[]"]').val('Second');
 
             }
-            else if(result >=33 && result <=35)
+            else if(result >=33 && result <=44)
             {
                 $(e).parent().siblings('.division').children('input[name="division[]"]').val('Third');
 
