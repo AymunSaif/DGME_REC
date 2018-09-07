@@ -18,12 +18,7 @@ trait RegistersUsers
     public function showRegistrationForm()
     {
       // dd(Auth::user());
-      if(Auth::user()->email == "admin@dgme.gov.pk"){
         return view('auth.register');
-      }
-      else{
-      return redirect("/");
-    }
     }
 
     /**
