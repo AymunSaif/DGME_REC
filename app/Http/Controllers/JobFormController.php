@@ -97,9 +97,11 @@ class JobFormController extends Controller
       $cniclog=CnicLog::where('applicant_id',$applicant->id)->first();
       if($cniclog->status==1 && $cniclog->user_id!=Auth::id()){ //Check Status if some-one working
         return redirect()->back()->with('warning',$cnicLog->User->first_name.' is working on it.');
-      } }
+      }
+    }
       else{
-      return redirect()->route('createCnic')->with('error','Not Found!');}
+      return redirect()->route('createCnic')->with('error','Not Found!');
+    }
         $cities=City::all();
         $districts=District::all();
         $provinces=Province::all();
@@ -134,7 +136,6 @@ class JobFormController extends Controller
         else
         {
           return redirect()->route('createCnic')->with('error',' Not Found!');
-
         }
 
     // Applicant Details
@@ -150,7 +151,6 @@ class JobFormController extends Controller
        $person->email= $request->emailaddress;
        $person->created_by=Auth::id();
        $person->save();
-
        $person_detail= new ApplicantDetail();
        $person_detail->applicant_id=$person->id;
        $person_detail->father_name=$request->f_name;
@@ -164,6 +164,7 @@ class JobFormController extends Controller
        $person_detail->save();
       // }
 
+      // dd($person);
        //---------->School Education//
 
        // else if($request->data_type=='education'){
@@ -381,7 +382,7 @@ class JobFormController extends Controller
           if(isset($request->foury_t_marks[$i]))
           $person_higherEdu_univ->total_marks=$request->foury_t_marks[$i];
 
-          if(isset($request->cgpa[$i]))
+          if(isset($request->foury_a_marks[$i]))
           $person_higherEdu_univ->achieved_marks=$request->foury_a_marks[$i];
 
           if(isset($request->univ_per[$i]))
@@ -625,16 +626,16 @@ class JobFormController extends Controller
             $person_exp= new ApplicantExperience();
             $person_exp->applicant_id=$person->id;
 
-            if(isset($request->org_name[$i]))
+            if(isset($request->org_Name[$i]))
             $person_exp->org_name=$org;
 
             if(isset($request->org_type[$i]))
             $person_exp->org_type=$request->org_type[$i];
 
-            if(isset($request->start_dob[$i]))
+            if(isset($request->start_date[$i]))
             $person_exp->start_date=$request->start_date[$i];
 
-            if(isset($request->end_dob[$i]))
+            if(isset($request->end_date[$i]))
             $person_exp->end_date=$request->end_date[$i];
 
             if(isset($request->role_name[$i]))

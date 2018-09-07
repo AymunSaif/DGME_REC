@@ -553,6 +553,16 @@
     {{-- <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/js/bootstrap-select.min.js"></script> --}}
     <script src="{{asset('js/intlTelInput.js')}}"></script>
     <script>
+    $(document).ready(function() {
+
+      $(document).keypress(function(event){
+
+        if (event.keyCode == 10 || event.keyCode == 13)
+        {
+            event.preventDefault();
+        }
+      });
+    });
         $('#mobilenumber, #mobile_number2').on('blur',function(){
         if($(this).intlTelInput("isValidNumber"))
         {
@@ -1530,12 +1540,12 @@
 
                 $(e).parent().siblings('.division').children('input[name="division[]"]').val('First');
             }
-            else if(result >=36 && result <=59)
+            else if(result >=45 && result <=59)
             {
                 $(e).parent().siblings('.division').children('input[name="division[]"]').val('Second');
 
             }
-            else if(result >=33 && result <=35)
+            else if(result >=33 && result <=44)
             {
                 $(e).parent().siblings('.division').children('input[name="division[]"]').val('Third');
 
