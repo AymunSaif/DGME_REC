@@ -30,4 +30,7 @@ Route::get('/univ','UniversityController@getuniv')->name('getuniv');
 Route::post('/district','DistrictController@getDistrict')->name('getDistrict');
 Route::get('/form', 'JobFormController@index')->name('index')->middleware('auth');
 });
+Route::get('/403', function () {
+    return view('403');
+});
 Auth::routes();

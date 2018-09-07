@@ -176,7 +176,7 @@
                     <td>
                         <span class="sch_board" style="display:none;">Board
                          <div>  
-                            <select class="selectpicker form-control b_Name"   data-live-search="true" name="b_Name" >
+                            <select class="form-control b_Name" name="b_Name" >
                                 <option >Select Board</option>
                                 <option >Other</option>
                                 <option >IGCSE </option>
