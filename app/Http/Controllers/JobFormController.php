@@ -436,14 +436,14 @@ class JobFormController extends Controller
           $person_higherEdu_grad->applicant_id=$person->id;
 
           if(isset($request->pg_Name[$i]) && $request->pg_Name[$i]!=Null)
-          $person_higherEdu_grad->institute_name=$request->pg_Name[$i];
+          $person_higherEdu_grad->university_id=$request->pg_Name[$i];
           elseif(isset($request->otherpost_univ[$i]) && $request->otherpost_univ[$i]!=Null)
           {
             $new_univ= new University();
             $new_univ->name =$request->otherpost_univ[$i];
             $new_univ->status='true';
             $new_univ->save();
-            $person_higherEdu_grad->institute_name=$new_univ->name;
+            $person_higherEdu_grad->university_id=$new_univ->id;
 
           }
 
@@ -737,7 +737,15 @@ public function showsummary(JobForm $jobForm)
     public function show($id)
     {
       $applicant= Applicant::find($id);
-      return view('recuritment.show',['applicant'=>$applicant]);
+     
+    //  dd( $applicant_secondaryEdu);
+      //calculating age
+      $dateofbirth=date('Y-m-d',strtotime($applicant->dob)); 
+      $today_date = date('Y-m-d');
+      $age=date_diff(date_create($dateofbirth), date_create($today_date));
+      $age=$age->format('%y');
+      
+      return view('recuritment.show',['applicant'=>$applicant,'age'=>$age]);
     }
 
     /**
