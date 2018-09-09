@@ -491,6 +491,23 @@
                 <th style="text-align:center;">Role</th>
                 <th style="text-align:center;"><button type="button" id="add_moreexp" class="btn btn-success btn-sm add_moreexp"><span class="glyphicon glyphicon-plus"></span></button></th>
             </tr>
+            <tr>
+                <td><input type="text" name="org_Name[]" id="org_Name" placeholder="Enter Your Organization Name" class="form-control"></td>
+                <td>
+                    <select class="form-control" name="org_type[]">
+                    <option value="">Select Type:</option>
+                     <option value="1">Private/NGO</option>
+                    <option value="2">Government</option>
+                    <option value="3">International/INGO</option>
+                    <option value="4">Self-Employed</option>
+                    <option value="5">Donor Agencies</option>
+                    </select>
+                </td>
+                <td> <input type="date" name="start_date[]" id="start_date" class="form-control"></td>
+                <td><input type="date" name="end_date[]" id="end_date" class="form-control"></td>
+                <td><input type="text" name="role_name[]" class="form-control"></td>
+                <td style="text-align:center;"><button type="button" id="remove_exp[]" onclick="remove_exp(this)" class="btn btn-danger btn-sm remove" ><span class=" glyphicon glyphicon-minus"></span></button></td>
+                </tr>
         </table>
         <div class="row" style="margin-top:5px;">
 
@@ -1251,10 +1268,10 @@
             //designation
             var i=0;
             $('button#add_moredesignation').click(function(e){
-
+               
                 var designation_row = '';
                 designation_row += '<tr>';
-                designation_row += '<td>1</td>';
+                designation_row += '<td style="text-align:center;">'+ ++i +' </td>';
                 designation_row += '<td><select class="form-control" name="app_designation[]"><option value="">Select Designation:</option><option >Deputy Director (Admin/HR)</option><option >Deputy Director (Finance & Accounts)</option><option >Deputy Director (IT)</option><option >Communication Specialist</option><option >Assistant Director IT</option><option >Assistant Director (Programming)</option><option >Assistant Director (Database)</option><option >Admin/Hr Officer </option><option >Finance Officer</option><option >Audit Officer</option><option >Research Associates</option><option >M & E Expert</option><option >Socio Economic Development Specialist</option><option >Evaluation Specialist </option><option >Project Management Specialist</option><option >Financial Management Specialist</option><option >Procurement Specialist</option></select></td>';
                 designation_row += '<td style="text-align:center;"><button type="button" id="remove_designation[]" onclick="remove_designation(this)" class="btn btn-danger btn-sm remove" style="text-align:center;"><span class=" glyphicon glyphicon-minus"></span></button></td></tr>';
                 $('#designation_table').append(designation_row);
