@@ -1,10 +1,10 @@
 @extends('layouts.app')
 @section('content')
 <div class="row container-fluid" >     
-    <h1 style="margin-top:15px; margin-bottom:12px;text-align: center;">ALL RECURITMENTS</h1>
+    <h1 style="margin-top:15px; margin-bottom:20px;text-align:center; color:black !important;"><b>VIEW RECURITMENTS</b></h1>
   
    
-    <table class="table table-bordered">
+    <table class="table table-bordered" style="color:black !important;">
         <tr>
             <th>Applicant Name</th>
             <th>CNIC</th>

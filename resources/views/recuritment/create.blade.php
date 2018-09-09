@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('styletags')
-{{-- <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/css/bootstrap-select.min.css" /> --}}
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/css/bootstrap-select.min.css" />
 {{-- <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet"> --}}
       <link href="{{ asset('css/intlTelInput.css') }}" rel="stylesheet">
 @endsection
@@ -176,10 +176,10 @@
                     <td>
                         <span class="sch_board" style="display:none;">Board
                          <div>
-                            <select class="form-control b_Name" name="b_Name" >
-                                <option >Select Board</option>
-                                <option >Other</option>
-                                <option >IGCSE </option>
+                            <select class="form-control b_Name " name="b_Name" >
+                                <option disabled selected="selected"> Select Board</option>
+                                <option  value="other" style="background-color:peachpuff;">Other</option>
+                                <option style="background-color:plum;">IGCSE-Cambridge</option>
                                 <option >Federal BISE</option>
                                 <option >Mirpur AJK BISE</option>
                                 <option >Faisalabad BISE</option>
@@ -222,7 +222,7 @@
                             <div>
                                 <b> Subjects </b>
                                 <select class="form-control subjects_school" name="s_subjects" onchange="add_newsub(this)">
-                                    <option value="" selected>Select Subjects</option>
+                                    
                                 </select><br>
                                 <div class="subjectsschool_other" style=" margin-top: -20px; display:none;">
                                 <input type="text"   name="subjectsschool_other" id="subjectsschool_other" class="form-control"/>
@@ -294,9 +294,9 @@
                                 id="c_Name" class="form-control"></span></td>
                     <td><span class="col_board" style="display:none"> <b> Board </b>
                         <select class="form-control c_b_Name" name="c_b_Name">
-                            <option value="">Select Board</option>
-                            <option>Other</option>
-                            <option>IGCSE </option>
+                            <option disabled selected="selected"> Select Board</option>
+                            <option value ="other" style="background-color:peachpuff;">Other</option>
+                            <option style="background-color:plum;">IGCSE-Cambridge</option>
                             <option>Federal BISE</option>
                             <option>Mirpur AJK BISE</option>
                             <option>Faisalabad BISE</option>
@@ -337,7 +337,6 @@
                             <div>
                                 <b> Subjects </b>
                                 <select class="form-control college_subjects " name="c_subjects" onchange="add_newsub(this)">
-                                    <option value="" selected>Select degree:</option>
                                 </select><br>
                                 <div class="c_othersubjects" style=" margin-top: -20px; display:none;">
                                         <input type="text"   name="c_othersubjects" id="c_othersubjects" class="form-control"/>
@@ -549,8 +548,8 @@
 @section('scriptTags')
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-    {{-- <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/js/bootstrap-select.min.js"></script> --}}
+    {{-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script> --}}
+    <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/js/bootstrap-select.min.js"></script>
     <script src="{{asset('js/intlTelInput.js')}}"></script>
     <script>
     $(document).ready(function() {
@@ -751,7 +750,7 @@
             $('.b_Name').on('change', function ()
                 {
 
-                    if($('.b_Name').val()=="Other")
+                    if($('.b_Name').val()=="other")
                     {
                         $('.sch_otherboard').show(1000);
                         }
@@ -765,8 +764,10 @@
         function add_newsub(e){
             if($(e).hasClass("subjects_school"))
             {
+                console.log('sgdua');
                 if($('.subjects_school :selected').text()=='Other')
                     {
+                        console.log('shdgas');
                     $('.subjectsschool_other').show(1000);
                     }
                 else
@@ -791,7 +792,7 @@
         }
 
         $('.c_b_Name').on('change', function () {
-            if($('.c_b_Name').val()=="Other")
+            if($('.c_b_Name').val()=="other")
             {
                 $('.college_otherboard').show(1000);
                 }
@@ -889,7 +890,7 @@
                 if ($('.school_level').val() == 'Matric') {
                     $('.Grades_olevel').hide(1000);
                     $('.subjects_school').children().remove();
-                    $('.subjects_school').append('<option>Select Subject</option>');
+                    $('.subjects_school').append('<option disabled selected="selected"> Select Subject</option><option value="other" style="background-color:peachpuff;">Other</option>');
                     $.ajax({
                                 type: "POST",
                                 url: '{{route("getSecondaryCustomSubject")}}',
@@ -898,7 +899,7 @@
                                 'type' : $(this).val()},
                                 success: function(data){
                                     console.log(data);
-                                    for (let index = 0; index < data.length; index++) {
+                                    for (let index = 1; index <=data.length; index++) {
                                         $('.subjects_school').append('<option value="'+data[index].id+'" selected="selected">'+data[index].subject_name+'</option>');
                                     }
                                 },
@@ -920,7 +921,7 @@
                 } else if ($('.school_level').val() == 'O-Level') {
                     $('input[name="qualification"]').val("O-Level");
                     $('.subjects_school').children().remove();
-                    $('.subjects_school').append('<option>Select Subject</option>');
+                    $('.subjects_school').append('<option disabled selected="selected"> Select Subject</option><option value="other" style="background-color:peachpuff;">Other</option>');
                     $.ajax({
                                 type: "POST",
                                 url: '{{route("getSecondaryCustomSubject")}}',
@@ -956,7 +957,7 @@
 
                     $('input[name="college_qualification_type"]').val("Intermediate")
                     $('.college_subjects').children().remove();
-                    $('.college_subjects').append('<option>Select Subject</option>');
+                    $('.college_subjects').append('<option disabled selected="selected">Select Subject</option><option value="other" style="background-color:peachpuff;">Other</option>');
                     $.ajax({
                                 type: "POST",
                                 url: '{{route("getSecondaryCustomSubject")}}',
@@ -986,7 +987,7 @@
                 } else if ($('.college_level').val() == 'A-Level') {
                     $('input[name="college_qualification_type"]').val("A-Level")
                     $('.college_subjects').children().remove();
-                    $('.college_subjects').append('<option>Select Subject</option>');
+                    $('.college_subjects').append('<option disabled selected="selected"> Select Subject</option><option value="other" style="background-color:peachpuff;">Other</option>');
                     $.ajax({
                                 type: "POST",
                                 url: '{{route("getSecondaryCustomSubject")}}',
@@ -997,7 +998,7 @@
                                     console.log(data);
                                 for (let index = 0; index < data.length; index++) {
                                     $('.college_subjects').append('<option value="'+data[index].id+'" selected="selected">'+data[index].subject_name+'</option>');
-                                }
+                                } 
                             },
                             error: function(jqXHR, textStatus, errorThrown) { // What to do if we fail
                                 console.log(JSON.stringify(jqXHR));
@@ -1046,10 +1047,10 @@
                             +'<div class="row">'
                             +'<div class="col-md-12" style="margin-bottom: 15px;margin-top: 15px;">'
                             +'<input type="hidden" name="qualification_postuniv[]" value="post_grad">'
-                            +'<div class="col-md-5 institute_name">Institution Name'
+                            +'<div class="col-md-4 institute_name">Institution Name'
                             +'<select name="pg_Name[]" class="form-control" onchange="add_newUC(this)">'
                             +'<option value=""></option>'
-                            +'<option value="other">other</option>';
+                            +'<option value="other" style="background-color:peachpuff;">Other</option>';
                             $.ajax({
                                 type: "get",
                                 url: '{{route("getuniv")}}',
@@ -1066,14 +1067,15 @@
                             for (var i = 0; i < univ.length; ++i) {
                                 uniname_start=uniname_start+'<option value="'+univ[i].id+'">'+univ[i].name+'</option>';
                             }
-                            uniname_end='</select> <br>'
+                            uniname_end='</select><br>'
                             +'<input type="hidden" id="university_n[]"/>'
                             +'<div id="otherpost_univ" style=" margin-top: -20px; display:none;">'
                             +'<input type="text"  name="otherpost_univ[]" id="otherpost_univ" class="form-control"/>'
                             +'</div></div>'
-                            +'<div class="col-md-5 postgrad_subjects">Subjects'
-                            +'<select class="form-control" name="post_grad_subject[]">'
-                            +'<option value=""></option>';
+                            +'<div class="col-md-4 postgrad_subjects">Degree'
+                            +'<select class="form-control" name="post_grad_subject[]" onchange="add_newdegree(this)">'
+                            +'<option disabled selected="selected">Select Degree</option>'
+                            +'<option value="other" style="background-color:peachpuff;">Other</option>';
                             $.ajax({
                                 type: "POST",
                                 url: '{{route("getCustomSubject")}}',
@@ -1093,16 +1095,22 @@
                             for (var i = 0; i < masterSubjects.length; ++i) {
                             secndvar=secndvar+'<option value="'+masterSubjects[i].id+'">'+masterSubjects[i].subject_name+'</option>';
                             }
-                            thirdvar='</select></span></div></div></div>'
+                            thirdvar='</select></br>'
+                            +'<div  style=" margin-top: -20px; display:none;">'
+                            +'<input type="text"  name="other_postgradsubjects[]" id="other_postgradsubjects" class="form-control "/>'
+                            +'</div></div>'
+                            +'<div class="col-md-3 distinction">Distinction'
+                            +'<select class="form-control" name="pg_distinction[]">'
+                            +'<option value=""></option><option value="Yes">Yes</option><option value="No">No</option></select></div></div></div>'
                             +'<div class="row">'
-                            +'<div class="col-md-12"> <div class="col-md-2 post_cgpa">CGPA/4<input type="number" step="0.01" name="pg_cgpa[]" id="pg_cgpa" class="form-control pg_cgpa" onkeyup="calculatePercentagePostGrad(this)"></div>'
+                            +'<div class="col-md-12"> <div class="col-md-1 post_cgpa">CGPA/4<input type="number" step="0.01" name="pg_cgpa[]" id="pg_cgpa" class="form-control pg_cgpa" ></div>'
+                            +'<div class="col-md-2 marks">'
+                            +'Total Marks<input type="number" name="postgrad_marks[]"  class="form-control postgrad_marks" /></div>'
+                            +'<div class="col-md-2 achievedmarks">Achieved Marks<input type="number" onkeyup="calculatePercentagePostGrad(this)" name="postgrad_achievedmarks[]"  class="form-control postgrad_achievedmarks"></div>'
                             +'<div class="col-md-2 post_percentage">Percentage<input type="number" step="0.01" name="pg_percentage[]" id="pg_percentage" class="form-control pg_percentage"></div>'
                             +'<div class="col-md-2 division"> Division'
                             +'<input type="string" name="postgrad_division[]" value="" class="form-control postgrad_division"></div>'
                             +'<div class="col-md-2 post_dmc">Final DMC Date<input type="date" name="pg_dmc_date[]" id="pg_dmc_date" class="form-control"></div>'
-                            +'<div class="col-md-2 distinction">Distinction'
-                            +'<select class="form-control" name="pg_distinction[]">'
-                            +'<option value=""></option><option value="Yes">Yes</option><option value="No">No</option></select></div>'
                             +'<div class="col-md-1 remove_grad_level"><button type="button" id="remove_grad_level[]"  class="pull-left btn btn-danger btn-sm add" style=" margin-top: 24px;" onclick="remove_data(this,1)" ><span class="glyphicon glyphicon-minus"></span></button></div></div></div></div>';
 
                     $('#postgradeducation').append(eduprogram+uniname_start+uniname_end+secndvar+thirdvar);
@@ -1279,9 +1287,9 @@
                     add_year_fields='<div class="col-md-4 years">'
                         +'<input type="hidden" name="qualification_univ[]" value="bachelor2year">'
                     +'<span class="twoyear_grad" id="twoyear_grad" >'
-                +'Institution Name<select class="form-control"  id="college_university_names[]" name="college_university_names[]" onchange="add_newUC(this)">'
-                            +'<option ></option>'
-                            +'<option value="other">other</option>';
+                +'Institution Name<select class="form-control"  id="college_university_names" name="college_university_names[]" onchange="add_newUC(this)">'
+                            +'<option >Select Degree</option>'
+                            +'<option value="other" style="background-color:peachpuff;">Other</option>';
                             $.ajax({
                                 type: "get",
                                 url: '{{route("getuniv")}}',
@@ -1303,10 +1311,11 @@
                             +'<div id="other_college_univ" style=" margin-top: -20px; display:none;">'
                             +'<input type="text"   name="other_collegebox[]" id="other_collegebox[]" class="form-control"/>'
                             +' </div></span></div>'
-                            +'<div class="col-md-4 subjects">'
-                            +'<span class="univsubjects">'
-                            +'Subjects<select class="form-control" name="u_subjects[]">'
-                            +'<option value="">Select </option>';
+                            +'<div class="col-md-4 colsubjects">'
+                            +'<span >'
+                            +'Degree<select class="form-control u_collegesubjects" name="u_collegesubjects[]" onchange="add_newdegree(this)">'
+                            +'<option disabled selected="selected">Select Degree</option>'
+                            +'<option value="other" style="background-color:peachpuff;">Other</option>';
                             $.ajax({
                                 type: "POST",
                                 url: '{{route("getCustomSubject")}}',
@@ -1327,7 +1336,10 @@
                             for (var i = 0; i < bachelorSubjects.length; ++i) {
                             secndvar=secndvar+'<option value="'+bachelorSubjects[i].id+'">'+bachelorSubjects[i].subject_name+'</option>';
                             }
-                            thirdvar='</select></span></div></div>'
+                            thirdvar='</select></br>'
+                            +'<div  style=" margin-top: -20px; display:none;">'
+                            +'<input type="text"  name="other_univ_colsubjects[]" id="other_univ_colsubjects" class="form-control "/>'
+                            +'</div> </span></div>'
                             +'<div class="row "><div class="col-md-12"><div class="col-md-2 marks">'
                             +'Total Marks<input type="number" name="twoyear_t_marks[]"  class="form-control twoyear_t_marks"/></div>'
                             +'<div class="col-md-2 achievedmarks">Achieved Marks<input type="number" onkeyup="calculatePercentage(this)" name="twoyear_a_marks[]"  class="form-control twoyear_a_marks"></div>'
@@ -1349,7 +1361,7 @@
                         +'<span class=" fouryear_grad" id="fouryear_grad" >'
                         +'Institute <select class="form-control"  id="university_names[]" name="university_names[]" onchange="add_newUC(this)">'
                         +'<option value=""></option>'
-                        +'<option value="other">other</option>';
+                        +'<option value="other" style="background-color:peachpuff;">Other</option>';
                         $.ajax({
                                 type: "get",
                                 url: '{{route("getuniv")}}',
@@ -1371,10 +1383,11 @@
                         +'<div id="other_univ" style=" margin-top: -20px; display:none;">'
                         +'<input type="text"  name="other_univbox[]" id="other_univbox[]" class="form-control"/>'
                         +'</div> </span></div>'
-                        +'<div class="col-md-4  subjects">'
-                        +'<span class="univsubjects" >'
-                        +'Subjects<select class="form-control" name="u_subjects[]">'
-                        +'<option value=""></option>'
+                        +'<div class="col-md-4 univsubjects">'
+                        +'<span>'
+                        +'Degree<select class="form-control u_subjects" name="u_subjects[]" onchange="add_newdegree(this)">'
+                        +'<option disabled selected="selected">Select Degree</option>'
+                        +'<option value="other" style="background-color:peachpuff;">Other</option>'
                         $.ajax({
                                 type: "POST",
                                 url: '{{route("getCustomSubject")}}',
@@ -1396,7 +1409,10 @@
                             secndvar=secndvar+'<option value="'+bachelorSubjects[i].id+'">'+bachelorSubjects[i].subject_name+'</option>';
                             }
 
-                        thirdvar='</select></span></div>'
+                        thirdvar='</select> <br>'
+                        +'<div class="other_univsubjects" style=" margin-top: -20px; display:none;">'
+                        +'<input type="text"  name="other_univsubjects[]" class="form-control"/>'
+                        +'</div> </span></div>'
                         +'<div class="row "><div class="col-md-12"><div class="col-md-1 cgpamarks">CGPA/4<input type="number" step="0.01" name="cgpa[]" id="cgpa" class="form-control"></div>'
                         +'<div class="col-md-2 dmc">Final DMC Date<input type="date" name="dmc_date[]" id="dmc_date" class="form-control"></div>'
                         +'<div class="col-md-2 marks">Total Marks<input type="number" name="foury_t_marks[]" class="form-control foury_t_marks"/></div>'
@@ -1411,10 +1427,10 @@
                 $(e).parent().parent().find('.remove').remove();
                 $(e).parent().parent().find('.Percentage').remove();
                 $(e).parent().parent().find('.years').remove();
-                $(e).parent().parent().find('.subjects').remove();
+                $(e).parent().parent().find('.univsubjects').remove();
+                $(e).parent().parent().find('.colsubjects').remove();
                 $(e).parent().parent().find('.cgpamarks').remove();
                 $(e).parent().parent().find('.marks').remove();
-                $(e).parent().parent().find('.univsubjects').remove();
                 $(e).parent().parent().find('.fouryear_grad').remove();
                 $(e).parent().parent().find('.achievedmarks').remove();
                 $(e).parent().parent().find('.grad_date').remove();
@@ -1430,30 +1446,50 @@
         {
             if($(e).attr('name')=="pg_Name")
             {
-                $('#otherpost_univ').show();
+                $('#otherpost_univ').show(1000);
             }
             else
             {
-                $('#otherpost_univ').hide();
+                $('#otherpost_univ').hide(1000);
                 
                 if($(e).val()=="other")
                 {
-                    $(e).next().next().next().show()
+                    $(e).next().next().next().show(1000)
                 }
                 else
                 {
-                    $(e).next().next().next().hide()
+                    $(e).next().next().next().hide(1000)
                 }
             }
         }
+        //add new degree
 
+        function add_newdegree(e)
+        {
+             
+             if($(e).val()=="other")
+            {
+                
+                $(e).next().next().show(1000)
+            }
+            else
+            {
+                $(e).next().next().hide(1000)
+            }
+        }
+       
         //postgrad
         function calculatePercentagePostGrad(e)
-        {    var total_marks=0;var achieved_marks=0;
-            if($(e).hasClass("pg_cgpa"))
+        {      var total_marks=0;var achieved_marks=0;
+            if($(e).hasClass("postgrad_marks"))
                 {
+                    achieved_marks = $(e).parent().siblings('.achievedmarks').children('input[name="postgrad_achievedmarks[]"]').val();
+                    total_marks=$(e).val();
+                }
+            else if($(e).hasClass("postgrad_achievedmarks"))
+                {
+                    total_marks = $(e).parent().siblings('.marks').children('input[name="postgrad_marks[]"]').val();
                     achieved_marks=$(e).val();
-                    total_marks=4;
                 }
 
             var percntgInput= $(e).parent().siblings('.post_percentage').children('input[name="pg_percentage[]"]');
@@ -1641,6 +1677,7 @@
             if (length == 5 || length == 13)
                 $(this).val($(this).val() + '-');
         });
+        
 
     </script>
 @endsection

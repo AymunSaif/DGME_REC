@@ -169,19 +169,19 @@ class JobFormController extends Controller
           $person_secondaryEdu->applicant_id=$person->id;
           $person_secondaryEdu->name_of_school=$request->s_Name;
           $person_secondaryEdu->qualification_type=$request->qualification;
-
-          if(isset($request->b_Name) && $request->b_Name!=Null)
+          
+          if(isset($request->b_Name) && $request->b_Name!=Null && $request->b_Name!='other')
             $person_secondaryEdu->board=$request->b_Name;
           else if(isset($request->sch_otherboard) && $request->sch_otherboard!=Null)
             $person_secondaryEdu->board=$request->sch_otherboard;
-
-          if(isset($request->s_subjects) && $request->s_subjects!=Null)
+        
+          if(isset($request->s_subjects) && $request->s_subjects!=Null &&  $request->s_subjects!='other')
             $person_secondaryEdu->secondarysubject_id=$request->s_subjects;
           else if(isset($request->subjectsschool_other) && $request->subjectsschool_other!=Null)
             {
             $secondary_subject= new SecondarySubject();
             $secondary_subject->subject_name = $request->subjectsschool_other;
-            $secondary_subject->type= $request->qualification;
+            $secondary_subject->type='Matric';
             $secondary_subject->save();
             $person_secondaryEdu->secondarysubject_id=$secondary_subject->id;
             }
@@ -202,18 +202,19 @@ class JobFormController extends Controller
           $person_secondaryEdu->name_of_school=$request->s_Name;
           $person_secondaryEdu->qualification_type=$request->qualification;
 
-          if(isset($request->b_Name) && $request->b_Name!=Null)
+          if(isset($request->b_Name) && $request->b_Name!=Null && $request->b_Name!='other')
           $person_secondaryEdu->board=$request->b_Name;
           else if(isset($request->sch_otherboard) && $request->sch_otherboard!=Null)
           $person_secondaryEdu->board=$request->sch_otherboard;
 
-          if(isset($request->s_subjects) && $request->s_subjects!=Null)
+          if(isset($request->s_subjects) && $request->s_subjects!=Null  && $request->s_subjects!='other')
           $person_secondaryEdu->secondarysubject_id=$request->s_subjects;
           else if(isset($request->subjectsschool_other) && $request->subjectsschool_other!=Null)
           {
+         
             $secondary_subject= new SecondarySubject();
             $secondary_subject->subject_name = $request->subjectsschool_other;
-            $secondary_subject->type= $request->school;
+            $secondary_subject->type= 'O-Level';
             $secondary_subject->save();
             $person_secondaryEdu->secondarysubject_id=$secondary_subject->id;
           }
@@ -238,12 +239,12 @@ class JobFormController extends Controller
           $person_secondaryEdu_college->name_of_school=$request->c_Name;
           $person_secondaryEdu_college->qualification_type=$request->college_qualification_type;
 
-          if(isset($request->c_b_Name) && $request->c_b_Name!=Null)
+          if(isset($request->c_b_Name) && $request->c_b_Name!=Null && $request->c_b_Name!='other')
            $person_secondaryEdu_college->board=$request->c_b_Name;
           else if(isset($request->college_otherboard) && $request->college_otherboard!=Null)
            $person_secondaryEdu_college->board=$request->college_otherboard;
 
-          if(isset($request->c_subjects) && $request->c_subjects!=Null)
+          if(isset($request->c_subjects) && $request->c_subjects!=Null  && $request->c_subjects!='other')
            $person_secondaryEdu_college->secondarysubject_id=$request->c_subjects;
           else if(isset($request->c_othersubjects)  && $request->c_othersubjects!=Null)
           {
@@ -269,12 +270,12 @@ class JobFormController extends Controller
         $person_secondaryEdu_college->name_of_school=$request->c_Name;
         $person_secondaryEdu_college->qualification_type=$request->college_qualification_type;
 
-        if(isset($request->c_b_Name) && $request->c_b_Name!=Null)
+        if(isset($request->c_b_Name) && $request->c_b_Name!=Null && $request->c_b_Name!='other')
         $person_secondaryEdu_college->board=$request->c_b_Name;
         else if(isset($request->college_otherboard) && $request->college_otherboard!=Null)
         $person_secondaryEdu_college->board=$request->college_otherboard;
 
-        if(isset($request->c_subjects) && $request->c_subjects!=Null)
+        if(isset($request->c_subjects) && $request->c_subjects!=Null && $request->c_subjects!='other')
         $person_secondaryEdu_college->secondarysubject_id=$request->c_subjects;
         else if(isset($request->c_othersubjects)  && $request->c_othersubjects!=Null)
           {
@@ -296,35 +297,45 @@ class JobFormController extends Controller
 
        //---------->Bachelors Education 2year and 4 year
        $i=0;
-       if($request->bch_year!=null)
+     if($request->bch_year!=null)
+     {
       foreach($request->bch_year as $by)
        {
          if($by=="2 years")
           {
+           
             $person_higherEdu_2yr = new ApplicantHigherEducation();
             $person_higherEdu_2yr->applicant_id=$person->id;
-
-
 
             if(isset($request->college_university_names[$i]) && $request->college_university_names[$i] !=Null && $request->college_university_names[$i]!='other')
               $person_higherEdu_2yr->institute_name=$request->college_university_names[$i];
             else if(isset($request->other_collegebox[$i]) && ($request->other_collegebox[$i]!=Null))
-            {
+             {
+             
               $new_univ= new University();
               $new_univ->name =$request->other_collegebox[$i];
               $new_univ->status= 'true';
               $new_univ->save();
-              $person_higherEdu_2yr->institute_name=$new_univ->name;
-            }
+              $person_higherEdu_2yr->institute_name=$new_univ->id;
+            
+             }
 
             if(isset($request->qualification_univ[$i]))
             $person_higherEdu_2yr->qualification_type=$request->qualification_univ[$i];
 
             $person_higherEdu_2yr->bach_year=$by;
 
-            if(isset($request->u_subjects[$i]) && $request->u_subjects[$i]!=Null )
-            $person_higherEdu_2yr->highersubject_id=$request->u_subjects[$i];
-
+            if(isset($request->u_collegesubjects[$i]) && $request->u_collegesubjects[$i]!=Null  && $request->u_collegesubjects[$i]!='other' )
+             $person_higherEdu_2yr->highersubject_id=$request->u_collegesubjects[$i];
+            else if(isset($request->other_univ_colsubjects[$i]) && ($request->other_univ_colsubjects[$i]!=Null))
+             {
+              $new_highersubject= new HigherSubject();
+              $new_highersubject->subject_name =$request->other_univ_colsubjects[$i];
+              $new_highersubject->type= 'bachelor';
+              $new_highersubject->save();
+              $person_higherEdu_2yr->highersubject_id=$new_highersubject->id;
+             }
+ 
             if(isset($request->twoy_t_marks[$i]))
             $person_higherEdu_2yr->total_marks=$request->twoyear_t_marks[$i];
 
@@ -341,23 +352,27 @@ class JobFormController extends Controller
             $person_higherEdu_2yr->distinction=$request->distinction[$i];
 
             $person_higherEdu_2yr->save();
-        }
-        elseif ($by=="4 years")
+            
+         
+          }
+        else if($by=="4 years")
          {
+         
           $person_higherEdu_univ = new ApplicantHigherEducation();
           $person_higherEdu_univ->applicant_id=$person->id;
-
+               
           if(isset($request->university_names[$i]) && $request->university_names[$i]!=Null && $request->university_names[$i]!='other')
-          $person_higherEdu_univ->institute_name=$request->university_names[$i];
-          else if(isset($request->other_univbox[$i])  && $request->other_univbox[$i] !=Null)
           {
-            // dd($request->other_univbox[$i]);
+            $person_higherEdu_univ->institute_name=$request->university_names[$i];
+          }
+          else if(isset($request->other_univbox[$i]) && $request->other_univbox[$i]!=Null)
+          {    
             $new_univ= new University();
             $new_univ->name = $request->other_univbox[$i];
             $new_univ->status= 'true';
             $new_univ->save();
-            $person_higherEdu_univ->institute_name=$new_univ->name;
-
+            $person_higherEdu_univ->institute_name=$new_univ->id;
+          
           }
 
           if(isset($request->qualification_univ[$i]))
@@ -366,10 +381,16 @@ class JobFormController extends Controller
           $person_higherEdu_univ->bach_year=$by;
 
 
-            if(isset($request->u_subjects[$i]) && $request->u_subjects[$i]!=Null )
-            $person_higherEdu_univ->highersubject_id=$request->u_subjects[$i];
-
-
+          if(isset($request->u_subjects[$i]) && $request->u_subjects[$i]!=Null && $request->u_subjects[$i]!='other' )
+          $person_higherEdu_univ->highersubject_id=$request->u_subjects[$i];
+          else if(isset($request->other_univsubjects[$i]) && ($request->other_univsubjects[$i]!=Null))
+          {
+            $new_highersubject= new HigherSubject();
+            $new_highersubject->subject_name =$request->other_univsubjects[$i];
+            $new_highersubject->type= 'bachelor';
+            $new_highersubject->save();
+            $person_higherEdu_univ->highersubject_id=$new_highersubject->id;
+          }
 
           if(isset($request->cgpa[$i]))
           $person_higherEdu_univ->cgpa=$request->cgpa[$i];
@@ -394,11 +415,12 @@ class JobFormController extends Controller
 
           $person_higherEdu_univ->save();
           // dd('saved'.$person_higherEdu_univ);
-            }
-            $i++;
-          }
+        }
+        $i++;
+        }
 
-      //------------>postgraduation
+     }
+     //------------>postgraduation
 
        $i=0;
       //  dump($request->all());
@@ -426,13 +448,26 @@ class JobFormController extends Controller
 
           if(isset($request->post_grad_subject[$i]))
           $person_higherEdu_grad->highersubject_id=$request->post_grad_subject[$i];
+          else if(isset($request->other_postgradsubjects[$i]) && ($request->other_postgradsubjects[$i]!=Null))
+          {
+            $new_highersubject= new HigherSubject();
+            $new_highersubject->subject_name =$request->other_postgradsubjects[$i];
+            $new_highersubject->type= 'masters';
+            $new_highersubject->save();
+            $person_higherEdu_grad->highersubject_id=$new_highersubject->id;
+          }
 
+          if(isset($request->postgrad_marks[$i]))
+            $person_higherEdu_grad->total_marks=$request->postgrad_marks[$i];
+
+          if(isset($request->postgrad_achievedmarks[$i]))
+          $person_higherEdu_grad->achieved_marks=$request->postgrad_achievedmarks[$i];
+          
           if(isset($request->pg_cgpa[$i]))
-            $person_higherEdu_grad->cgpa=$request->pg_cgpa[$i];
+          $person_higherEdu_grad->cgpa=$request->pg_cgpa[$i];
 
-          if(isset($request->pg_prcentage[$i]))
+         if(isset($request->pg_prcentage[$i]))
           $person_higherEdu_grad->percentage=$request->pg_percentage[$i];
-
 
           if(isset($request->postgrad_division[$i]))
           $person_higherEdu_grad->division=$request->postgrad_division[$i];
