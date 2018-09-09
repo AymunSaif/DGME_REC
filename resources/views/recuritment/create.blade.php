@@ -41,26 +41,40 @@
             <div class="form-group">
                     <b>Diary Number</b>
                     <br>
-                    <input type="text" name="d_num" id="d_num" class="form-control" >
+                    @if($applicant->diary_num!='' && $applicant->diary_num!=NULL)
+                      <input type="text" name="d_num" id="d_num" value="<?= $applicant->diary_num  ?>" disabled class="form-control" >
+                    @else
+                      <input type="text" name="d_num" id="d_num" class="form-control" >
+                    @endif
                 </div>
                 <div class="form-group">
                     <b>Name
                         <span style="color:red;font-size:12px;"> (required)</span>
                     </b>
                     <br>
-                    <input type="text" name="name" id="name" placeholder="Enter Your Full Name" class="form-control"    required>
+                    @if($applicant->name!='' && $applicant->name!=NULL)
+                      <input type="text" name="name" id="name" value="<?= $applicant->name  ?>" disabled placeholder="Enter Your Full Name" class="form-control"    required>
+                    @else
+                      <input type="text" name="name" id="name" placeholder="Enter Your Full Name" class="form-control"    required>
+                    @endif
                 </div>
                 <div class="form-group">
                     <b>Father / Husband Name </b>
                     <br>
-                    <input type="text" name="f_name" id="f_name" placeholder="" class="form-control">
+                    @if(isset($applicant->ApplicantDetail->father_name) && $applicant->ApplicantDetail->father_name!='' && $applicant->ApplicantDetail->father_name!=NULL)
+                      <input type="text" name="f_name" id="f_name" value="<?= $applicant->ApplicantDetail->father_name  ?>" disabled placeholder="" class="form-control">
+                    @else
+                      <input type="text" name="f_name" id="f_name" placeholder="" class="form-control">
+                    @endif
                 </div>
                 <div class="form-group">
                     <b>Gender </b>
                     <br>
 
                     Male
-                    <input style="margin-left:6px;margin-right:5px;" type="radio" value="Male" name="gender"> Female
+                    @if($applicant->gender!='' && $applicant->diary_num!=NULL)
+                    <input style="margin-left:6px;margin-right:5px;" type="radio" value="Male" name="gender">
+                    Female
                     <input style="margin-left:6px;margin-right:5px;" type="radio" value="Female" name="gender">
                     Transgender
                     <input style="margin-left:6px;margin-right:5px;" type="radio" value="Transgender" name="gender">
