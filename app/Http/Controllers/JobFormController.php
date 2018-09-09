@@ -308,7 +308,7 @@ class JobFormController extends Controller
             $person_higherEdu_2yr->applicant_id=$person->id;
 
             if(isset($request->college_university_names[$i]) && $request->college_university_names[$i] !=Null && $request->college_university_names[$i]!='other')
-              $person_higherEdu_2yr->institute_name=$request->college_university_names[$i];
+              $person_higherEdu_2yr->university_id=$request->college_university_names[$i];
             else if(isset($request->other_collegebox[$i]) && ($request->other_collegebox[$i]!=Null))
              {
              
@@ -316,7 +316,7 @@ class JobFormController extends Controller
               $new_univ->name =$request->other_collegebox[$i];
               $new_univ->status= 'true';
               $new_univ->save();
-              $person_higherEdu_2yr->institute_name=$new_univ->id;
+              $person_higherEdu_2yr->university_id=$new_univ->id;
             
              }
 
@@ -363,7 +363,7 @@ class JobFormController extends Controller
                
           if(isset($request->university_names[$i]) && $request->university_names[$i]!=Null && $request->university_names[$i]!='other')
           {
-            $person_higherEdu_univ->institute_name=$request->university_names[$i];
+            $person_higherEdu_univ->university_id=$request->university_names[$i];
           }
           else if(isset($request->other_univbox[$i]) && $request->other_univbox[$i]!=Null)
           {    
@@ -371,7 +371,7 @@ class JobFormController extends Controller
             $new_univ->name = $request->other_univbox[$i];
             $new_univ->status= 'true';
             $new_univ->save();
-            $person_higherEdu_univ->institute_name=$new_univ->id;
+            $person_higherEdu_univ->university_id=$new_univ->id;
           
           }
 
@@ -432,14 +432,14 @@ class JobFormController extends Controller
           $person_higherEdu_grad->applicant_id=$person->id;
 
           if(isset($request->pg_Name[$i]) && $request->pg_Name[$i]!=Null)
-          $person_higherEdu_grad->institute_name=$request->pg_Name[$i];
+          $person_higherEdu_grad->university_id=$request->pg_Name[$i];
           elseif(isset($request->otherpost_univ[$i]) && $request->otherpost_univ[$i]!=Null)
           {
             $new_univ= new University();
             $new_univ->name =$request->otherpost_univ[$i];
             $new_univ->status='true';
             $new_univ->save();
-            $person_higherEdu_grad->institute_name=$new_univ->name;
+            $person_higherEdu_grad->university_id=$new_univ->id;
 
           }
 
@@ -734,7 +734,15 @@ public function showsummary(JobForm $jobForm)
     public function show($id)
     { 
       $applicant= Applicant::find($id);
-      return view('recuritment.show',['applicant'=>$applicant]);
+     
+    //  dd( $applicant_secondaryEdu);
+      //calculating age
+      $dateofbirth=date('Y-m-d',strtotime($applicant->dob)); 
+      $today_date = date('Y-m-d');
+      $age=date_diff(date_create($dateofbirth), date_create($today_date));
+      $age=$age->format('%y');
+      
+      return view('recuritment.show',['applicant'=>$applicant,'age'=>$age]);
     }
 
     /**

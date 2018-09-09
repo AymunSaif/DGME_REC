@@ -925,7 +925,7 @@
                                 console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
                                 }
                             });
-                    $('input[name="qualification"]').val("School")
+                    $('input[name="qualification"]').val("Matric")
                     $('.sch_name').show(1000);
                     $('.sch_board').show(1000);
                     $('.sch_subjects').show(1000);

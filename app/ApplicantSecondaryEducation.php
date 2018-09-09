@@ -11,8 +11,8 @@ class ApplicantSecondaryEducation extends Model
     {   
         return $this->belongsTo('App\Applicant');
     }
-    public function SecondarySubject()
+    public function SecondarySubject() 
     {   
-        return $this->belongsTo('App\SecondarySubject');
+        return $this->belongsTo('App\SecondarySubject','secondarysubject_id');
     }
 }
