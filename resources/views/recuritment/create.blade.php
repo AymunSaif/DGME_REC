@@ -222,7 +222,7 @@
                             <div>
                                 <b> Subjects </b>
                                 <select class="form-control subjects_school" name="s_subjects" onchange="add_newsub(this)">
-                                    
+
                                 </select><br>
                                 <div class="subjectsschool_other" style=" margin-top: -20px; display:none;">
                                 <input type="text"   name="subjectsschool_other" id="subjectsschool_other" class="form-control"/>
@@ -684,8 +684,8 @@
             $(document).ready(function() {
 
                 $(document).keypress(function(event){
-                
-                if (event.keyCode == 10 || event.keyCode == 13) 
+
+                if (event.keyCode == 10 || event.keyCode == 13)
                 {
                     event.preventDefault();
                 }
@@ -1015,7 +1015,7 @@
                                     console.log(data);
                                 for (let index = 0; index < data.length; index++) {
                                     $('.college_subjects').append('<option value="'+data[index].id+'" selected="selected">'+data[index].subject_name+'</option>');
-                                } 
+                                }
                             },
                             error: function(jqXHR, textStatus, errorThrown) { // What to do if we fail
                                 console.log(JSON.stringify(jqXHR));
@@ -1268,7 +1268,7 @@
             //designation
             var i=0;
             $('button#add_moredesignation').click(function(e){
-               
+
                 var designation_row = '';
                 designation_row += '<tr>';
                 designation_row += '<td style="text-align:center;">'+ ++i +' </td>';
@@ -1421,7 +1421,7 @@
                                 console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
                                 }
                             });
-                            console.log(bachelorSubjects);//SSS
+                            console.log(bachelorSubjects);
                             for (var i = 0; i < bachelorSubjects.length; ++i) {
                             secndvar=secndvar+'<option value="'+bachelorSubjects[i].id+'">'+bachelorSubjects[i].subject_name+'</option>';
                             }
@@ -1468,7 +1468,7 @@
             else
             {
                 $('#otherpost_univ').hide(1000);
-                
+
                 if($(e).val()=="other")
                 {
                     $(e).next().next().next().show(1000)
@@ -1483,10 +1483,10 @@
 
         function add_newdegree(e)
         {
-             
+
              if($(e).val()=="other")
             {
-                
+
                 $(e).next().next().show(1000)
             }
             else
@@ -1494,7 +1494,7 @@
                 $(e).next().next().hide(1000)
             }
         }
-       
+
         //postgrad
         function calculatePercentagePostGrad(e)
         {      var total_marks=0;var achieved_marks=0;
@@ -1694,7 +1694,7 @@
             if (length == 5 || length == 13)
                 $(this).val($(this).val() + '-');
         });
-        
+
 
     </script>
 @endsection
