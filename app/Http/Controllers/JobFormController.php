@@ -314,7 +314,7 @@ class JobFormController extends Controller
           $person_higherEdu_2yr->applicant_log_id=$person->id;
 
           if(isset($request->college_university_names[$year2]) && $request->college_university_names[$year2] !=Null && $request->college_university_names[$year2]!='other')
-            $person_higherEdu_2yr->institute_name=$request->college_university_names[$year2];
+            $person_higherEdu_2yr->university_id=$request->college_university_names[$year2];
           else if(isset($request->other_collegebox[$year2]) && ($request->other_collegebox[$year2]!=Null))
            {
              // dd($reuest)
@@ -322,7 +322,7 @@ class JobFormController extends Controller
             $new_univ->name =$request->other_collegebox[$year2];
             $new_univ->status= 'true';
             $new_univ->save();
-            $person_higherEdu_2yr->institute_name=$new_univ->id;
+            $person_higherEdu_2yr->university_id=$new_univ->id;
 
            }
 
@@ -368,7 +368,7 @@ class JobFormController extends Controller
         $person_higherEdu_univ->applicant_log_id=$person->id;
         if(isset($request->university_names[$year4]) && $request->university_names[$year4]!=Null && $request->university_names[$year4]!='other')
         {
-          $person_higherEdu_univ->institute_name=$request->university_names[$year4];
+          $person_higherEdu_univ->university_id=$request->university_names[$year4];
         }
         else if(isset($request->other_univbox[$year4]) && $request->other_univbox[$year4]!=Null)
         {
@@ -376,7 +376,7 @@ class JobFormController extends Controller
           $new_univ->name = $request->other_univbox[$year4];
           $new_univ->status= 'true';
           $new_univ->save();
-          $person_higherEdu_univ->institute_name=$new_univ->id;
+          $person_higherEdu_univ->university_id=$new_univ->id;
 
         }
         // dd($request->all());
@@ -437,7 +437,7 @@ class JobFormController extends Controller
         $person_higherEdu_grad = new ApplicantHigherEducationLog();
         $person_higherEdu_grad->applicant_log_id=$person->id;
 
-        if(isset($request->pg_Name[$i]) && $request->pg_Name[$i]!=Null)
+        if(isset($request->pg_Name[$i]) && $request->pg_Name[$i]!=Null && $request->pg_Name[$i]!='other')
         $person_higherEdu_grad->university_id=$request->pg_Name[$i];
         elseif(isset($request->otherpost_univ[$i]) && $request->otherpost_univ[$i]!=Null)
         {
@@ -452,7 +452,7 @@ class JobFormController extends Controller
         if(isset($request->qualification_postuniv[$i]))
         $person_higherEdu_grad->qualification_type=$qualification_postuniv;
 
-        if(isset($request->post_grad_subject[$i]))
+        if(isset($request->post_grad_subject[$i]) && $request->post_grad_subject[$i]!=Null && $request->post_grad_subject[$i]!="other")
         $person_higherEdu_grad->highersubject_id=$request->post_grad_subject[$i];
         else if(isset($request->other_postgradsubjects[$i]) && ($request->other_postgradsubjects[$i]!=Null))
         {
@@ -498,15 +498,24 @@ class JobFormController extends Controller
       if(isset($request->qualification_phduniv[$i]))
       $person_higherEdu_phd->qualification_type=$request->qualification_phduniv[$i];
 
-      $person_higherEdu_phd->institute_name=$request->phd_name;
+      if(isset($request->phd_name[$i]) && $request->phd_name[$i]!=Null  && $request->phd_name[$i]!="other")
+      $person_higherEdu_phd->university_id=$request->phd_name;
+      elseif(isset($request->otherphd_univ[$i]) && $request->otherphd_univ[$i]!=Null)
+      {
+        $new_univ= new University();
+        $new_univ->name =$request->otherphd_univ[$i];
+        $new_univ->status='true';
+        $new_univ->save();
+        $person_higherEdu_phd->university_id=$new_univ->id;
+      }
+   
 
-      if(isset($request->phd_SubjectName[$i]))
+      if(isset($request->phd_SubjectName[$i]) && $request->phd_SubjectName[$i]!=Null && $request->phd_SubjectName[$i]!="other")
       $person_higherEdu_phd->highersubject_id=$request->phd_SubjectName[$i];
-
-      if(isset($request->phd_SubjectName[$i]) && $request->phd_SubjectName!=Null)
+      if(isset($request->phd_other_SubjectName[$i]) && $request->phd_other_SubjectName!=Null)
       {
         $higher_subject= new HigherSubject();
-        $higher_subject->subject_name = $request->phd_SubjectName[$i];
+        $higher_subject->subject_name = $request->phd_other_SubjectName[$i];
         $higher_subject->type= 'PHD';
         $higher_subject->save();
         $person_higherEdu_phd->highersubject_id=$higher_subject->id;
@@ -917,7 +926,7 @@ class JobFormController extends Controller
             $person_higherEdu_2yr->applicant_id=$person->id;
 
             if(isset($request->college_university_names[$year2]) && $request->college_university_names[$year2] !=Null && $request->college_university_names[$year2]!='other')
-              $person_higherEdu_2yr->institute_name=$request->college_university_names[$year2];
+              $person_higherEdu_2yr->university_id=$request->college_university_names[$year2];
             else if(isset($request->other_collegebox[$year2]) && ($request->other_collegebox[$year2]!=Null))
              {
                // dd($reuest)
@@ -925,7 +934,7 @@ class JobFormController extends Controller
               $new_univ->name =$request->other_collegebox[$year2];
               $new_univ->status= 'true';
               $new_univ->save();
-              $person_higherEdu_2yr->institute_name=$new_univ->id;
+              $person_higherEdu_2yr->university_id=$new_univ->id;
 
              }
 
@@ -971,7 +980,7 @@ class JobFormController extends Controller
           $person_higherEdu_univ->applicant_id=$person->id;
           if(isset($request->university_names[$year4]) && $request->university_names[$year4]!=Null && $request->university_names[$year4]!='other')
           {
-            $person_higherEdu_univ->institute_name=$request->university_names[$year4];
+            $person_higherEdu_univ->university_id=$request->university_names[$year4];
           }
           else if(isset($request->other_univbox[$year4]) && $request->other_univbox[$year4]!=Null)
           {
@@ -979,7 +988,7 @@ class JobFormController extends Controller
             $new_univ->name = $request->other_univbox[$year4];
             $new_univ->status= 'true';
             $new_univ->save();
-            $person_higherEdu_univ->institute_name=$new_univ->id;
+            $person_higherEdu_univ->university_id=$new_univ->id;
 
           }
           // dd($request->all());

@@ -133,15 +133,18 @@
                 <th>Division</th>
                 <th>Grades</th>
             </tr> 
+            {{-- {{dd($applicant->ApplicantSecondaryEducation)}} --}}
             @foreach($applicant->ApplicantSecondaryEducation as $applicant_secondaryEdu)
             <tr> 
                 <td>{{$applicant_secondaryEdu->qualification_type}}</td>
                 <td>{{$applicant_secondaryEdu->board}}</td>
                 <td>{{$applicant_secondaryEdu->name_of_school}}</td>
                 <td>                          
-                @foreach($applicant->ApplicantSecondaryEducation as $applicant_secondaryEdu)
+                {{-- @foreach($applicant->ApplicantSecondaryEducation as $applicant_secondaryEdu)
                 {{$applicant_secondaryEdu->SecondarySubject->subject_name}}
-                @endforeach
+                @endforeach --}}
+                {{$applicant_secondaryEdu->SecondarySubject->subject_name}}
+
                 </td>
                 <td>{{$applicant_secondaryEdu->distinction}}</td>
                 <td>{{$applicant_secondaryEdu->total_marks}}</td>
