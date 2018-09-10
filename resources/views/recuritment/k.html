@@ -171,28 +171,13 @@
                         <th>Division</th>
                     </tr>
                     <tr>
-                        <td>{{$applicant_higherEdu->bach_year}}</td>
+                    <td>{{$applicant_higherEdu->bach_year}}</td>
                         <td>{{$applicant_higherEdu->University->name}}</td>
                         <td>{{$applicant_higherEdu->higherSubject->subject_name}}</td>
                         <td>{{$applicant_higherEdu->distinction}}</td>
-                        <td>@if($applicant_higherEdu->total_marks==NULL)
-                                <b style="color:red;">Not Available</b> 
-                                @else
-                            {{$applicant_higherEdu->total_marks}}
-                            @endif
-                        </td>
-                        <td>@if($applicant_higherEdu->achieved_marks==NULL)
-                                <b style="color:red;">Not Available</b> 
-                                @else
-                            {{$applicant_higherEdu->achieved_marks}}
-                            @endif
-                        </td>
-                        <td>@if($applicant_higherEdu->percentage==NULL)
-                                <b style="color:red;">Not Available</b> 
-                                @else
-                            {{$applicant_higherEdu->percentage}}
-                            @endif
-                        </td>
+                        <td>{{$applicant_higherEdu->total_marks}}</td>
+                        <td>{{$applicant_higherEdu->achieved_marks}}</td>
+                        <td>{{$applicant_higherEdu->percentage}}</td>
                         <td>{{$applicant_higherEdu->division}}</td>
                      
                     </tr>
@@ -225,22 +210,9 @@
                         {{$applicant_higherEdu->cgpa}}
                     @endif
                     </td>
-                    <td>
-                        @if($applicant_higherEdu->total_marks==NULL)
-                        <b style="color:red;">Not Available</b> 
-                        @else
-                        {{$applicant_higherEdu->total_marks}} @endif
-                    </td>
-                    <td> @if($applicant_higherEdu->achieved_marks==NULL)
-                        <b style="color:red;">Not Available</b> 
-                        @else
-                        {{$applicant_higherEdu->achieved_marks}} @endif
-                    </td>
-                    <td>
-                        @if($applicant_higherEdu->percentage==NULL)
-                        <b style="color:red;">Not Available</b> 
-                        @else
-                        {{$applicant_higherEdu->percentage}} @endif</td>
+                    <td>{{$applicant_higherEdu->total_marks}}</td>
+                    <td>{{$applicant_higherEdu->achieved_marks}}</td>
+                    <td>{{$applicant_higherEdu->percentage}}</td>
                     <td>
                         @if($applicant_higherEdu->final_dmc_date==NULL)
                         <b style="color:red;">Not Available</b> 
@@ -248,11 +220,7 @@
                         {{$applicant_higherEdu->final_dmc_date}}
                     @endif
                     </td>
-                    <td>
-                        @if($applicant_higherEdu->division==NULL)
-                        <b style="color:red;">Not Available</b> 
-                        @else
-                        {{$applicant_higherEdu->division}}@endif</td>
+                    <td>{{$applicant_higherEdu->division}}</td>
                 </tr>
             @endif
              
@@ -459,6 +427,7 @@
        </table>
         
        <table>
+            @if(isset($applicant->ApplicantCertification))  
                     <tr><th style="color:white; background-color:black;"><b>CERTIFICATIONS</b></th></tr>
                     <tr>
                             <th>Certification Name</th>
@@ -466,72 +435,72 @@
                             <th>Issued By</th>
                             <th>Date Of Issuance</th>
                         </tr>
-                @foreach($applicant->ApplicantCertification as $ApplicantCertification)
+                @foreach($applicant->ApplicantCertification as $applicant->ApplicantCertification)
                         <tr>
-                        <td> @if( $ApplicantCertification->name_certifictaion==NULL ||  $ApplicantCertification->name_certifictaion=='NA')
-                                <b style="color:red;">Not Available</b>
-                                @else
-                            {{$ApplicantCertification->name_certifictaion}} @endif</td>
-                        <td>
-                                @if( $ApplicantCertification->certification_number==NULL ||  $ApplicantCertification->certification_number=='NA')
-                                <b style="color:red;">Not Available</b>
-                                @else
-                            {{$ApplicantCertification->certification_number}}@endif
-                        </td>
-                        <td> 
-                                @if( $ApplicantCertification->issued_by==NULL ||  $ApplicantCertification->issued_by=='NA')
-                                <b style="color:red;">Not Available</b>
-                                @else
-                            {{$ApplicantCertification->issued_by}}@endif</td>
-                        <td>
-                                @if( $ApplicantCertification->date_of_issuance==NULL || $ApplicantCertification->date_of_issuance=='NA')
-                                <b style="color:red;">Not Available</b>
-                                @else
-                            {{$ApplicantCertification->date_of_issuance}}@endif</td>
+                        <td>{{$applicant->ApplicantCertification->name_certifictaion}}</td>
+                        <td>{{$applicant->ApplicantCertification->certification_number}}</td>
+                        <td>{{$applicant->ApplicantCertification->issued_by}}</td>
+                        <td>{{$applicant->ApplicantCertification->date_of_issuance}}</td>
                         </tr>
                     @endforeach
-               
+                @endif
 
+                @if(isset($applicant->ApplicantTraining))
                     <tr><th style="color:white; background-color:black;"><b>TRAININGS</b></th></tr>
                     <tr>
                         <th>Training Name</th>
                         <th>By</th>
                         <th>Duration</th>
                     </tr>
-                 @foreach($applicant->ApplicantTraining as $ApplicantTraining)
+                 @foreach($applicant->ApplicantTraining as $applicant->ApplicantTraining)
                        <tr>
-                        <td>{{$ApplicantTraining->training_name}}</td>
-                        <td>{{$ApplicantTraining->by_name}}</td>
-                        <td>{{$ApplicantTraining->duration}}</td>
-                       </tr>    
-                 @endforeach               
+                        <td>{{$applicant->ApplicantTraining->training_name}}</td>
+                        <td>{{$applicant->ApplicantTraining->by_name}}</td>
+                        <td>{{$applicant->ApplicantTraining->duration}}</td>
+                        </tr>
+                    
+                    @endforeach
+                
+            @endif
+            @if(isset($applicant->ApplicantResearchWork->researchtype))
                 <tr><th style="color:white; background-color:black;"><b>RESEARCH PAPERS</b></th></tr>
-                        <tr>
-                                <th>Name </th>
-                                <th>Conference Name </th>
-                                <th>Published Year</th>
-                                <th>Date</th>
-                        </tr>  
-                        @foreach($applicant->ApplicantResearchWork as $research)
-                        
-                           @if($research->researchtype=="Journal")      
+                   <tr>
+                        <th>Name Of Journal</th>
+                        <th>Published Year</th>
+                        <th>Date</th>
+                   </tr>
+                    @if($applicant->ApplicantResearchWork->researchtype=="Journal")
+                        @foreach($applicant->ApplicantResearchWork as $applicant->ApplicantResearchWork)
                            <tr>
-                            <td><b>JOURNAL :</b> {{$research->name}}</td>
-                            <td>{{$research->published_year}}</td>
-                            <td>{{$research->date_published}}</td>
+                            <td>{{$applicant->ApplicantResearchWork->name}}</td>
+                            <td>{{$applicant->ApplicantResearchWork->published_year}}</td>
+                            <td>{{$applicant->ApplicantResearchWork->date_published}}</td>
                            </tr>
-
-                        @elseif($research->researchtype=="Conference")
+                        @endforeach
+                    
+                    @elseif($applicant->ApplicantResearchWork->researchtype=="Conference")
+                        <tr>
+                            <th>Name Of Conference</th>
+                            <th>Published Year</th>
+                            <th>Date</th>
+                            <th>Paper Topic</th>
+                        </tr>
+                        @foreach($applicant->ApplicantResearchWork as $applicant->ApplicantResearchWork)
+                        
                             <tr>
-                            <td> <b>RESEARCH :</b> {{$research->name}}</td>
-                            <td>{{$research->conference}}</td>
-                            <td>{{$research->published_year}}</td>
-                            <td>{{$research->date_published}}</td>
+                            <td>{{$applicant->ApplicantResearchWork->conference}}</td>
+                            <td>{{$applicant->ApplicantResearchWork->published_year}}</td>
+                            <td>{{$applicant->ApplicantResearchWork->date_published}}</td>
+                            <td>{{$applicant->ApplicantResearchWork->name}}</td>
                             </tr>
-                    @endif
-                @endforeach                                    
-
-           
+                        
+                        @endforeach
+                    
+                    @endif  
+                
+                @endif
+                
+            @if(isset($applicant->ProfessionalCertificationMember))  
                 <tr><th colspan="1" style="color:white; background-color:black;"><b>PROFESSIONAL MEMBERSHIP</b></th></tr>
                     <tr>
                         <th>Name</th>
@@ -540,71 +509,20 @@
                         <th>Issuance date</th>
                         <th>Registeration Number</th>
                     </tr>
-                @foreach($applicant->ProfessionalCertificationMember as $ProfessionalCertificationMember) 
+                @foreach($applicant->ProfessionalCertificationMember as $applicant->ProfessionalCertificationMember) 
                     <tr>
-                    <td>@if($ProfessionalCertificationMember->name==NULL || $ProfessionalCertificationMember->name=='NA')
-                            <b style="color:red;">Not Available</b>
-                            @else
-                        {{$ProfessionalCertificationMember->name}} @endif
-                    </td>
-                    <td>@if($ProfessionalCertificationMember->membership_level==NULL || $ProfessionalCertificationMember->membership_level=='NA')
-                            <b style="color:red;">Not Available</b>
-                            @else
-                        {{$ProfessionalCertificationMember->membership_level}}@endif</td>
-                    <td>@if($ProfessionalCertificationMember->issued_by==NULL || $ProfessionalCertificationMember->issued_by=='NA')
-                            <b style="color:red;">Not Available</b>
-                            @else
-                        {{$ProfessionalCertificationMember->issued_by}}@endif</td>    
-                    <td>@if($ProfessionalCertificationMember->issuance_date==NULL || $ProfessionalCertificationMember->issuance_date=='NA')
-                            <b style="color:red;">Not Available</b>
-                            @else
-                        {{$ProfessionalCertificationMember->issuance_date}}@endif</td>
-                    <td>@if($ProfessionalCertificationMember->registeration==NULL || $ProfessionalCertificationMember->registeration=='NA')
-                            <b style="color:red;">Not Available</b>
-                            @else
-                        {{$ProfessionalCertificationMember->registeration}}@endif</td> 
+                    <td>{{$applicant->ProfessionalCertificationMember->name}}</td>
+                    <td>{{$applicant->ProfessionalCertificationMember->membership_level}}</td>
+                    <td>{{$applicant->ProfessionalCertificationMember->issued_by}}</td>    
+                    <td>{{$applicant->ProfessionalCertificationMember->issuance_date}}</td>
+                    <td>{{$applicant->ProfessionalCertificationMember->registeration}}</td> 
                     </tr>
                 @endforeach
-           
+            @endif
             
     
      </table>
-     
-     <table>
-         <tr><tr><th style="color:white; background-color:black;"><b>EXPERIENCE</b></th></tr></tr>
-         <tr>
-             <th>Organization Name</th>
-             <th>Organization Type</th>
-             <th>Duration</th>
-             <th>Role</th>
-         </tr>
-         @foreach ($applicant->ApplicantExperience as $ApplicantExperience)
-         <tr>
-         <td>{{$ApplicantExperience->org_name}}</td>
-                <td>{{$ApplicantExperience->org_type}}</td>
-                <td>
-                    @php
-                    $s_date=date('Y-m-d',strtotime($ApplicantExperience->start_date));
-                    $e_date=date('Y-m-d',strtotime($ApplicantExperience->end_date));
-                    $duration=date_diff(date_create($s_date), date_create($e_date));
-                    @endphp
-                    {{$duration->y}} Years {{$duration->m}} Months {{$duration->d}} Days</td>
-                <td>{{$ApplicantExperience->role}}</td>
-            </tr>    
-         @endforeach
-         
-     </table>
-     <table>
-            <tr><tr><th style="color:black; background-color:lightblue;font-weight:bold;"><b>POSITION APPLIED FOR</b></th></tr></tr>
-            @foreach ($applicant->ApplicantAppliedFor as $ApplicantAppliedFor)
-            <tr>
-               
-               <td> <ol><li>{{$ApplicantAppliedFor->position_name}} </li></ol></td>
-          
-               </tr>    
-            @endforeach
-            
-        </table>
+
  
 </div>
 @endsection

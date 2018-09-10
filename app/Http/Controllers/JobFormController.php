@@ -32,6 +32,9 @@ class JobFormController extends Controller
       return view('recuritment.storeCnic');
     }
     public function storeCnic(Request $request){
+      $personcheck= Applicant::orderBy('created_at','desc')->first();
+      $number='1';
+      // dd($personcheck);
       // dd($request->all());
       $person=Applicant::where('cnic',$request->person_cnic)->first();
       if($person){ //if entry stored in Applicant Table
@@ -53,6 +56,11 @@ class JobFormController extends Controller
         $person= new Applicant();
         $person->cnic=$request->person_cnic;
         $person->created_by=Auth::id();
+        if($personcheck){
+          $num=explode('_',$personcheck->uniqueNumber);
+          $number+=$num[2];
+        }
+        $person->uniqueNumber="HIS_".date('Y').'_'.$number;  
         $person->save();
         // Setting status
         $cnicLog= new CnicLog();
@@ -135,7 +143,6 @@ class JobFormController extends Controller
        // $person= new Applicant();
       // if($request->data_type=='applicant_detail'){
        $person->diary_num=$request->d_num;
-    //    $person->uniqueNumber="HIS_2018_0001";
        $person->name= $request->name;
        // $person->cnic= $request->person_cnic;
        $person->gender= $request->gender;
@@ -435,10 +442,10 @@ class JobFormController extends Controller
           $person_higherEdu_grad = new ApplicantHigherEducation();
           $person_higherEdu_grad->applicant_id=$person->id;
 
-          if(isset($request->pg_Name[$i]) && $request->pg_Name[$i]!=Null)
+          if(isset($request->pg_Name[$i]) && $request->pg_Name[$i]!=Null && $request->pg_Name[$i]!='other')
           $person_higherEdu_grad->university_id=$request->pg_Name[$i];
-          elseif(isset($request->otherpost_univ[$i]) && $request->otherpost_univ[$i]!=Null)
-          {
+          else if(isset($request->otherpost_univ[$i]) && $request->otherpost_univ[$i]!=Null)
+          { 
             $new_univ= new University();
             $new_univ->name =$request->otherpost_univ[$i];
             $new_univ->status='true';
@@ -450,7 +457,7 @@ class JobFormController extends Controller
           if(isset($request->qualification_postuniv[$i]))
           $person_higherEdu_grad->qualification_type=$qualification_postuniv;
 
-          if(isset($request->post_grad_subject[$i]))
+          if(isset($request->post_grad_subject[$i]) && $request->post_grad_subject[$i]!=null && $request->post_grad_subject[$i]!="other")
           $person_higherEdu_grad->highersubject_id=$request->post_grad_subject[$i];
           else if(isset($request->other_postgradsubjects[$i]) && ($request->other_postgradsubjects[$i]!=Null))
           {
@@ -493,18 +500,28 @@ class JobFormController extends Controller
        {
         $person_higherEdu_phd = new ApplicantHigherEducation();
         $person_higherEdu_phd->applicant_id=$person->id;
+        
         if(isset($request->qualification_phduniv[$i]))
         $person_higherEdu_phd->qualification_type=$request->qualification_phduniv[$i];
 
-        $person_higherEdu_phd->institute_name=$request->phd_name;
+        if(isset($request->$request->phd_Name[$i]) && $request->$request->phd_Name[$i]!=Null && $request->$request->phd_Name[$i]!="other")
+          $person_higherEdu_phd->unversity_id=$request->phd_name;
+          elseif(isset($request->otherphd_univ[$i]) && $request->otherphd_univ[$i]!=Null)
+          {
+            $new_univ= new University();
+            $new_univ->name =$request->otherphd_univ[$i];
+            $new_univ->status='true';
+            $new_univ->save();
+            $person_higherEdu_phd->university_id=$new_univ->id;
 
-        if(isset($request->phd_SubjectName[$i]))
+          }
+
+        if(isset($request->phd_SubjectName[$i]) &&$request->phd_SubjectName[$i]!=Null &&$request->phd_SubjectName[$i]!="other")
         $person_higherEdu_phd->highersubject_id=$request->phd_SubjectName[$i];
-
-        if(isset($request->phd_SubjectName[$i]) && $request->phd_SubjectName!=Null)
+        else if(isset($request->phd_other_SubjectName[$i]) && $request->phd_other_SubjectName!=Null)
         {
           $higher_subject= new HigherSubject();
-          $higher_subject->subject_name = $request->phd_SubjectName[$i];
+          $higher_subject->subject_name = $request->phd_other_SubjectName[$i];
           $higher_subject->type= 'PHD';
           $higher_subject->save();
           $person_higherEdu_phd->highersubject_id=$higher_subject->id;
@@ -526,25 +543,30 @@ class JobFormController extends Controller
        if($request->pd_Name!=null)
      foreach($request->pd_Name as $pd_name)
        {
-        $person_higherEdu_postgrad = new ApplicantHigherEducation();
-        $person_higherEdu_postgrad->applicant_id=$person->id;
+        $person_higherEdu_postdoc = new ApplicantHigherEducation();
+        $person_higherEdu_postdoc->applicant_id=$person->id;
 
-        $person_higherEdu_postgrad->institute_name=$pd_name;
+        if(isset($request->$request->pd_Name[$i]) && $request->$request->pd_Name[$i]!=Null && $request->$request->pd_Name[$i]!="other")
+        $person_higherEdu_postdoc->university_id=$pd_name;
+        elseif(isset($request->otherpostdoc_univ[$i]) && $request->otherpostdoc_univ[$i]!=Null)
+        {
+          $new_univ= new University();
+          $new_univ->name =$request->otherpostdoc_univ[$i];
+          $new_univ->status='true';
+          $new_univ->save();
+          $person_higherEdu_postdoc->university_id=$new_univ->id;
 
+        }
         if(isset($request->qualification_postdocuniv[$i]))
-        $person_higherEdu_postgrad->qualification_type=$request->qualification_postdocuniv[$i];
+        $person_higherEdu_postdoc->qualification_type=$request->qualification_postdocuniv[$i];
 
         if(isset($request->pd_thesis[$i]))
-        $person_higherEdu_postgrad->thesis_topic=$request->pd_thesis[$i];
-
-
-        if(isset($request->postdoc_subjName[$i]))
-        $person_higherEdu_phd->highersubject_id=$request->postdoc_subjName[$i];
+        $person_higherEdu_postdoc->thesis_topic=$request->pd_thesis[$i];
 
         if(isset($request->pd_date[$i]))
-        $person_higherEdu_postgrad->date_of_grad=$request->pd_date[$i];
+        $person_higherEdu_postdoc->date_of_grad=$request->pd_date[$i];
 
-        $person_higherEdu_postgrad->save();
+        $person_higherEdu_postdoc->save();
         $i++;
     }
 
@@ -724,10 +746,10 @@ class JobFormController extends Controller
     return redirect()->route('createCnic')->with('success','New Recuritment Has Been Added!!');
 }
 
-public function showsummary(JobForm $jobForm)
-{
+    public function showsummary(JobForm $jobForm)
+    {
 
-}
+    }
     /**
      * Display the specified resource.
      *
@@ -740,10 +762,13 @@ public function showsummary(JobForm $jobForm)
      
     //  dd( $applicant_secondaryEdu);
       //calculating age
+      
       $dateofbirth=date('Y-m-d',strtotime($applicant->dob)); 
       $today_date = date('Y-m-d');
       $age=date_diff(date_create($dateofbirth), date_create($today_date));
       $age=$age->format('%y');
+
+      //experience duration
       
       return view('recuritment.show',['applicant'=>$applicant,'age'=>$age]);
     }

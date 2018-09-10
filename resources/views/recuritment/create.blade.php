@@ -1135,25 +1135,81 @@
 
 
             $('button#add_phd_level').click(function(e){
+                var phdSubjects=[];
+                var secndvar='';
+                var thirdvar='';
+
+                var univ=[];
+                var uniname_start='';
+                var uniname_end='';
                 var eduprogram ='<div class="row" id="new_phdrow[]">'
                             +'<div class="col-md-12" style="margin-bottom: 15px;margin-top: 15px;">'
                             +'<input type="hidden" name="qualification_phduniv[]" value="phd">'
-                            +'<div class="col-md-2 phd_institute_name">Institution Name<input type="text" name="phd_Name[]" id="phd_Name" class="form-control"> </div>'
-                            +'<div class="col-md-2 phd_SubjectName">Subject Name<input type="text" name="phd_SubjectName[]" id="phd_SubjectName[" class="form-control"> </div>'
+                            +'<div class="col-md-3 institute_name">Institution Name'
+                            +'<select name="phd_Name[]" class="form-control" onchange="add_newUC(this)">'
+                            +'<option value=""></option>'
+                            +'<option value="other" style="background-color:peachpuff;">Other</option>';
+                            $.ajax({
+                                type: "get",
+                                url: '{{route("getuniv")}}',
+                                async: false,
+                                success: function(data){
+                                console.log(data);
+                                univ = data;
+                                },
+                                error: function(jqXHR, textStatus, errorThrown) { // What to do if we fail
+                                console.log(JSON.stringify(jqXHR));
+                                console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
+                                }
+                            });
+                            for (var i = 0; i < univ.length; ++i) {
+                                uniname_start=uniname_start+'<option value="'+univ[i].id+'">'+univ[i].name+'</option>';
+                            }
+                            uniname_end='</select><br>'
+                            +'<input type="hidden" id="university_n[]"/>'
+                            +'<div id="otherphd_univ" style=" margin-top: -20px; display:none;">'
+                            +'<input type="text"  name="otherphd_univ[]" id="otherphd_univ" class="form-control"/>'
+                            +'</div></div>'
+                            +'<div class="col-md-3 phd_SubjectName">Subject Name'
+                            +'<select class="form-control" name="phd_SubjectName[]" onchange="add_newdegree(this)">'
+                            +'<option disabled selected="selected">Select Degree</option>'
+                            +'<option value="other" style="background-color:peachpuff;">Other</option>';
+                            $.ajax({
+                                type: "POST",
+                                url: '{{route("getCustomSubject")}}',
+                                async: false,
+                                data: {
+                                "_token": "{{ csrf_token() }}",
+                                'type' : 'phd'},
+                                success: function(data){
+                                console.log(data);
+                                phdSubjects = data;
+                                },
+                                error: function(jqXHR, textStatus, errorThrown) { // What to do if we fail
+                                console.log(JSON.stringify(jqXHR));
+                                console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
+                                }
+                            });
+                            for (var i = 0; i < phdSubjects.length; ++i) {
+                            secndvar=secndvar+'<option value="'+phdSubjects[i].id+'">'+phdSubjects[i].subject_name+'</option>';
+                            }
+                            thirdvar='</select></br>'
+                            +'<div  style=" margin-top: -20px; display:none;">'
+                            +'<input type="text"  name="phd_other_SubjectName[]" id="phd_other_SubjectName" class="form-control "/>'
+                            +'</div></div>'
                             +'<div class="col-md-2 phd_thesis">Thesis Topic<input type="text" name="phd_thesis[]" id="phd_thesis" class="form-control">  </div>'
                             +'<div class="col-md-2 phd_dg">Date Of Graduation <input type="date" name="phd_date[]" id="phd_date" class="form-control"> </div>'
                             +'<div class="col-md-1 remove_phd_level"><button type="button" id="remove_phd_level[]"  class=" btn btn-danger btn-md remove_phd_level" style="margin-top:21px;" onclick="remove_data(this)" ><span class="glyphicon glyphicon-minus"></span></button></div></div></div>';
 
-                $('#phdeducation').append(eduprogram);
+                $('#phdeducation').append(eduprogram+uniname_start+uniname_end+secndvar+thirdvar);
         });
 
 
             $('button#add_postdoc_level').click(function(e){
                 var eduprogram ='<div class="row" id="new_postdocrow[]">'
                                 +'<div class="col-md-12" style="margin-bottom: 15px;margin-top: 15px;">'
-                                +'<input type="hidden" name="qualification_postdocuniv[]" value="post_graddoc">'
+                                +'<input type="hidden" name="qualification_postdocuniv[]" value="post_doc">'
                                 +'<div class="col-md-2 pd_institute_name">Institution Name<input type="text" name="pd_Name[]" id="pd_Name[]" class="form-control"> </div>'
-                                +'<div class="col-md-2 postdoc_subjName">Subject Name<input type="text" name="postdoc_subjName[]" id="postdoc_subjName[]" class="form-control"> </div>'
                                 +'<div class="col-md-2 postdoc_thesis">Thesis Topic<input type="text" name="pd_thesis[]" id="pd_thesis[]" class="form-control"> </div>'
                                 +'<div class="col-md-2 postdoc_dg">Date Of Graduation <input type="date" name="pd_date[]" id="pd_date[]" class="form-control"> </div>'
                                 +'<div class="col-md-1 remove_graddoc_level"><button type="button" id="remove_graddoc_level[]"  class="btn btn-danger btn-md " style=" margin-top: 21px;" onclick="remove_data(this)" ><span class="glyphicon glyphicon-minus"></span></button></div></div></div>';
@@ -1257,7 +1313,7 @@
                 var exp_row = '';
                 exp_row += '<tr>';
                 exp_row += '<td><input type="text" name="org_Name[]" id="org_Name" placeholder="Enter Your Organization Name" class="form-control"></td>';
-                exp_row += '<td><select class="form-control" name="org_type[]"><option value="">Select Type:</option><option value="1">Private/NGO</option><option value="2">Government</option><option value="3">International/INGO</option><option value="4">Self-Employed</option><option value="5">Donor Agencies</option></select></td>';
+                exp_row += '<td><select class="form-control" name="org_type[]"><option value="">Select Type:</option><option value="Private/NGO">Private/NGO</option><option value="Government">Government</option><option value="International/INGO">International/INGO</option><option value="Self-Employed">Self-Employed</option><option value="Donor Agencies">Donor Agencies</option></select></td>';
                 exp_row += '<td> <input type="date" name="start_date[]" id="start_date" class="form-control"></td>';
                 exp_row +='<td><input type="date" name="end_date[]" id="end_date" class="form-control"></td>'
                 exp_row +='<td><input type="text" name="role_name[]" class="form-control"></td>'

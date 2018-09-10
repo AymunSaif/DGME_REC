@@ -37,6 +37,16 @@ class Applicant extends Model
     {
         return $this->hasMany('App\ApplicantAppliedFor');
     }
-    
-
+    public function ApplicantResearchWork()
+    {
+        return $this->hasMany('App\ApplicantResearchWork');
+    }
+    public function ApplicantTraining()
+    {
+        return $this->hasMany('App\ApplicantTraining');
+    }
+    public function ProfessionalCertificationMember()
+    {
+        return $this->hasMany('App\ProfessionalCertificationMember');
+    }
 }
