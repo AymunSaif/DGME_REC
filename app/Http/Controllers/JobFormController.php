@@ -2,27 +2,37 @@
 
 namespace App\Http\Controllers;
 
-use App\JobForm;
+use App\ApplicantLog;
 use App\Applicant;
 use App\ApplicantDetail;
+use App\ApplicantDetailLog;
+use App\ApplicantAppliedforLog;
 use App\ApplicantAppliedFor;
 use App\ApplicantCertification;
+use App\ApplicantCertificationLog;
 use App\City;
 use App\District;
 use Auth;
+use App\ApplicantExperienceLog;
 use App\ApplicantExperience;
+use App\ApplicantHigherEducationLog;
 use App\ApplicantHigherEducation;
+use App\ApplicantSecondaryEducationLog;
 use App\ApplicantSecondaryEducation;
 use App\Certification;
 use App\HigherSubject;
 use App\SecondarySubject;
 use App\Province;
+use App\ApplicantDocumentLog;
 use App\ApplicantDocument;
 use App\User;
 use App\CnicLog;
 use Illuminate\Http\Request;
 use App\ApplicantTraining;
+use App\ApplicantTrainingLog;
+use App\ApplicantResearchWorkLog;
 use App\ApplicantResearchWork;
+use App\ProfessionalCertificationMemberLog;
 use App\ProfessionalCertificationMember;
 use App\University;
 use phpDocumentor\Reflection\Types\Null_;
@@ -117,8 +127,9 @@ class JobFormController extends Controller
      */
   private function storeLog(Request $request)
   {
-      $person=Applicant::where('id',$request->person_id)->first();
+      $person= new ApplicantLog();
       // Applicant Details
+     $person->applicant_id=$request->person_id;
      $person->diary_num=$request->d_num;
      $person->name= $request->name;
      $person->gender= $request->gender;
@@ -127,8 +138,8 @@ class JobFormController extends Controller
      $person->email= $request->emailaddress;
      $person->created_by=Auth::id();
      $person->save();
-     $person_detail= new ApplicantDetail();
-     $person_detail->applicant_id=$person->id;
+     $person_detail= new ApplicantDetailLog();
+     $person_detail->applicant_log_id=$person->id;
      $person_detail->father_name=$request->f_name;
      $person_detail->province_id=$request->dom_province;
      $person_detail->district_id=$request->dom_district;
@@ -146,8 +157,8 @@ class JobFormController extends Controller
      // else if($request->data_type=='education'){
      if($request->schooling_level=="Matric")
       {
-        $person_secondaryEdu = new ApplicantSecondaryEducation();
-        $person_secondaryEdu->applicant_id=$person->id;
+        $person_secondaryEdu = new ApplicantSecondaryEducationLog();
+        $person_secondaryEdu->applicant_log_id=$person->id;
         $person_secondaryEdu->name_of_school=$request->s_Name;
         $person_secondaryEdu->qualification_type=$request->qualification;
 
@@ -179,9 +190,9 @@ class JobFormController extends Controller
 
      elseif($request->schooling_level=="O-Level")
       {
-        $person_secondaryEdu = new ApplicantSecondaryEducation();
+        $person_secondaryEdu = new ApplicantSecondaryEducationLog();
 
-        $person_secondaryEdu->applicant_id=$person->id;
+        $person_secondaryEdu->applicant_log_id=$person->id;
 
         $person_secondaryEdu->name_of_school=$request->s_Name;
         $person_secondaryEdu->qualification_type=$request->qualification;
@@ -218,8 +229,8 @@ class JobFormController extends Controller
 
      if($request->college_level=="Intermediate")
       {
-        $person_secondaryEdu_college = new ApplicantSecondaryEducation();
-        $person_secondaryEdu_college->applicant_id=$person->id;
+        $person_secondaryEdu_college = new ApplicantSecondaryEducationLog();
+        $person_secondaryEdu_college->applicant_log_id=$person->id;
         $person_secondaryEdu_college->name_of_school=$request->c_Name;
         $person_secondaryEdu_college->qualification_type=$request->college_qualification_type;
 
@@ -251,9 +262,9 @@ class JobFormController extends Controller
       }
      elseif($request->college_level=="A-Level")
       {
-        $person_secondaryEdu_college = new ApplicantSecondaryEducation();
+        $person_secondaryEdu_college = new ApplicantSecondaryEducationLog();
 
-      $person_secondaryEdu_college->applicant_id=$person->id;
+      $person_secondaryEdu_college->applicant_log_id=$person->id;
       $person_secondaryEdu_college->name_of_school=$request->c_Name;
       $person_secondaryEdu_college->qualification_type=$request->college_qualification_type;
 
@@ -291,8 +302,8 @@ class JobFormController extends Controller
        if($by=="2 years")
         {
 
-          $person_higherEdu_2yr = new ApplicantHigherEducation();
-          $person_higherEdu_2yr->applicant_id=$person->id;
+          $person_higherEdu_2yr = new ApplicantHigherEducationLog();
+          $person_higherEdu_2yr->applicant_log_id=$person->id;
 
           if(isset($request->college_university_names[$year2]) && $request->college_university_names[$year2] !=Null && $request->college_university_names[$year2]!='other')
             $person_higherEdu_2yr->institute_name=$request->college_university_names[$year2];
@@ -345,8 +356,8 @@ class JobFormController extends Controller
       else if($by=="4 years")
        {
 
-        $person_higherEdu_univ = new ApplicantHigherEducation();
-        $person_higherEdu_univ->applicant_id=$person->id;
+        $person_higherEdu_univ = new ApplicantHigherEducationLog();
+        $person_higherEdu_univ->applicant_log_id=$person->id;
         if(isset($request->university_names[$year4]) && $request->university_names[$year4]!=Null && $request->university_names[$year4]!='other')
         {
           $person_higherEdu_univ->institute_name=$request->university_names[$year4];
@@ -415,8 +426,8 @@ class JobFormController extends Controller
      {
       foreach($request->qualification_postuniv as $qualification_postuniv)
       {
-        $person_higherEdu_grad = new ApplicantHigherEducation();
-        $person_higherEdu_grad->applicant_id=$person->id;
+        $person_higherEdu_grad = new ApplicantHigherEducationLog();
+        $person_higherEdu_grad->applicant_log_id=$person->id;
 
         if(isset($request->pg_Name[$i]) && $request->pg_Name[$i]!=Null)
         $person_higherEdu_grad->university_id=$request->pg_Name[$i];
@@ -474,8 +485,8 @@ class JobFormController extends Controller
      if($request->phd_Name!=null)
     foreach($request->phd_Name as $phd_name)
      {
-      $person_higherEdu_phd = new ApplicantHigherEducation();
-      $person_higherEdu_phd->applicant_id=$person->id;
+      $person_higherEdu_phd = new ApplicantHigherEducationLog();
+      $person_higherEdu_phd->applicant_log_id=$person->id;
       if(isset($request->qualification_phduniv[$i]))
       $person_higherEdu_phd->qualification_type=$request->qualification_phduniv[$i];
 
@@ -509,8 +520,8 @@ class JobFormController extends Controller
      if($request->pd_Name!=null)
    foreach($request->pd_Name as $pd_name)
      {
-      $person_higherEdu_postgrad = new ApplicantHigherEducation();
-      $person_higherEdu_postgrad->applicant_id=$person->id;
+      $person_higherEdu_postgrad = new ApplicantHigherEducationLog();
+      $person_higherEdu_postgrad->applicant_log_id=$person->id;
 
       $person_higherEdu_postgrad->institute_name=$pd_name;
 
@@ -537,8 +548,8 @@ class JobFormController extends Controller
      if($request->app_cer!=null)
     foreach($request->app_cer as $app_cer)
       {
-      $person_certificate= new ApplicantCertification();
-      $person_certificate->applicant_id=$person->id;
+      $person_certificate= new ApplicantCertificationLog();
+      $person_certificate->applicant_log_id=$person->id;
 
       $person_certificate->name_certifictaion=$app_cer;
 
@@ -558,8 +569,8 @@ class JobFormController extends Controller
      if($request->app_tr!=null)
    foreach($request->app_tr as $app_tr)
      {
-     $person_training= new ApplicantTraining();
-     $person_training->applicant_id=$person->id;
+     $person_training= new ApplicantTrainingLog();
+     $person_training->applicant_log_id=$person->id;
      $person_training->training_name=$app_tr;
      if(isset($request->tr_by[$i]))
      $person_training->by_name=$request->tr_by[$i];
@@ -575,8 +586,8 @@ class JobFormController extends Controller
      if($request->researchType!=null)
    foreach($request->researchType as $rp)
     {
-      $person_researchwork= new ApplicantResearchWork();
-      $person_researchwork->applicant_id=$person->id;
+      $person_researchwork= new ApplicantResearchWorkLog();
+      $person_researchwork->applicant_log_id=$person->id;
       $person_researchwork->researchtype=$rp;
         if($request->researchType[$i]=="Journal")
         {
@@ -610,8 +621,8 @@ class JobFormController extends Controller
      if($request->app_pmname!=null)
      foreach($request->app_pmname as $app_pmname)
       {
-        $person_pm= new ProfessionalCertificationMember();
-        $person_pm->applicant_id=$person->id;
+        $person_pm= new ProfessionalCertificationMemberLog();
+        $person_pm->applicant_log_id=$person->id;
 
         if(isset($request->app_pmname))
         $person_pm->name=$app_pmname;
@@ -639,8 +650,8 @@ class JobFormController extends Controller
       if($request->org_Name!=null)
      foreach($request->org_Name as $org)
        {
-          $person_exp= new ApplicantExperience();
-          $person_exp->applicant_id=$person->id;
+          $person_exp= new ApplicantExperienceLog();
+          $person_exp->applicant_log_id=$person->id;
 
           if(isset($request->org_Name[$i]))
           $person_exp->org_name=$org;
@@ -670,8 +681,8 @@ class JobFormController extends Controller
      foreach($request->app_designation as $app_designation)
       {
         if($request->app_designation!=null){
-              $person_designation= new ApplicantAppliedFor();
-              $person_designation->applicant_id=$person->id;
+              $person_designation= new ApplicantAppliedforLog();
+              $person_designation->applicant_log_id=$person->id;
               $person_designation->position_name=$app_designation;
           }
           $person_designation->save();
@@ -684,8 +695,8 @@ class JobFormController extends Controller
      $i=0;
      if($request->cv!=null)
     foreach($request->cv as $cv){
-          $person_document= new ApplicantDocument();
-          $person_document->applicant_id=$person->id;
+          $person_document= new ApplicantDocumentLog();
+          $person_document->applicant_log_id=$person->id;
           if(isset($request->picture[$i]))
           $person_document->applicant_picture=$request->picture[$i];
           $person_document->cv=$cv;
@@ -696,7 +707,7 @@ class JobFormController extends Controller
   }
   public function store(Request $request)
     {
-        // $this->storeLog($request);
+        $this->storeLog($request);
         $person=Applicant::where('id',$request->person_id)->first();
         if($person)
         {
