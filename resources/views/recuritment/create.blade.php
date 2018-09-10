@@ -1745,7 +1745,7 @@
                             +'<input type="text"  name="phd_other_SubjectName[]" id="phd_other_SubjectName" class="form-control "/>'
                             +'</div></div>'
                             +'<div class="col-md-2 phd_thesis">Thesis Topic<input type="text" name="phd_thesis[]" id="phd_thesis" class="form-control">  </div>'
-                            +'<div class="col-md-2 phd_dg">Date Of Graduation <input type="date" name="phd_date[]" id="phd_date" class="form-control"> </div>'
+                            +'<div class="col-md-2 phd_dg">Final DMC Date <input type="date" name="phd_date[]" id="phd_date" class="form-control"> </div>'
                             +'<div class="col-md-1 remove_phd_level"><button type="button" id="remove_phd_level[]"  class=" btn btn-danger btn-md remove_phd_level" style="margin-top:21px;" onclick="remove_data(this)" ><span class="glyphicon glyphicon-minus"></span></button></div></div></div>';
 
                 $('#phdeducation').append(eduprogram+uniname_start+uniname_end+secndvar+thirdvar);

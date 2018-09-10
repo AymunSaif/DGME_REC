@@ -525,7 +525,7 @@ class JobFormController extends Controller
       $person_higherEdu_phd->thesis_topic=$request->phd_thesis[$i];
 
       if(isset($request->phd_date[$i]))
-      $person_higherEdu_phd->date_of_grad=$request->phd_date[$i];
+      $person_higherEdu_phd->final_dmc_date=$request->phd_date[$i];
 
       $person_higherEdu_phd->save();
 
