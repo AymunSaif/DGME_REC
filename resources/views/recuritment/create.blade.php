@@ -41,99 +41,150 @@
             <div class="form-group">
                     <b>Diary Number</b>
                     <br>
-                    <input type="text" name="d_num" id="d_num" class="form-control" >
+                    @if($applicant->diary_num!='' && $applicant->diary_num!=NULL)
+                      <input type="text" value="<?= $applicant->diary_num  ?>" disabled class="form-control" >
+                    @else
+                      <input type="text" name="d_num" id="d_num" class="form-control" >
+                    @endif
                 </div>
                 <div class="form-group">
                     <b>Name
                         <span style="color:red;font-size:12px;"> (required)</span>
                     </b>
                     <br>
-                    <input type="text" name="name" id="name" placeholder="Enter Your Full Name" class="form-control"    required>
+                    @if($applicant->name!='' && $applicant->name!=NULL)
+                      <input type="text" value="<?= $applicant->name  ?>" disabled placeholder="Enter Your Full Name" class="form-control" >
+                    @else
+                      <input type="text" name="name" id="name" placeholder="Enter Your Full Name" class="form-control"    required>
+                    @endif
                 </div>
                 <div class="form-group">
                     <b>Father / Husband Name </b>
                     <br>
-                    <input type="text" name="f_name" id="f_name" placeholder="" class="form-control">
+                    @if(isset($applicant->ApplicantDetail->father_name) && $applicant->ApplicantDetail->father_name!='' && $applicant->ApplicantDetail->father_name!=NULL)
+                      <input type="text" name="f_name" id="f_name" value="<?= $applicant->ApplicantDetail->father_name  ?>" disabled placeholder="" class="form-control">
+                    @else
+                      <input type="text" name="f_name" id="f_name" placeholder="" class="form-control">
+                    @endif
                 </div>
                 <div class="form-group">
                     <b>Gender </b>
                     <br>
 
                     Male
-                    <input style="margin-left:6px;margin-right:5px;" type="radio" value="Male" name="gender"> Female
-                    <input style="margin-left:6px;margin-right:5px;" type="radio" value="Female" name="gender">
+                    <input style="margin-left:6px;margin-right:5px;" type="radio" value="Male" <?= $applicant->gender=='Male' ? 'checked disabled' : '' ?> name="gender">
+                    Female
+                    <input style="margin-left:6px;margin-right:5px;" type="radio" value="Female" <?= $applicant->gender=='Female' ? 'checked disabled' : '' ?> name="gender">
                     Transgender
-                    <input style="margin-left:6px;margin-right:5px;" type="radio" value="Transgender" name="gender">
+                    <input style="margin-left:6px;margin-right:5px;" type="radio" value="Transgender" <?= $applicant->gender=='Transgender' ? 'checked disabled' : '' ?> name="gender">
 
                 </div>
 
                 <div class="form-group">
                     <b>Date Of Birth </b>
                     <br>
-                    <input type="date" name="dob" class="form-control">
+                    @if ($applicant->dob!=NULL && $applicant->dob!='')
+                      <input type="date" name="dob" value="<?= $applicant->dob ? $applicant->dob : '' ?>" disabled class="form-control">
+                    @else
+                      <input type="date" name="dob" class="form-control">
+                    @endif
                 </div>
                 <div class="form-group">
                     <b>Religion</b>
                     <br>
-                    <input type="text" name="religion" class="form-control">
+                    @if ($applicant->religion!=NULL && $applicant->religion!='' && $applicant->religion!="NA")
+                      <input type="text" name="religion" value="{{$applicant->religion}}" disabled class="form-control">
+                    @else
+                      <input type="text" name="religion" class="form-control">
+                    @endif
                 </div>
 
 
             </div>
             <div class="col-md-6">
                 <div class="form-group">
-                    <b>Domicile Province</b>
-                    <select class="form-control dom_province" name="dom_province">
+                  <b>Domicile Province</b>
+                  @if(isset($applicant->ApplicantDetail->Province->name)&&$applicant->ApplicantDetail->province_id!=NULL)
+                    <input type="text" value="{{$applicant->ApplicantDetail->Province->name}}" class="form-control" disabled>
+                  @else
+                    <select class="form-control dom_province" name="dom_province" >
                         <option value="">Select Province</option>
                         @foreach($provinces as $province)
-                        <option value="{{$province->id}}">{{$province->name}}</option>
+                            <option value="{{$province->id}}" >{{$province->name}}</option>
                         @endforeach
 
                     </select>
+                  @endif
                 </div>
 
                 <div class="form-group">
                     <b>Domicile Districts </b>
-                    <select class="form-control dom_district " name="dom_district">
-                        <option value="">Select Districts</option>
+                    @if(isset($applicant->ApplicantDetail->District->name)&&$applicant->ApplicantDetail->district_id!=NULL)
+                      <input type="text" value="{{$applicant->ApplicantDetail->District->name}}" class="form-control" disabled>
+                    @else
+                      <select class="form-control dom_district " name="dom_district">
+                          <option value="">Select Districts</option>
 
-                    </select>
+                      </select>
+                    @endif
                 </div>
                 <div class="form-group">
                         <b>Postal Address </b>
                         <br>
-                        <textarea type="text" name="address" class="form-control"></textarea>
+                        @if(isset($applicant->ApplicantDetail->postal_add) && $applicant->ApplicantDetail->postal_add!='' && $applicant->ApplicantDetail->postal_add!=NULL)
+                          <input type="text" value="{{$applicant->ApplicantDetail->postal_add}}" class="form-control" disabled>
+                        @else
+                          <textarea type="text" name="address" class="form-control"></textarea>
+                        @endif
                     </div>
                 <div class="form-group">
+                  @if(isset($applicant->ApplicantDetail->city) && $applicant->ApplicantDetail->city!='' && $applicant->ApplicantDetail->city!=NULL)
+                    <input type="text" value="{{$applicant->ApplicantDetail->city}}" class="form-control" disabled>
+                  @else
                     <b>City </b>  <input type="text" name="city" id="city" class="form-control">
-
+                  @endif
                 </div>
 
                 <div class="form-group">
                     <b>Email Address : </b>
                     <br>
-                    <input type="email" name="emailaddress" id="email" class="form-control">
+                    @if($applicant->email!='NA' && $applicant->email!=NULL && $applicant->email!='')
+                      <input type="text" value="{{$applicant->email}}" class="form-control" disabled>
+                    @else
+                      <input type="email" name="emailaddress" id="email" class="form-control">
+                    @endif
                 </div>
 
                 <div class="form-group">
                     <b>Phone Number </b>
                     <br>
-                    <input id="phone" name="phone" type="tel" class="form-control">
-                    <span id="valid-msg" style="color:#3c763d" class="hide valid-msg">✓ Valid</span>
-                    <span id="error-msg" style="color:red" class="hide error-msg">X Invalid number</span>
-
+                    @if(isset($applicant->ApplicantDetail->phone_num)&&$applicant->ApplicantDetail->phone_num!=NULL)
+                      <input type="text" value="{{$applicant->ApplicantDetail->phone_num}}" class="form-control" disabled>
+                    @else
+                      <input id="phone" name="phone" type="tel" class="form-control">
+                      <span id="valid-msg" style="color:#3c763d" class="hide valid-msg">✓ Valid</span>
+                      <span id="error-msg" style="color:red" class="hide error-msg">X Invalid number</span>
+                    @endif
                 </div>
                 <div class="form-group">
                     <b>Cell Number (1)</b>
+                    @if(isset($applicant->ApplicantDetail->cell_num)&&$applicant->ApplicantDetail->cell_num!=NULL)
+                      <input type="text" value="{{$applicant->ApplicantDetail->cell_num}}" class="form-control" disabled>
+                    @else
                      <input id="mobilenumber" name="mobile_number1" type="tel" class="form-control mobile_number">
                      <span id="valid-msg" style="color:#3c763d" class="hide valid-msg">✓ Valid</span>
                      <span id="error-msg" style="color:red" class="hide error-msg">X Invalid number</span>
+                    @endif
                 </div>
                 <div class="form-group">
                 <b>Cell Number (2)</b>
-                <input id="mobile_number2" name="mobile_number" type="tel" class="form-control">
-                <span id="valid-msg" style="color:#3c763d" class="hide valid-msg">✓ Valid</span>
-                <span id="error-msg" style="color:red" class="hide error-msg">X Invalid number</span>
+                @if(isset($applicant->ApplicantDetail->cellnum_2)&&$applicant->ApplicantDetail->cellnum_2!=NULL)
+                  <input type="text" value="{{$applicant->ApplicantDetail->cellnum_2}}" class="form-control" disabled>
+                @else
+                  <input id="mobile_number2" name="mobile_number" type="tel" class="form-control">
+                  <span id="valid-msg" style="color:#3c763d" class="hide valid-msg">✓ Valid</span>
+                  <span id="error-msg" style="color:red" class="hide error-msg">X Invalid number</span>
+                @endif
                 </div>
 
             </div>
@@ -151,6 +202,161 @@
 
         <table class="table " id="secondaryeducation" >
             <tbody>
+              @if(isset($applicant->ApplicantSecondaryEducation) && $applicant->ApplicantSecondaryEducation!=NULL)
+                @foreach ($applicant->ApplicantSecondaryEducation as $secondary_edu)
+                  @if ($secondary_edu->qualification_type=='School')
+                    <tr>
+                        <td>
+                          <span class=""> School Level
+                              <br>
+                              @if (isset($secondary_edu->SecondarySubject->type))
+                                <input type="text" value="{{$secondary_edu->SecondarySubject->type}}" disabled class="form-control">
+                              @else
+                                <input type="text" value="NA" disabled class="form-control">
+                              @endif
+                          </span>
+                        </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <span class=""> School Name
+                          <br>
+                          <input type="text" value="{{$secondary_edu->name_of_school}}" disabled class="form-control">
+                        </span>
+                      </td>
+                        <td>
+                          <span class=""> Board Name
+                              <br>
+                              <input type="text" value="{{$secondary_edu->board}}" disabled class="form-control">
+                          </span>
+                        </td>
+                        <td>
+                          <span class=""> Subject
+                              <br>
+                              @if (isset($secondary_edu->SecondarySubject->subject_name))
+                                <input type="text" value="{{$secondary_edu->SecondarySubject->subject_name}}" disabled class="form-control">
+                              @endif
+                          </span>
+                        </td>
+                        <td>
+                          <span class=""> Distinction
+                              <br>
+                                <input type="text" value="{{$secondary_edu->distinction}}" disabled class="form-control">
+                          </span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <span class=""> Total
+                              <br>
+                                <input type="text" value="{{$secondary_edu->total_marks}}" disabled class="form-control">
+                          </span>
+                        </td>
+                        <td>
+                          <span class=""> Achieved Marks
+                              <br>
+                                <input type="text" value="{{$secondary_edu->achieved_marks}}" disabled class="form-control">
+                          </span>
+                        </td>
+                        <td>
+                          <span class=""> Percentage %
+                              <br>
+                                <input type="text" value="{{$secondary_edu->percentage}}" disabled class="form-control">
+                          </span>
+                        </td>
+                        <td>
+                          <span class=""> Division
+                              <br>
+                                <input type="text" value="{{$secondary_edu->division}}" disabled class="form-control">
+                          </span>
+                        </td>
+                        @if (isset($secondary_edu->SecondarySubject->type) && $secondary_edu->SecondarySubject->type=='O-Level')
+                          <td>
+                            <span class=""> Grades
+                                <br>
+                                  <input type="text" value="{{$secondary_edu->grades}}" disabled class="form-control">
+                            </span>
+                          </td>
+                        @endif
+                      </tr>
+                  @elseif($secondary_edu->qualification_type=='Intermediate')
+                    <tr>
+                        <td>
+                          <span class=""> College Level
+                              <br>
+                              @if (isset($secondary_edu->SecondarySubject->type))
+                                <input type="text" value="{{$secondary_edu->SecondarySubject->type}}" disabled class="form-control">
+                              @else
+                                <input type="text" value="NA" disabled class="form-control">
+                              @endif
+                          </span>
+                        </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <span class=""> School Name
+                          <br>
+                          <input type="text" value="{{$secondary_edu->name_of_school}}" disabled class="form-control">
+                        </span>
+                      </td>
+                        <td>
+                          <span class=""> Board Name
+                              <br>
+                              <input type="text" value="{{$secondary_edu->board}}" disabled class="form-control">
+                          </span>
+                        </td>
+                        <td>
+                          <span class=""> Subject
+                              <br>
+                              @if (isset($secondary_edu->SecondarySubject->subject_name))
+                                <input type="text" value="{{$secondary_edu->SecondarySubject->subject_name}}" disabled class="form-control">
+                              @endif
+                          </span>
+                        </td>
+                        <td>
+                          <span class=""> Distinction
+                              <br>
+                                <input type="text" value="{{$secondary_edu->distinction}}" disabled class="form-control">
+                          </span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <span class=""> Total
+                              <br>
+                                <input type="text" value="{{$secondary_edu->total_marks}}" disabled class="form-control">
+                          </span>
+                        </td>
+                        <td>
+                          <span class=""> Achieved Marks
+                              <br>
+                                <input type="text" value="{{$secondary_edu->achieved_marks}}" disabled class="form-control">
+                          </span>
+                        </td>
+                        <td>
+                          <span class=""> Percentage %
+                              <br>
+                                <input type="text" value="{{$secondary_edu->percentage}}" disabled class="form-control">
+                          </span>
+                        </td>
+                        <td>
+                          <span class=""> Division
+                              <br>
+                                <input type="text" value="{{$secondary_edu->division}}" disabled class="form-control">
+                          </span>
+                        </td>
+                        @if (isset($secondary_edu->SecondarySubject->type) && $secondary_edu->SecondarySubject->type=='A-Level')
+                          <td>
+                            <span class=""> Grades
+                                <br>
+                                  <input type="text" value="{{$secondary_edu->grades}}" disabled class="form-control">
+                            </span>
+                          </td>
+                        @endif
+                      </tr>
+                  @endif
+                @endforeach
+              @endif
                 <tr>
                     <td>
                         <div>
@@ -393,14 +599,142 @@
         </div>
 
         <hr/>
+        @if (isset($applicant->ApplicantHigherEducation) && $applicant->ApplicantHigherEducation!=NULL)
+          <div class="container-fluid">
+            @foreach ($applicant->ApplicantHigherEducation as $high_edu)
+              @if ($high_edu->bach_year=='4 years' || $high_edu->bach_year=='2 years')
+                <div class="row">
+                  <div class="col-md-4">
+                    Graduate Level
+                    <br>
+                    <input type="text" value="{{$high_edu->bach_year}}" class="form-control" disabled>
+                  </div>
+                  <div class="col-md-4">
+                    Institution Name
+                    <br>
+                    @if (isset($high_edu->University->name))
+                      <input type="text" value="{{$high_edu->University->name}}" class="form-control" disabled>
+                    @endif
+                  </div>
+                  <div class="col-md-4">
+                    Degree
+                    <br>
+                    @if (isset($high_edu->HigherSubject->subject_name))
+                      <input type="text" value="{{$high_edu->HigherSubject->subject_name}}" class="form-control" disabled>
+                    @endif
+                  </div>
+                </div>
+                <div class="row">
+                  @if ($high_edu->bach_year=='4 years')
+                    <div class="col-md-2">
+                      CGPA/4
+                      <br>
+                      <input type="text" value="{{$high_edu->cgpa}}" class="form-control" disabled>
+                    </div>
+                    <div class="col-md-2">
+                      Final DMC Date
+                      <br>
+                      <input type="text" value="{{$high_edu->final_dmc_date}}" class="form-control" disabled>
+                    </div>
 
+                  @endif
+                  <div class="col-md-2">
+                    Total Marks
+                    <br>
+                    <input type="text" value="{{$high_edu->total_marks}}" class="form-control" disabled>
+                  </div>
+                  <div class="col-md-2">
+                    Achieved Marks
+                    <br>
+                    <input type="text" value="{{$high_edu->achieved_marks}}" class="form-control" disabled>
+                  </div>
+                  <div class="col-md-2">
+                    Division
+                    <br>
+                      <input type="text" value="{{$high_edu->division}}" class="form-control" disabled>
+                  </div>
+                  </div>
+                  <div class="col-md-2">
+                    Percentage
+                    <br>
+                      <input type="text" value="{{$high_edu->percentage}}" class="form-control" disabled>
+                  </div>
+                  <div class="col-md-2">
+                    Distinction
+                    <br>
+                      <input type="text" value="{{$high_edu->distinction}}" class="form-control" disabled>
+                  </div>
+              @endif
+            @endforeach
+          </div>
+        @endif
         <div class="row" id="postgradeducation" style="margin-top:5px;">
                 <div class="col-md-1">
                     <button type="button" id="add_postgrad_level"   class="btn btn-lg btn-success add_postgrad_level" style="width: 252px;" ><span
                             class="glyphicon glyphicon-plus"> Add Post Graduation Level</span></button>
                 </div>
         </div>
-
+        @if (isset($applicant->ApplicantHigherEducation) && $applicant->ApplicantHigherEducation!=NULL)
+          <div class="container-fluid">
+            @foreach ($applicant->ApplicantHigherEducation as $high_edu)
+              @if ($high_edu->qualification_type=='post_grad')
+              <div class="row">
+                <div class="col-md-4">
+                  Institution Name
+                  <br>
+                  @if (isset($high_edu->University->name))
+                    <input type="text" value="{{$high_edu->University->name}}" class="form-control" disabled>
+                  @endif
+                </div>
+                <div class="col-md-4">
+                  Degree
+                  <br>
+                  @if (isset($high_edu->HigherSubject->subject_name))
+                    <input type="text" value="{{$high_edu->HigherSubject->subject_name}}" class="form-control" disabled>
+                  @endif
+                </div>
+                <div class="col-md-2">
+                  CGPA/4
+                  <br>
+                  <input type="text" value="{{$high_edu->cgpa}}" class="form-control" disabled>
+                </div>
+                <div class="col-md-2">
+                  Final DMC Date
+                  <br>
+                  <input type="text" value="{{$high_edu->final_dmc_date}}" class="form-control" disabled>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-2">
+                  Total Marks
+                  <br>
+                  <input type="text" value="{{$high_edu->total_marks}}" class="form-control" disabled>
+                </div>
+                <div class="col-md-2">
+                  Achieved Marks
+                  <br>
+                  <input type="text" value="{{$high_edu->achieved_marks}}" class="form-control" disabled>
+                </div>
+                <div class="col-md-2">
+                  Division
+                  <br>
+                    <input type="text" value="{{$high_edu->division}}" class="form-control" disabled>
+                </div>
+                </div>
+                <div class="col-md-2">
+                  Percentage
+                  <br>
+                    <input type="text" value="{{$high_edu->percentage}}" class="form-control" disabled>
+                </div>
+                <div class="col-md-2">
+                  Distinction
+                  <br>
+                    <input type="text" value="{{$high_edu->distinction}}" class="form-control" disabled>
+                </div>
+              @endif
+            @endforeach
+          </div>
+        @endif
         <hr/>
 
         <div class="row" id="phdeducation" style="margin-top:5px;">
@@ -409,6 +743,42 @@
                             class="glyphicon glyphicon-plus"> Add PHD Level</span></button>
                 </div>
         </div>
+        @if (isset($applicant->ApplicantHigherEducation) && $applicant->ApplicantHigherEducation!=NULL)
+          <div class="container-fluid">
+            @foreach ($applicant->ApplicantHigherEducation as $high_edu)
+              @if ($high_edu->qualification_type=='PHD')
+              <div class="row">
+                <div class="col-md-2">
+                  Institution Name
+                  <br>
+                  @if (isset($high_edu->University->name))
+                    <input type="text" value="{{$high_edu->University->name}}" class="form-control" disabled>
+                  @endif
+                </div>
+                <div class="col-md-2">
+                  Subject Name
+                  <br>
+                  @if (isset($high_edu->HigherSubject->subject_name))
+                    <input type="text" value="{{$high_edu->HigherSubject->subject_name}}" class="form-control" disabled>
+                  @else
+                    <input type="text" value="{{$high_edu->HigherSubject->subject_name}}" class="form-control">
+                  @endif
+                </div>
+                <div class="col-md-2">
+                  Thesis Topic
+                  <br>
+                  <input type="text" value="{{$high_edu->thesis_topic}}" class="form-control" disabled>
+                </div>
+                <div class="col-md-2">
+                  Date
+                  <br>
+                  <input type="text" value="{{$high_edu->date_of_grad}}" class="form-control" disabled>
+                </div>
+              </div>
+              @endif
+            @endforeach
+          </div>
+        @endif
         <hr/>
 
         <div class="row" id="postdoceducation" style="margin-top:5px;">
@@ -417,7 +787,40 @@
                         class="glyphicon glyphicon-plus"> Add Post Doctral Level</span></button>
              </div>
         </div>
-
+        @if (isset($applicant->ApplicantHigherEducation) && $applicant->ApplicantHigherEducation!=NULL)
+          <div class="container-fluid">
+            @foreach ($applicant->ApplicantHigherEducation as $high_edu)
+              @if ($high_edu->qualification_type=='post_graddoc')
+              <div class="row">
+                <div class="col-md-2">
+                  Institution Name
+                  <br>
+                  @if (isset($high_edu->University->name))
+                    <input type="text" value="{{$high_edu->University->name}}" class="form-control" disabled>
+                  @endif
+                </div>
+                <div class="col-md-2">
+                  Subject Name
+                  <br>
+                  @if (isset($high_edu->HigherSubject->subject_name))
+                    <input type="text" value="{{$high_edu->HigherSubject->subject_name}}" class="form-control" disabled>
+                  @endif
+                </div>
+                <div class="col-md-2">
+                  Thesis Topic
+                  <br>
+                  <input type="text" value="{{$high_edu->thesis_topic}}" class="form-control" disabled>
+                </div>
+                <div class="col-md-2">
+                  Date
+                  <br>
+                  <input type="text" value="{{$high_edu->date_of_grad}}" class="form-control" disabled>
+                </div>
+              </div>
+              @endif
+            @endforeach
+          </div>
+        @endif
         <hr/>
 
         <div class="row" id="certifications" style="margin-top:5px;">
@@ -426,8 +829,35 @@
             <button type="button" id="add_morecertifications" class="btn btn-md btn-info add_certification "><span
             class="glyphicon glyphicon-plus"></button></h3>
           </div>
-
         </div>
+        @if (isset($applicant->ApplicantCertification) && $applicant->ApplicantCertification!=NULL)
+          <div class="container-fluid">
+            @foreach ($applicant->ApplicantCertification as $certification)
+              <div class="row">
+                <div class="col-md-2">
+                  Certification Name
+                  <br>
+                    <input type="text" value="{{$certification->name_certifictaion}}" class="form-control" disabled>
+                </div>
+                <div class="col-md-2">
+                  Certificate Number
+                  <br>
+                    <input type="text" value="{{$certification->certification_number}}" class="form-control" disabled>
+                </div>
+                <div class="col-md-2">
+                  Issued By
+                  <br>
+                  <input type="text" value="{{$certification->issued_by}}" class="form-control" disabled>
+                </div>
+                <div class="col-md-2">
+                  Date of Issuance
+                  <br>
+                  <input type="text" value="{{$certification->date_of_issuance}}" class="form-control" disabled>
+                </div>
+              </div>
+            @endforeach
+          </div>
+        @endif
         <hr/>
 
         <div class="row" id="trainings" style="margin-top:5px;">
@@ -436,10 +866,30 @@
                     <button type="button" id="add_moretrainings" class="btn btn-md btn-info add_moretrainings" ><span
                     class="glyphicon glyphicon-plus"></span></button></h3>
             </div>
-
-
         </div>
-
+        @if (isset($applicant->ApplicantTraining) && $applicant->ApplicantTraining!=NULL)
+          <div class="container-fluid">
+            @foreach ($applicant->ApplicantTraining as $training)
+              <div class="row">
+                <div class="col-md-2">
+                  Training Name
+                  <br>
+                    <input type="text" value="{{$training->training_name}}" class="form-control" disabled>
+                </div>
+                <div class="col-md-2">
+                  By
+                  <br>
+                    <input type="text" value="{{$training->by_name}}" class="form-control" disabled>
+                </div>
+                <div class="col-md-2">
+                  Duration
+                  <br>
+                  <input type="text" value="{{$training->duration}}" class="form-control" disabled>
+                </div>
+              </div>
+            @endforeach
+          </div>
+        @endif
         <hr/>
 
         <div class="row" id="researchpaper" style="margin-top:5px;">
@@ -448,9 +898,60 @@
                     <button type="button" id="add_morerps" class="btn btn-md btn-info add_morerps" ><span
                     class="glyphicon glyphicon-plus"></span></button></h3>
             </div>
-
         </div>
-
+        @if (isset($applicant->ResearchWork) && $applicant->ResearchWork!=NULL)
+          <div class="container-fluid">
+            @foreach ($applicant->ResearchWork as $research)
+              @if ($research->researchtype=='Conference')
+              <div class="row">
+                <div class="col-md-2">
+                  Paper Type
+                  <br>
+                    <input type="text" value="{{$research->researchtype}}" class="form-control" disabled>
+                </div>
+                <div class="col-md-2">
+                  Name of Conference
+                  <br>
+                    <input type="text" value="{{$training->name}}" class="form-control" disabled>
+                </div>
+                <div class="col-md-2">
+                  Published Year
+                  <br>
+                  <input type="text" value="{{$training->duration}}" class="form-control" disabled>
+                </div>
+                <div class="col-md-2">
+                  Paper of Topic
+                  <br>
+                  <input type="text" value="{{$training->conference}}" class="form-control" disabled>
+                </div>
+              </div>
+              @else
+                <div class="row">
+                  <div class="col-md-2">
+                    Paper Type
+                    <br>
+                      <input type="text" value="{{$research->researchtype}}" class="form-control" disabled>
+                  </div>
+                  <div class="col-md-2">
+                    Name of Journal
+                    <br>
+                      <input type="text" value="{{$training->name}}" class="form-control" disabled>
+                  </div>
+                  <div class="col-md-2">
+                    Published Year
+                    <br>
+                    <input type="text" value="{{$training->published_year}}" class="form-control" disabled>
+                  </div>
+                  <div class="col-md-2">
+                    Paper of Topic
+                    <br>
+                    <input type="text" value="{{$training->date_published}}" class="form-control" disabled>
+                  </div>
+                </div>
+              @endif
+            @endforeach
+          </div>
+        @endif
         <hr/>
 
         <div class="row" id="professional_membership" style="margin-top:5px;">
@@ -459,11 +960,39 @@
                     <button type="button" id="addmore_pro_member" class="btn btn-md btn-info    " ><span
                     class="glyphicon glyphicon-plus"></span></button></h3>
             </div>
-
         </div>
-
+        @if (isset($applicant->ProfessionalCertificationMember))
+          @foreach ($applicant->ProfessionalCertificationMember as $certifica)
+            <div class="row">
+              <div class="col-md-2">
+                Name
+                <br>
+                <input type="text" disabled value="{{$certifica->name}}">
+              </div>
+              <div class="col-md-2">
+                Membership Level
+                <br>
+                <input type="text" disabled value="{{$certifica->membership_level}}">
+              </div>
+              <div class="col-md-2">
+                Issued By
+                <br>
+                <input type="text" disabled value="{{$certifica->issued_by}}">
+              </div>
+              <div class="col-md-2">
+                Issuance Date
+                <br>
+                <input type="text" disabled value="{{$certifica->issuance_date}}">
+              </div>
+              <div class="col-md-2">
+                Registeration #
+                <br>
+                <input type="text" disabled value="{{$certifica->registeration}}">
+              </div>
+            </div>
+          @endforeach
+        @endif
         <hr/>
-
         <div class="row" style="margin-top:5px;">
 
                 <div class="col-md-1"></div>
@@ -472,9 +1001,7 @@
                 </div>
                 <div class="col-md-4"></div>
                 <div class="col-md-3">
-                    <button type="button" class="btn btn-md btn-success pull-right" style="
-                        width: 252px;"
-                        id="experience"> Next</button>
+                    <button type="button" class="btn btn-md btn-success pull-right" style="width: 252px;"id="experience"> Next</button>
                 </div>
                 <div class="col-md-1"></div>
         </div>
@@ -491,6 +1018,15 @@
                 <th style="text-align:center;">Role</th>
                 <th style="text-align:center;"><button type="button" id="add_moreexp" class="btn btn-success btn-sm add_moreexp"><span class="glyphicon glyphicon-plus"></span></button></th>
             </tr>
+            @foreach ($applicant->ApplicantExperience as $experience)
+              <tr>
+                <td>{{$experience->org_name}}</td>
+                <td>{{$experience->org_type}}</td>
+                <td>{{$experience->start_date}}</td>
+                <td>{{$experience->end_date}}</td>
+                <td>{{$experience->role}}</td>
+              </tr>
+            @endforeach
             <tr>
                 <td><input type="text" name="org_Name[]" id="org_Name" placeholder="Enter Your Organization Name" class="form-control"></td>
                 <td>
@@ -507,7 +1043,7 @@
                 <td><input type="date" name="end_date[]" id="end_date" class="form-control"></td>
                 <td><input type="text" name="role_name[]" class="form-control"></td>
                 <td style="text-align:center;"><button type="button" id="remove_exp[]" onclick="remove_exp(this)" class="btn btn-danger btn-sm remove" ><span class=" glyphicon glyphicon-minus"></span></button></td>
-                </tr>
+              </tr>
         </table>
         <div class="row" style="margin-top:5px;">
 
@@ -517,9 +1053,7 @@
                 </div>
                 <div class="col-md-4"></div>
                 <div class="col-md-3">
-                    <button type="button" class="btn btn-md btn-success pull-right" style="
-                        width: 252px;"
-                        id="designation"> Next</button>
+                    <button type="button" class="btn btn-md btn-success pull-right" style="width: 252px;" id="designation"> Next</button>
                 </div>
                 <div class="col-md-1"></div>
         </div>
@@ -533,6 +1067,19 @@
                     <th style="text-align:center;">Position Applied</th>
                     <th style="text-align:center;"><button type="button" id="add_moredesignation" class="btn btn-success btn-sm add_moredesignation"><span class="glyphicon glyphicon-plus"></span></button></th>
                 </tr>
+                @php
+                  $i=1;
+                @endphp
+                @foreach ($applicant->ApplicantAppliedFor as $applied_for)
+                  <tr>
+                    <td>{{$i}}</td>
+                    <td>{{$applied_for->position_name}}</td>
+                    <td></td>
+                  </tr>
+                  @php
+                    $i++;
+                  @endphp
+                @endforeach
             </table>
 
               <h1 style="text-align:center; background-color:azure;">Upload Documents</h1>
@@ -925,7 +1472,7 @@
                                 console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
                                 }
                             });
-                    $('input[name="qualification"]').val("Matric")
+                    $('input[name="qualification"]').val("School")
                     $('.sch_name').show(1000);
                     $('.sch_board').show(1000);
                     $('.sch_subjects').show(1000);

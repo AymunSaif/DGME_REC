@@ -115,8 +115,588 @@ class JobFormController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+  private function storeLog(Request $request)
+  {
+      $person=Applicant::where('id',$request->person_id)->first();
+      // Applicant Details
+     $person->diary_num=$request->d_num;
+     $person->name= $request->name;
+     $person->gender= $request->gender;
+     $person->dob= $request->dob;
+     $person->religion=$request->religion;
+     $person->email= $request->emailaddress;
+     $person->created_by=Auth::id();
+     $person->save();
+     $person_detail= new ApplicantDetail();
+     $person_detail->applicant_id=$person->id;
+     $person_detail->father_name=$request->f_name;
+     $person_detail->province_id=$request->dom_province;
+     $person_detail->district_id=$request->dom_district;
+     $person_detail->city=$request->city;
+     $person_detail->postal_add=$request->address;
+     $person_detail->phone_num=$request->full_phone;
+     $person_detail->cell_num=$request->full_mobilenumber1;
+     $person_detail->cellnum_2=$request->full_mobilenumber2;
+     $person_detail->save();
+    // }
+
+    // dd($person);
+     //---------->School Education//
+
+     // else if($request->data_type=='education'){
+     if($request->schooling_level=="Matric")
+      {
+        $person_secondaryEdu = new ApplicantSecondaryEducation();
+        $person_secondaryEdu->applicant_id=$person->id;
+        $person_secondaryEdu->name_of_school=$request->s_Name;
+        $person_secondaryEdu->qualification_type=$request->qualification;
+
+        if(isset($request->b_Name) && $request->b_Name!=Null && $request->b_Name!='other')
+          $person_secondaryEdu->board=$request->b_Name;
+        else if(isset($request->sch_otherboard) && $request->sch_otherboard!=Null)
+          $person_secondaryEdu->board=$request->sch_otherboard;
+
+        if(isset($request->s_subjects) && $request->s_subjects!=Null &&  $request->s_subjects!='other')
+          $person_secondaryEdu->secondarysubject_id=$request->s_subjects;
+        else if(isset($request->subjectsschool_other) && $request->subjectsschool_other!=Null)
+          {
+          $secondary_subject= new SecondarySubject();
+          $secondary_subject->subject_name = $request->subjectsschool_other;
+          $secondary_subject->type='Matric';
+          $secondary_subject->save();
+          $person_secondaryEdu->secondarysubject_id=$secondary_subject->id;
+          }
+
+        $person_secondaryEdu->total_marks=$request->t_marks;
+        $person_secondaryEdu->achieved_marks=$request->a_marks;
+        $person_secondaryEdu->percentage=$request->sch_percentage;
+
+        $person_secondaryEdu->division=$request->divi;
+
+        $person_secondaryEdu->distinction=$request->dist;
+        $person_secondaryEdu->save();
+      }
+
+     elseif($request->schooling_level=="O-Level")
+      {
+        $person_secondaryEdu = new ApplicantSecondaryEducation();
+
+        $person_secondaryEdu->applicant_id=$person->id;
+
+        $person_secondaryEdu->name_of_school=$request->s_Name;
+        $person_secondaryEdu->qualification_type=$request->qualification;
+
+        if(isset($request->b_Name) && $request->b_Name!=Null && $request->b_Name!='other')
+        $person_secondaryEdu->board=$request->b_Name;
+        else if(isset($request->sch_otherboard) && $request->sch_otherboard!=Null)
+        $person_secondaryEdu->board=$request->sch_otherboard;
+
+        if(isset($request->s_subjects) && $request->s_subjects!=Null  && $request->s_subjects!='other')
+        $person_secondaryEdu->secondarysubject_id=$request->s_subjects;
+        else if(isset($request->subjectsschool_other) && $request->subjectsschool_other!=Null)
+        {
+
+          $secondary_subject= new SecondarySubject();
+          $secondary_subject->subject_name = $request->subjectsschool_other;
+          $secondary_subject->type= 'O-Level';
+          $secondary_subject->save();
+          $person_secondaryEdu->secondarysubject_id=$secondary_subject->id;
+        }
+        $person_secondaryEdu->distinction=$request->dist;
+        $person_secondaryEdu->total_marks=$request->t_marks;
+        $person_secondaryEdu->achieved_marks=$request->a_marks;
+        $person_secondaryEdu->percentage=$request->sch_percentage;
+
+
+        $person_secondaryEdu->division=$request->divi;
+        $person_secondaryEdu->grades=$request->grades_olevel;
+        $person_secondaryEdu->save();
+       }
+
+
+    //----->College Education//
+
+     if($request->college_level=="Intermediate")
+      {
+        $person_secondaryEdu_college = new ApplicantSecondaryEducation();
+        $person_secondaryEdu_college->applicant_id=$person->id;
+        $person_secondaryEdu_college->name_of_school=$request->c_Name;
+        $person_secondaryEdu_college->qualification_type=$request->college_qualification_type;
+
+        if(isset($request->c_b_Name) && $request->c_b_Name!=Null && $request->c_b_Name!='other')
+         $person_secondaryEdu_college->board=$request->c_b_Name;
+        else if(isset($request->college_otherboard) && $request->college_otherboard!=Null)
+         $person_secondaryEdu_college->board=$request->college_otherboard;
+
+        if(isset($request->c_subjects) && $request->c_subjects!=Null  && $request->c_subjects!='other')
+         $person_secondaryEdu_college->secondarysubject_id=$request->c_subjects;
+        else if(isset($request->c_othersubjects)  && $request->c_othersubjects!=Null)
+        {
+          $secondary_subject= new SecondarySubject();
+          $secondary_subject->subject_name = $request->c_othersubjects;
+          $secondary_subject->type= $request->college_level;
+          $secondary_subject->save();
+          $person_secondaryEdu_college->secondarysubject_id=$secondary_subject->id;
+
+        }
+        $person_secondaryEdu_college->total_marks=$request->c_t_marks;
+        $person_secondaryEdu_college->achieved_marks=$request->c_a_marks;
+        $person_secondaryEdu_college->percentage=$request->c_percentage;
+
+
+        $person_secondaryEdu_college->division=$request->c_div;
+        $person_secondaryEdu_college->distinction=$request->c_dist;
+        $person_secondaryEdu_college->save();
+
+      }
+     elseif($request->college_level=="A-Level")
+      {
+        $person_secondaryEdu_college = new ApplicantSecondaryEducation();
+
+      $person_secondaryEdu_college->applicant_id=$person->id;
+      $person_secondaryEdu_college->name_of_school=$request->c_Name;
+      $person_secondaryEdu_college->qualification_type=$request->college_qualification_type;
+
+      if(isset($request->c_b_Name) && $request->c_b_Name!=Null && $request->c_b_Name!='other')
+      $person_secondaryEdu_college->board=$request->c_b_Name;
+      else if(isset($request->college_otherboard) && $request->college_otherboard!=Null)
+      $person_secondaryEdu_college->board=$request->college_otherboard;
+
+      if(isset($request->c_subjects) && $request->c_subjects!=Null && $request->c_subjects!='other')
+      $person_secondaryEdu_college->secondarysubject_id=$request->c_subjects;
+      else if(isset($request->c_othersubjects)  && $request->c_othersubjects!=Null)
+        {
+          $secondary_subject= new SecondarySubject();
+          $secondary_subject->subject_name = $request->c_othersubjects;
+          $secondary_subject->type= $request->college_level;
+          $secondary_subject->save();
+          $person_secondaryEdu_college->secondarysubject_id=$secondary_subject->id;
+
+        }
+      $person_secondaryEdu_college->total_marks=$request->c_t_marks;
+      $person_secondaryEdu_college->achieved_marks=$request->c_a_marks;
+      $person_secondaryEdu_college->percentage=$request->c_percentage;
+      $person_secondaryEdu_college->grades=$request->c_grades;
+      $person_secondaryEdu_college->division=$request->c_div;
+      $person_secondaryEdu_college->distinction=$request->c_dist;
+      $person_secondaryEdu_college->save();
+    }
+
+     //---------->Bachelors Education 2year and 4 year
+     $i=0;$year4=0;$year2=0;
+   if($request->bch_year!=null)
+   {
+    foreach($request->bch_year as $by)
+     {
+       if($by=="2 years")
+        {
+
+          $person_higherEdu_2yr = new ApplicantHigherEducation();
+          $person_higherEdu_2yr->applicant_id=$person->id;
+
+          if(isset($request->college_university_names[$year2]) && $request->college_university_names[$year2] !=Null && $request->college_university_names[$year2]!='other')
+            $person_higherEdu_2yr->institute_name=$request->college_university_names[$year2];
+          else if(isset($request->other_collegebox[$year2]) && ($request->other_collegebox[$year2]!=Null))
+           {
+             // dd($reuest)
+            $new_univ= new University();
+            $new_univ->name =$request->other_collegebox[$year2];
+            $new_univ->status= 'true';
+            $new_univ->save();
+            $person_higherEdu_2yr->institute_name=$new_univ->id;
+
+           }
+
+          if(isset($request->qualification_univ[$year2]))
+          $person_higherEdu_2yr->qualification_type=$request->qualification_univ[$i];
+
+          $person_higherEdu_2yr->bach_year=$by;
+
+          if(isset($request->u_collegesubjects[$year2]) && $request->u_collegesubjects[$year2]!=Null  && $request->u_collegesubjects[$year2]!='other' )
+           $person_higherEdu_2yr->highersubject_id=$request->u_collegesubjects[$year2];
+          else if(isset($request->other_univ_colsubjects[$year2]) && ($request->other_univ_colsubjects[$year2]!=Null))
+           {
+            $new_highersubject= new HigherSubject();
+            $new_highersubject->subject_name =$request->other_univ_colsubjects[$year2];
+            $new_highersubject->type= 'bachelor';
+            $new_highersubject->save();
+            $person_higherEdu_2yr->highersubject_id=$new_highersubject->id;
+           }
+
+          if(isset($request->twoyear_t_marks[$year2]))
+          $person_higherEdu_2yr->total_marks=$request->twoyear_t_marks[$year2];
+
+          if(isset($request->twoy_a_marks[$year2]))
+          $person_higherEdu_2yr->achieved_marks=$request->twoyear_a_marks[$year2];
+
+          if(isset($request->percentage[$year2]))
+          $person_higherEdu_2yr->percentage=$request->percentage[$year2];
+
+          if(isset($request->division[$i]))
+          $person_higherEdu_2yr->division=$request->division[$i];
+
+          if(isset($request->distinction[$i]))
+          $person_higherEdu_2yr->distinction=$request->distinction[$i];
+
+          $person_higherEdu_2yr->save();
+          $year2++;
+
+        }
+      else if($by=="4 years")
+       {
+
+        $person_higherEdu_univ = new ApplicantHigherEducation();
+        $person_higherEdu_univ->applicant_id=$person->id;
+        if(isset($request->university_names[$year4]) && $request->university_names[$year4]!=Null && $request->university_names[$year4]!='other')
+        {
+          $person_higherEdu_univ->institute_name=$request->university_names[$year4];
+        }
+        else if(isset($request->other_univbox[$year4]) && $request->other_univbox[$year4]!=Null)
+        {
+          $new_univ= new University();
+          $new_univ->name = $request->other_univbox[$year4];
+          $new_univ->status= 'true';
+          $new_univ->save();
+          $person_higherEdu_univ->institute_name=$new_univ->id;
+
+        }
+        // dd($request->all());
+        if(isset($request->qualification_univ[$year4]))
+        $person_higherEdu_univ->qualification_type=$request->qualification_univ[$i];
+
+        $person_higherEdu_univ->bach_year=$by;
+
+
+        if(isset($request->u_subjects[$year4]) && $request->u_subjects[$year4]!=Null && $request->u_subjects[$year4]!='other' )
+        $person_higherEdu_univ->highersubject_id=$request->u_subjects[$year4];
+        else if(isset($request->other_univsubjects[$year4]) && ($request->other_univsubjects[$year4]!=Null))
+        {
+          $new_highersubject= new HigherSubject();
+          $new_highersubject->subject_name =$request->other_univsubjects[$year4];
+          $new_highersubject->type= 'bachelor';
+          $new_highersubject->save();
+          $person_higherEdu_univ->highersubject_id=$new_highersubject->id;
+        }
+
+        if(isset($request->cgpa[$year4]))
+        $person_higherEdu_univ->cgpa=$request->cgpa[$year4];
+
+        if(isset($request->foury_t_marks[$year4]))
+        $person_higherEdu_univ->total_marks=$request->foury_t_marks[$year4];
+
+        if(isset($request->foury_a_marks[$year4]))
+        $person_higherEdu_univ->achieved_marks=$request->foury_a_marks[$year4];
+
+        if(isset($request->univ_per[$year4]))
+        $person_higherEdu_univ->percentage=$request->univ_per[$year4];
+
+        if(isset($request->dmc_date[$year4]))
+        $person_higherEdu_univ->final_dmc_date=$request->dmc_date[$year4];
+
+        if(isset($request->division[$i]))
+        $person_higherEdu_univ->division=$request->division[$i];
+
+        if(isset($request->distinction[$i]))
+        $person_higherEdu_univ->distinction=$request->distinction[$i];
+
+        $person_higherEdu_univ->save();
+        $year4++;
+        // dd('saved'.$person_higherEdu_univ);
+      }
+      $i++;
+      }
+
+   }
+   //------------>postgraduation
+
+     $i=0;
+    //  dump($request->all());
+    if($request->qualification_postuniv[$i]!=null)
+     {
+      foreach($request->qualification_postuniv as $qualification_postuniv)
+      {
+        $person_higherEdu_grad = new ApplicantHigherEducation();
+        $person_higherEdu_grad->applicant_id=$person->id;
+
+        if(isset($request->pg_Name[$i]) && $request->pg_Name[$i]!=Null)
+        $person_higherEdu_grad->university_id=$request->pg_Name[$i];
+        elseif(isset($request->otherpost_univ[$i]) && $request->otherpost_univ[$i]!=Null)
+        {
+          $new_univ= new University();
+          $new_univ->name =$request->otherpost_univ[$i];
+          $new_univ->status='true';
+          $new_univ->save();
+          $person_higherEdu_grad->university_id=$new_univ->id;
+
+        }
+
+        if(isset($request->qualification_postuniv[$i]))
+        $person_higherEdu_grad->qualification_type=$qualification_postuniv;
+
+        if(isset($request->post_grad_subject[$i]))
+        $person_higherEdu_grad->highersubject_id=$request->post_grad_subject[$i];
+        else if(isset($request->other_postgradsubjects[$i]) && ($request->other_postgradsubjects[$i]!=Null))
+        {
+          $new_highersubject= new HigherSubject();
+          $new_highersubject->subject_name =$request->other_postgradsubjects[$i];
+          $new_highersubject->type= 'masters';
+          $new_highersubject->save();
+          $person_higherEdu_grad->highersubject_id=$new_highersubject->id;
+        }
+        if(isset($request->postgrad_marks[$i]))
+          $person_higherEdu_grad->total_marks=$request->postgrad_marks[$i];
+
+        if(isset($request->postgrad_achievedmarks[$i]))
+        $person_higherEdu_grad->achieved_marks=$request->postgrad_achievedmarks[$i];
+
+        if(isset($request->pg_cgpa[$i]))
+        $person_higherEdu_grad->cgpa=$request->pg_cgpa[$i];
+
+       if(isset($request->pg_prcentage[$i]))
+        $person_higherEdu_grad->percentage=$request->pg_percentage[$i];
+
+        if(isset($request->postgrad_division[$i]))
+        $person_higherEdu_grad->division=$request->postgrad_division[$i];
+
+        if(isset($request->pg_dmc_date[$i]))
+          $person_higherEdu_grad->final_dmc_date=$request->pg_dmc_date[$i];
+
+        if(isset($request->pg_distinction[$i]))
+          $person_higherEdu_grad->distinction=$request->pg_distinction[$i];
+          // dd($person_higherEdu_grad);
+         $person_higherEdu_grad->save();
+        $i++;
+     }
+    }
+     //--------------->phd education
+
+     $i=0;
+     if($request->phd_Name!=null)
+    foreach($request->phd_Name as $phd_name)
+     {
+      $person_higherEdu_phd = new ApplicantHigherEducation();
+      $person_higherEdu_phd->applicant_id=$person->id;
+      if(isset($request->qualification_phduniv[$i]))
+      $person_higherEdu_phd->qualification_type=$request->qualification_phduniv[$i];
+
+      $person_higherEdu_phd->institute_name=$request->phd_name;
+
+      if(isset($request->phd_SubjectName[$i]))
+      $person_higherEdu_phd->highersubject_id=$request->phd_SubjectName[$i];
+
+      if(isset($request->phd_SubjectName[$i]) && $request->phd_SubjectName!=Null)
+      {
+        $higher_subject= new HigherSubject();
+        $higher_subject->subject_name = $request->phd_SubjectName[$i];
+        $higher_subject->type= 'PHD';
+        $higher_subject->save();
+        $person_higherEdu_phd->highersubject_id=$higher_subject->id;
+      }
+
+      if(isset($request->phd_thesis[$i]))
+      $person_higherEdu_phd->thesis_topic=$request->phd_thesis[$i];
+
+      if(isset($request->phd_date[$i]))
+      $person_higherEdu_phd->date_of_grad=$request->phd_date[$i];
+
+      $person_higherEdu_phd->save();
+
+      $i++;
+    }
+
+     //---------------->postdoc education
+      $i=0;
+     if($request->pd_Name!=null)
+   foreach($request->pd_Name as $pd_name)
+     {
+      $person_higherEdu_postgrad = new ApplicantHigherEducation();
+      $person_higherEdu_postgrad->applicant_id=$person->id;
+
+      $person_higherEdu_postgrad->institute_name=$pd_name;
+
+      if(isset($request->qualification_postdocuniv[$i]))
+      $person_higherEdu_postgrad->qualification_type=$request->qualification_postdocuniv[$i];
+
+      if(isset($request->pd_thesis[$i]))
+      $person_higherEdu_postgrad->thesis_topic=$request->pd_thesis[$i];
+
+
+      if(isset($request->postdoc_subjName[$i]))
+      $person_higherEdu_phd->highersubject_id=$request->postdoc_subjName[$i];
+
+      if(isset($request->pd_date[$i]))
+      $person_higherEdu_postgrad->date_of_grad=$request->pd_date[$i];
+
+      $person_higherEdu_postgrad->save();
+      $i++;
+  }
+
+     //------------------>certification
+
+     $i=0;
+     if($request->app_cer!=null)
+    foreach($request->app_cer as $app_cer)
+      {
+      $person_certificate= new ApplicantCertification();
+      $person_certificate->applicant_id=$person->id;
+
+      $person_certificate->name_certifictaion=$app_cer;
+
+      if(isset($request->cer_num[$i]))
+      $person_certificate->certification_number=$request->cer_num[$i];
+      if(isset($request->certificate_i[$i]))
+      $person_certificate->issued_by=$request->certificate_i[$i];
+      if(isset($request->i_date[$i]))
+      $person_certificate->date_of_issuance=$request->i_date[$i];
+      $person_certificate->save();
+      $i++;
+    }
+
+  //-------------------->trainings
+
+     $i=0;
+     if($request->app_tr!=null)
+   foreach($request->app_tr as $app_tr)
+     {
+     $person_training= new ApplicantTraining();
+     $person_training->applicant_id=$person->id;
+     $person_training->training_name=$app_tr;
+     if(isset($request->tr_by[$i]))
+     $person_training->by_name=$request->tr_by[$i];
+     if(isset($request->tr_duration[$i]))
+     $person_training->duration=$request->tr_duration[$i];
+     $person_training->save();
+     $i++;
+   }
+
+   //--------------------->researchwork
+
+     $i=0;
+     if($request->researchType!=null)
+   foreach($request->researchType as $rp)
+    {
+      $person_researchwork= new ApplicantResearchWork();
+      $person_researchwork->applicant_id=$person->id;
+      $person_researchwork->researchtype=$rp;
+        if($request->researchType[$i]=="Journal")
+        {
+            if(isset($request->app_jr[$i]))
+          $person_researchwork->name=$request->app_jr[$i];
+          if(isset($request->journal_yr[$i]))
+          $person_researchwork->published_year=$request->journal_yr[$i];
+          if(isset($request->journal_dt[$i]))
+          $person_researchwork->date_published=$request->journal_dt[$i];
+
+        }
+        else if($request->researchType[$i]=="Conference")
+        {
+          if(isset($request->app_conf[$i]))
+          $person_researchwork->conference=$request->app_conf[$i];
+          if(isset($request->conf_yr[$i]))
+          $person_researchwork->published_year=$request->conf_yr[$i];
+          if(isset($request->rp_dt[$i]))
+          $person_researchwork->date_published=$request->rp_dt[$i];
+          if(isset($request->app_rp[$i]))
+          $person_researchwork->name=$app_rp[$i];
+
+        }
+        $person_researchwork->save();
+        $i++;
+  }
+
+  //---------------------->professional trainings
+
+     $i=0;
+     if($request->app_pmname!=null)
+     foreach($request->app_pmname as $app_pmname)
+      {
+        $person_pm= new ProfessionalCertificationMember();
+        $person_pm->applicant_id=$person->id;
+
+        if(isset($request->app_pmname))
+        $person_pm->name=$app_pmname;
+
+        if(isset($request->m_level[$i]))
+        $person_pm->membership_level=$request->m_level[$i];
+
+        if(isset($request->issued_name[$i]))
+        $person_pm->issued_by=$request->issued_name[$i];
+
+        if(isset($request->pm_doi[$i]))
+        $person_pm->issuance_date=$request->pm_doi[$i];
+
+        if(isset($request->pm_reg[$i]))
+        $person_pm->registeration=$request->pm_reg[$i];
+        $person_pm->save();
+
+        $i++;
+    }
+
+   //---------------------->experience
+    // }
+  // else if($request->data_type=='experience'){
+      $i=0;
+      if($request->org_Name!=null)
+     foreach($request->org_Name as $org)
+       {
+          $person_exp= new ApplicantExperience();
+          $person_exp->applicant_id=$person->id;
+
+          if(isset($request->org_Name[$i]))
+          $person_exp->org_name=$org;
+
+          if(isset($request->org_type[$i]))
+          $person_exp->org_type=$request->org_type[$i];
+
+          if(isset($request->start_date[$i]))
+          $person_exp->start_date=$request->start_date[$i];
+
+          if(isset($request->end_date[$i]))
+          $person_exp->end_date=$request->end_date[$i];
+
+          if(isset($request->role_name[$i]))
+          $person_exp->role=$request->role_name[$i];
+
+          $person_exp->save();
+          $i++;
+      }
+    // }
+
+
+    //---------------------->position applied for
+    // else if($request->data_type=='designation'){
+      $i=0;
+       if($request->app_designation!=null)
+     foreach($request->app_designation as $app_designation)
+      {
+        if($request->app_designation!=null){
+              $person_designation= new ApplicantAppliedFor();
+              $person_designation->applicant_id=$person->id;
+              $person_designation->position_name=$app_designation;
+          }
+          $person_designation->save();
+          $i++;
+    }
+
+
+    //------------------------>documents
+
+     $i=0;
+     if($request->cv!=null)
+    foreach($request->cv as $cv){
+          $person_document= new ApplicantDocument();
+          $person_document->applicant_id=$person->id;
+          if(isset($request->picture[$i]))
+          $person_document->applicant_picture=$request->picture[$i];
+          $person_document->cv=$cv;
+          $person_document->save();
+          $i++;
+    }
+
+  }
   public function store(Request $request)
     {
+        // $this->storeLog($request);
         $person=Applicant::where('id',$request->person_id)->first();
         if($person)
         {
@@ -134,16 +714,22 @@ class JobFormController extends Controller
     // Applicant Details
        // $person= new Applicant();
       // if($request->data_type=='applicant_detail'){
+      if(isset($request->d_num) && $request->d_num!='' && $request->d_num!=NULL)
        $person->diary_num=$request->d_num;
     //    $person->uniqueNumber="HIS_2018_0001";
+    if(isset($request->name) && $request->name!='' && $request->name!=NULL)
        $person->name= $request->name;
        // $person->cnic= $request->person_cnic;
-       $person->gender= $request->gender;
-       $person->dob= $request->dob;
-       $person->religion=$request->religion;
-       $person->email= $request->emailaddress;
-       $person->created_by=Auth::id();
-       $person->save();
+       if(isset($request->gender) && $request->gender!='' && $request->gender!=NULL)
+        $person->gender= $request->gender;
+       if(isset($request->dob) && $request->dob!='' && $request->dob!=NULL)
+        $person->dob= $request->dob;
+       if(isset($request->religion) && $request->religion!='' && $request->religion!=NULL)
+        $person->religion=$request->religion;
+       if(isset($request->emailaddress) && $request->emailaddress!='' && $request->emailaddress!=NULL)
+        $person->email= $request->emailaddress;
+        $person->created_by=Auth::id();
+        $person->save();
        $person_detail= new ApplicantDetail();
        $person_detail->applicant_id=$person->id;
        $person_detail->father_name=$request->f_name;
@@ -737,14 +1323,14 @@ public function showsummary(JobForm $jobForm)
     public function show($id)
     {
       $applicant= Applicant::find($id);
-     
+
     //  dd( $applicant_secondaryEdu);
       //calculating age
-      $dateofbirth=date('Y-m-d',strtotime($applicant->dob)); 
+      $dateofbirth=date('Y-m-d',strtotime($applicant->dob));
       $today_date = date('Y-m-d');
       $age=date_diff(date_create($dateofbirth), date_create($today_date));
       $age=$age->format('%y');
-      
+
       return view('recuritment.show',['applicant'=>$applicant,'age'=>$age]);
     }
 
