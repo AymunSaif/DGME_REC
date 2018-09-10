@@ -140,9 +140,7 @@
                 <td>{{$applicant_secondaryEdu->board}}</td>
                 <td>{{$applicant_secondaryEdu->name_of_school}}</td>
                 <td>                          
-                {{-- @foreach($applicant->ApplicantSecondaryEducation as $applicant_secondaryEdu)
-                {{$applicant_secondaryEdu->SecondarySubject->subject_name}}
-                @endforeach --}}
+               
                 {{$applicant_secondaryEdu->SecondarySubject->subject_name}}
 
                 </td>

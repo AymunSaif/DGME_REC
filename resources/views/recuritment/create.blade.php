@@ -2064,13 +2064,13 @@
 
         function add_newUC(e)
         {
-            if($(e).attr('name')=="pg_Name")
-            {
-                $('#otherpost_univ').show(1000);
-            }
-            else
-            {
-                $('#otherpost_univ').hide(1000);
+            // if($(e).attr('name')=="pg_Name")
+            // {
+            //     $(e).next().next().next().show(1000);
+            // }
+            // else
+            // {
+            //     $(e).next().next().next().hide(1000);
 
                 if($(e).val()=="other")
                 {
@@ -2080,7 +2080,7 @@
                 {
                     $(e).next().next().next().hide(1000)
                 }
-            }
+            // }
         }
         //add new degree
 
