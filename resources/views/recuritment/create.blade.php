@@ -2116,22 +2116,23 @@
             var result = (achieved_marks/total_marks)*100;
             result= result.toFixed(2);
             percntgInput.val(result);
+            console.log(result);
             if(result >=60 && result <=100)
             {
 
                 $(e).parent().siblings('.division').children('input[name="postgrad_division[]"]').val('First');
             }
-            else if(result >=36 && result <=59)
+            else if(result >=36 && result < 60)
             {
                 $(e).parent().siblings('.division').children('input[name="postgrad_division[]"]').val('Second');
 
             }
-            else if(result >=33 && result <=35)
+            else if(result >=33 && result < 36)
             {
                 $(e).parent().siblings('.division').children('input[name="postgrad_division[]"]').val('Third');
 
             }
-            else if(result >=0 && result <=32)
+            else if(result >=0 && result < 33)
             {
                 $(e).parent().siblings('.division').children('input[name="postgrad_division[]"]').val('Fail');
 
