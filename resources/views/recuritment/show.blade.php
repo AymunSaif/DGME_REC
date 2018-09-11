@@ -75,10 +75,26 @@
                 <th>Postal Address</th>
             </tr>
             <tr>
-                <td>{{$applicant->ApplicantDetail->Province->name}}</td>
-                <td>{{$applicant->ApplicantDetail->District->name}}</td>
-                <td>{{$applicant->ApplicantDetail->city}}</td>
-                <td>{{$applicant->ApplicantDetail->postal_add}}</td>
+                <td> 
+                    @if(isset($applicant->ApplicantDetail->Province->name))
+                    {{$applicant->ApplicantDetail->Province->name}}
+                    @else <b style="color:red;">Not Available</b> @endif
+                </td>
+                <td>
+                    @if(isset($applicant->ApplicantDetail->District->name))
+                    {{$applicant->ApplicantDetail->District->name}}
+                    @else<b style="color:red;">Not Available</b> @endif
+                </td>
+                <td>
+                    @if(isset($applicant->ApplicantDetail->city))
+                    {{$applicant->ApplicantDetail->city}}
+                    @else <b style="color:red;">Not Available</b> @endif
+                </td>
+                <td>
+                    @if(isset($applicant->ApplicantDetail->postal_add))
+                    {{$applicant->ApplicantDetail->postal_add}}
+                    @else <b style="color:red;">Not Available</b> @endif
+                </td>
             </tr>
             <tr>
                 <th>Email Address</th>
@@ -140,8 +156,9 @@
                 <td>{{$applicant_secondaryEdu->board}}</td>
                 <td>{{$applicant_secondaryEdu->name_of_school}}</td>
                 <td>                          
-               
+               @if(isset($applicant_secondaryEdu->SecondarySubject->subject_name))
                 {{$applicant_secondaryEdu->SecondarySubject->subject_name}}
+                @endif
 
                 </td>
                 <td>{{$applicant_secondaryEdu->distinction}}</td>
@@ -173,8 +190,15 @@
                     </tr>
                     <tr>
                         <td>{{$applicant_higherEdu->bach_year}}</td>
-                        <td>{{$applicant_higherEdu->University->name}}</td>
-                        <td>{{$applicant_higherEdu->higherSubject->subject_name}}</td>
+                        <td>@if(isset($applicant_higherEdu->University->name))
+                            {{$applicant_higherEdu->University->name}}
+                            @else<b style="color:red;">Not Available</b> @endif
+                        </td>
+                            
+                        <td>@if(isset($applicant_higherEdu->higherSubject->subject_name))
+                            {{$applicant_higherEdu->higherSubject->subject_name}}
+                            @else <b style="color:red;">Not Available</b> @endif
+                        </td>
                         <td>{{$applicant_higherEdu->distinction}}</td>
                         <td>@if($applicant_higherEdu->total_marks==NULL)
                                 <b style="color:red;">Not Available</b> 
@@ -216,8 +240,16 @@
                 <tr>
                     
                     <td>{{$applicant_higherEdu->bach_year}}</td>
-                    <td>{{$applicant_higherEdu->University->name}}</td>
-                    <td>{{$applicant_higherEdu->higherSubject->subject_name}}</td>
+                    <td>
+                        @if(isset($applicant_higherEdu->University->name))
+                        {{$applicant_higherEdu->University->name}}
+                        @else <b style="color:red;">Not Available</b> @endif
+                    </td>
+                    <td>
+                        @if(isset($applicant_higherEdu->higherSubject->subject_name))
+                        {{$applicant_higherEdu->higherSubject->subject_name}}
+                        @else <b style="color:red;">Not Available</b> @endif
+                    </td>
                     <td>{{$applicant_higherEdu->distinction}}</td>
                     <td>
                         @if($applicant_higherEdu->cgpa==NULL)
@@ -282,17 +314,16 @@
                             @endif
                         </td>
                         <td> 
-                            @if($applicant_higherEdu->University->name==NULL || $applicant_higherEdu->University->name=='NA')
-                            <b style="color:red;">Not Available</b>
-                            @else
+                            @if(isset($applicant_higherEdu->University->name))
                             {{$applicant_higherEdu->University->name}}
+                            @else<b style="color:red;">Not Available</b>
                             @endif
                         </td>
                         <td>
-                            @if($applicant_higherEdu->higherSubject->subject_name==NULL || $applicant_higherEdu->higherSubject->subject_name=='NA')
-                            <b style="color:red;">Not Available</b>
-                            @else
+                            @if(isset($applicant_higherEdu->higherSubject->subject_name))
                             {{$applicant_higherEdu->higherSubject->subject_name}} 
+                            @else
+                            <b style="color:red;">Not Available</b>
                             @endif
                         </td>
                         <td>
@@ -362,25 +393,25 @@
                     
                     <tr>
                         <td>
-                            @if($applicant_higherEdu->qualification_type==NULL || $applicant_higherEdu->qualification_type=='NA')
-                            <b style="color:red;">Not Available</b>
-                            @else
+                            @if(isset($applicant_higherEdu->qualification_type))
                             PHD
+                           @else
+                            <b style="color:red;">Not Available</b>
                             @endif
                         </td>
 
                         <td> 
-                            @if($applicant_higherEdu->University->name==NULL || $applicant_higherEdu->University->name=='NA')
-                            <b style="color:red;">Not Available</b>
-                            @else
+                            @if(isset($applicant_higherEdu->University->name))
                             {{$applicant_higherEdu->University->name}}
+                            @else
+                            <b style="color:red;">Not Available</b>
                             @endif
                         </td>
                         <td>
-                            @if($applicant_higherEdu->higherSubject->subject_name==NULL || $applicant_higherEdu->higherSubject->subject_name=='NA')
-                            <b style="color:red;">Not Available</b>
-                            @else
+                            @if(isset($applicant_higherEdu->higherSubject->subject_name))
                             {{$applicant_higherEdu->higherSubject->subject_name}} 
+                            @else
+                            <b style="color:red;">Not Available</b>
                             @endif
                         </td>
                         <td>
@@ -423,17 +454,17 @@
                     </td>
 
                     <td> 
-                        @if($applicant_higherEdu->University->name==NULL || $applicant_higherEdu->University->name=='NA')
-                        <b style="color:red;">Not Available</b>
-                        @else
+                        @if(isset($applicant_higherEdu->University->name))
                         {{$applicant_higherEdu->University->name}}
+                        @else
+                        <b style="color:red;">Not Available</b>
                         @endif
                     </td>
                     <td>
-                        @if($applicant_higherEdu->higherSubject->subject_name==NULL || $applicant_higherEdu->higherSubject->subject_name=='NA')
-                        <b style="color:red;">Not Available</b>
-                        @else
+                        @if(isset($applicant_higherEdu->higherSubject->subject_name))
                         {{$applicant_higherEdu->higherSubject->subject_name}} 
+                        @else
+                        <b style="color:red;">Not Available</b>
                         @endif
                     </td>
                     <td>

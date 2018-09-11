@@ -1745,7 +1745,7 @@
                             +'<input type="text"  name="phd_other_SubjectName[]" id="phd_other_SubjectName" class="form-control "/>'
                             +'</div></div>'
                             +'<div class="col-md-2 phd_thesis">Thesis Topic<input type="text" name="phd_thesis[]" id="phd_thesis" class="form-control">  </div>'
-                            +'<div class="col-md-2 phd_dg">Date Of Graduation <input type="date" name="phd_date[]" id="phd_date" class="form-control"> </div>'
+                            +'<div class="col-md-2 phd_dg">Final DMC Date <input type="date" name="phd_date[]" id="phd_date" class="form-control"> </div>'
                             +'<div class="col-md-1 remove_phd_level"><button type="button" id="remove_phd_level[]"  class=" btn btn-danger btn-md remove_phd_level" style="margin-top:21px;" onclick="remove_data(this)" ><span class="glyphicon glyphicon-minus"></span></button></div></div></div>';
 
                 $('#phdeducation').append(eduprogram+uniname_start+uniname_end+secndvar+thirdvar);
@@ -2116,22 +2116,23 @@
             var result = (achieved_marks/total_marks)*100;
             result= result.toFixed(2);
             percntgInput.val(result);
+            console.log(result);
             if(result >=60 && result <=100)
             {
 
                 $(e).parent().siblings('.division').children('input[name="postgrad_division[]"]').val('First');
             }
-            else if(result >=36 && result <=59)
+            else if(result >=36 && result < 60)
             {
                 $(e).parent().siblings('.division').children('input[name="postgrad_division[]"]').val('Second');
 
             }
-            else if(result >=33 && result <=35)
+            else if(result >=33 && result < 36)
             {
                 $(e).parent().siblings('.division').children('input[name="postgrad_division[]"]').val('Third');
 
             }
-            else if(result >=0 && result <=32)
+            else if(result >=0 && result < 33)
             {
                 $(e).parent().siblings('.division').children('input[name="postgrad_division[]"]').val('Fail');
 
