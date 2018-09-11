@@ -1032,11 +1032,11 @@
                 <td>
                     <select class="form-control" name="org_type[]">
                     <option value="">Select Type:</option>
-                     <option value="1">Private/NGO</option>
-                    <option value="2">Government</option>
-                    <option value="3">International/INGO</option>
-                    <option value="4">Self-Employed</option>
-                    <option value="5">Donor Agencies</option>
+                     <option value="Private/NGO">Private/NGO</option>
+                    <option value="Government">Government</option>
+                    <option value="International/INGO">International/INGO</option>
+                    <option value="Self-Employed">Self-Employed</option>
+                    <option value="Donor Agencies">Donor Agencies</option>
                     </select>
                 </td>
                 <td> <input type="date" name="start_date[]" id="start_date" class="form-control"></td>

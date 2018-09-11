@@ -179,7 +179,8 @@ class JobFormController extends Controller
           $person_secondaryEdu->board=$request->sch_otherboard;
 
         if(isset($request->s_subjects) && $request->s_subjects!=Null &&  $request->s_subjects!='other')
-          $person_secondaryEdu->secondary_subject_log_id=$request->s_subjects;
+          $a=1;
+          // $person_secondaryEdu->secondary_subject_log_id=$request->s_subjects;
         else if(isset($request->subjectsschool_other) && $request->subjectsschool_other!=Null)
           {
           $secondary_subject= new SecondarySubjectLog();
@@ -214,7 +215,8 @@ class JobFormController extends Controller
         $person_secondaryEdu->board=$request->sch_otherboard;
 
         if(isset($request->s_subjects) && $request->s_subjects!=Null  && $request->s_subjects!='other')
-        $person_secondaryEdu->secondary_subject_log_id=$request->s_subjects;
+        $a=1;
+        // $person_secondaryEdu->secondary_subject_log_id=$request->s_subjects;
         else if(isset($request->subjectsschool_other) && $request->subjectsschool_other!=Null)
         {
 
@@ -251,7 +253,8 @@ class JobFormController extends Controller
          $person_secondaryEdu_college->board=$request->college_otherboard;
 
         if(isset($request->c_subjects) && $request->c_subjects!=Null  && $request->c_subjects!='other')
-         $person_secondaryEdu_college->secondary_subject_log_id=$request->c_subjects;
+        $a=1;
+         // $person_secondaryEdu_college->secondary_subject_log_id=$request->c_subjects;
         else if(isset($request->c_othersubjects)  && $request->c_othersubjects!=Null)
         {
           $secondary_subject= new SecondarySubjectLog();
@@ -285,7 +288,8 @@ class JobFormController extends Controller
       $person_secondaryEdu_college->board=$request->college_otherboard;
 
       if(isset($request->c_subjects) && $request->c_subjects!=Null && $request->c_subjects!='other')
-      $person_secondaryEdu_college->secondary_subject_log_id=$request->c_subjects;
+      $a=1;
+      // $person_secondaryEdu_college->secondary_subject_log_id=$request->c_subjects;
       else if(isset($request->c_othersubjects)  && $request->c_othersubjects!=Null)
         {
           $secondary_subject= new SecondarySubjectLog();
@@ -317,7 +321,11 @@ class JobFormController extends Controller
           $person_higherEdu_2yr->applicant_log_id=$person->id;
 
           if(isset($request->college_university_names[$year2]) && $request->college_university_names[$year2] !=Null && $request->college_university_names[$year2]!='other')
-            $person_higherEdu_2yr->university_log_id=$request->college_university_names[$year2];
+            {
+              $univ=University::find($request->college_university_names[$year2]);
+              $univ_log=UniversityLog::where('name',$univ->name)->first();
+              $person_higherEdu_2yr->university_log_id=$univ_log->id;
+            }
           else if(isset($request->other_collegebox[$year2]) && ($request->other_collegebox[$year2]!=Null))
            {
              // dd($reuest)
@@ -335,14 +343,15 @@ class JobFormController extends Controller
           $person_higherEdu_2yr->bach_year=$by;
 
           if(isset($request->u_collegesubjects[$year2]) && $request->u_collegesubjects[$year2]!=Null  && $request->u_collegesubjects[$year2]!='other' )
-           $person_higherEdu_2yr->higher_subject_log_id=$request->u_collegesubjects[$year2];
+            $a=1;
+           // $person_higherEdu_2yr->higher_subject_log_id=($request->u_collegesubjects[$year2]-209);
           else if(isset($request->other_univ_colsubjects[$year2]) && ($request->other_univ_colsubjects[$year2]!=Null))
            {
             $new_highersubject= new HigherSubjectLog();
             $new_highersubject->subject_name =$request->other_univ_colsubjects[$year2];
             $new_highersubject->type= 'bachelor';
             $new_highersubject->save();
-            $person_higherEdu_2yr->higher_subject_log_id=$new_highersubject->id;
+            $person_higherEdu_2yr->higher_subject_log_id=($new_highersubject->id);
            }
 
           if(isset($request->twoyear_t_marks[$year2]))
@@ -371,7 +380,11 @@ class JobFormController extends Controller
         $person_higherEdu_univ->applicant_log_id=$person->id;
         if(isset($request->university_names[$year4]) && $request->university_names[$year4]!=Null && $request->university_names[$year4]!='other')
         {
-          $person_higherEdu_univ->university_log_id=$request->university_names[$year4];
+          $univ=University::find($request->university_names[$year4]);
+          $univ_log=UniversityLog::where('name',$univ->name)->first();
+          $person_higherEdu_univ->university_log_id=$univ_log->id;
+
+          // $person_higherEdu_univ->university_log_id=$request->university_names[$year4];
         }
         else if(isset($request->other_univbox[$year4]) && $request->other_univbox[$year4]!=Null)
         {
@@ -390,14 +403,15 @@ class JobFormController extends Controller
 
 
         if(isset($request->u_subjects[$year4]) && $request->u_subjects[$year4]!=Null && $request->u_subjects[$year4]!='other' )
-        $person_higherEdu_univ->higher_subject_log_id=$request->u_subjects[$year4];
+        $a=1;
+        // $person_higherEdu_univ->higher_subject_log_id=($request->u_subjects[$year4]-209);
         else if(isset($request->other_univsubjects[$year4]) && ($request->other_univsubjects[$year4]!=Null))
         {
           $new_highersubject= new HigherSubjectLog();
           $new_highersubject->subject_name =$request->other_univsubjects[$year4];
           $new_highersubject->type= 'bachelor';
           $new_highersubject->save();
-          $person_higherEdu_univ->higher_subject_log_id=$new_highersubject->id;
+          $person_higherEdu_univ->higher_subject_log_id=($new_highersubject->id);
         }
 
         if(isset($request->cgpa[$year4]))
@@ -441,8 +455,13 @@ class JobFormController extends Controller
         $person_higherEdu_grad->applicant_log_id=$person->id;
 
         if(isset($request->pg_Name[$i]) && $request->pg_Name[$i]!=Null && $request->pg_Name[$i]!='other')
-        $person_higherEdu_grad->university_log_id=$request->pg_Name[$i];
-        elseif(isset($request->otherpost_univ[$i]) && $request->otherpost_univ[$i]!=Null)
+      {
+        $univ=University::find($request->pg_Name[$i]);
+        $univ_log=UniversityLog::where('name',$univ->name)->first();
+        $person_higherEdu_grad->university_log_id=$univ_log->id;
+
+        // $person_higherEdu_grad->university_log_id=$request->pg_Name[$i];
+      }  elseif(isset($request->otherpost_univ[$i]) && $request->otherpost_univ[$i]!=Null)
         {
           $new_univ= new UniversityLog();
           $new_univ->name =$request->otherpost_univ[$i];
@@ -456,14 +475,15 @@ class JobFormController extends Controller
         $person_higherEdu_grad->qualification_type=$qualification_postuniv;
 
         if(isset($request->post_grad_subject[$i]) && $request->post_grad_subject[$i]!=Null && $request->post_grad_subject[$i]!="other")
-        $person_higherEdu_grad->higher_subject_log_id=$request->post_grad_subject[$i];
+          $a=1;
+        // $person_higherEdu_grad->higher_subject_log_id=($request->post_grad_subject[$i]-209);
         else if(isset($request->other_postgradsubjects[$i]) && ($request->other_postgradsubjects[$i]!=Null))
         {
           $new_highersubject= new HigherSubjectLog();
           $new_highersubject->subject_name =$request->other_postgradsubjects[$i];
           $new_highersubject->type= 'masters';
           $new_highersubject->save();
-          $person_higherEdu_grad->higher_subject_log_id=$new_highersubject->id;
+          $person_higherEdu_grad->higher_subject_log_id=($new_highersubject->id);
         }
         if(isset($request->postgrad_marks[$i]))
           $person_higherEdu_grad->total_marks=$request->postgrad_marks[$i];
@@ -502,7 +522,12 @@ class JobFormController extends Controller
       $person_higherEdu_phd->qualification_type=$request->qualification_phduniv[$i];
 
       if(isset($request->phd_Name[$i]) && $request->phd_Name[$i]!=Null  && $request->phd_Name[$i]!="other")
-        $person_higherEdu_phd->university_log_id=$phd_name;
+      {
+        $univ=University::find($phd_name);
+        $univ_log=UniversityLog::where('name',$univ->name)->first();
+        $person_higherEdu_phd->university_log_id=$univ_log->id;
+         // $person_higherEdu_phd->university_log_id=$phd_name;
+      }
       elseif(isset($request->otherphd_univ[$i]) && $request->otherphd_univ[$i]!=Null)
       {
 
@@ -515,14 +540,15 @@ class JobFormController extends Controller
 
 
       if(isset($request->phd_SubjectName[$i]) && $request->phd_SubjectName[$i]!=Null && $request->phd_SubjectName[$i]!="other")
-      $person_higherEdu_phd->higher_subject_log_id=$request->phd_SubjectName[$i];
+      $a=1;
+      // $person_higherEdu_phd->higher_subject_log_id=($request->phd_SubjectName[$i]-209);
       if(isset($request->phd_other_SubjectName[$i]) && $request->phd_other_SubjectName!=Null)
       {
         $higher_subject= new HigherSubjectLog();
         $higher_subject->subject_name = $request->phd_other_SubjectName[$i];
         $higher_subject->type= 'PHD';
         $higher_subject->save();
-        $person_higherEdu_phd->higher_subject_log_id=$higher_subject->id;
+        $person_higherEdu_phd->higher_subject_log_id=($new_highersubject->id);
       }
 
       if(isset($request->phd_thesis[$i]))
@@ -546,7 +572,12 @@ class JobFormController extends Controller
 
 
       if(isset($request->$request->pd_Name[$i]) && $request->$request->pd_Name[$i]!=Null && $request->$request->pd_Name[$i]!="other")
-      $person_higherEdu_postdoc->university_log_id=$pd_name;
+      {
+        $univ=University::find($pd_name);
+        $univ_log=UniversityLog::where('name',$univ->name)->first();
+        $person_higherEdu_postdoc->university_log_id=$univ_log->id;
+        // $person_higherEdu_postdoc->university_log_id=$pd_name;
+      }
       elseif(isset($request->otherpostdoc_univ[$i]) && $request->otherpostdoc_univ[$i]!=Null)
       {
         $new_univ= new UniversityLog();
