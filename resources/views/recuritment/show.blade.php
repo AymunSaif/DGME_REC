@@ -628,13 +628,15 @@
      </table>
      <table>
             <tr><tr><th style="color:black; background-color:lightblue;font-weight:bold;"><b>POSITION APPLIED FOR</b></th></tr></tr>
-            @foreach ($applicant->ApplicantAppliedFor as $ApplicantAppliedFor)
             <tr>
-
-               <td> <ol><li>{{$ApplicantAppliedFor->position_name}} </li></ol></td>
-
-               </tr>
+                <td>
+                  <ol>
+              @foreach ($applicant->ApplicantAppliedFor as $ApplicantAppliedFor)
+                 <li><b > {{$ApplicantAppliedFor->position_name}} </b></li>
             @endforeach
+          </ol>
+              </td>
+          </tr>
 
         </table>
 
