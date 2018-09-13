@@ -91,13 +91,8 @@ class JobFormController extends Controller
      */
     public function index()
      {
-      $persons=Applicant::all();
-      $person_detail= ApplicantDetail::all();
-      $person_secondaryEdu = ApplicantSecondaryEducation::all();
-      $person_higherEdu =ApplicantHigherEducation::all();
-      $person_certificate=ApplicantCertification::all();
-      $person_exp=ApplicantExperience::all();
-      $person_applied=ApplicantAppliedFor::all();
+      $persons=Applicant::orderBy('created_at','desc')->paginate(8);
+      $person_applied=ApplicantAppliedFor::orderBy('created_at','desc')->paginate(8);
       return view('recuritment.index',['persons'=>$persons,'person_applied'=>$person_applied]);
     }
 
