@@ -7,18 +7,22 @@
     <table class="table table-bordered" style="color:black !important;">
         <tr>
           <th>Sr.#</th>
+          <th>Diary Number</th>
             <th>Applicant Name</th>
             <th>CNIC</th>
             <th>Gender</th>
             <th>Date Of Birth</th>
             <th>Position Applied</th>
+            <th>Entered By</th>
         </tr>
         @php
-          $i=1;
+          // $i=1;
+          $i = $persons->perPage() * ($persons->currentPage() - 1)+1;
         @endphp
         @foreach ($persons as $person)
         <tr>
             <td><?php print_r($i++); ?></td>
+            <td>{{ $person->diary_num }}</td>
             <td>
             <a href="{{route('job_form.show',$person->id)}}">{{$person->name}}</a>
             </td>
@@ -32,11 +36,12 @@
                 @endforeach
                 </ol>
         </td>
+        <td>{{ $person->User->name }}</td>
 
         </tr>
         @endforeach
     </table>
-
+ <span class="pull-right">{{$persons->links()}}</span>
 
 </div>
 @endsection

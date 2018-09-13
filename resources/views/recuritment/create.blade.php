@@ -1328,10 +1328,10 @@
         function add_newsub(e){
             if($(e).hasClass("subjects_school"))
             {
-                console.log('sgdua');
+                // console.log('sgdua');
                 if($('.subjects_school :selected').text()=='Other')
                     {
-                        console.log('shdgas');
+                        // console.log('shdgas');
                     $('.subjectsschool_other').show(1000);
                     }
                 else
@@ -1409,17 +1409,17 @@
             $("#c_division").val('First');
 
             }
-            else if(result >=36 && result <=59)
+            else if(result >=36 && result < 60)
             {
             $("#c_division").val('Second');
 
             }
-            else if(result >=33 && result <=35)
+            else if(result >=33 && result < 36)
             {
             $("#c_division").val('Third');
 
             }
-            else if(result >=0 && result <=32)
+            else if(result >=0 && result < 33)
             {
             $("#c_division").val('Fail');
 
@@ -1438,7 +1438,7 @@
                         "_token": "{{ csrf_token() }}",
                         'province_id' : $(this).val()},
                         success: function(data){
-                            console.log(data);
+                            // console.log(data);
                         for (let index = 0; index < data.length; index++) {
                             $('.dom_district').append('<option value="'+data[index].id+'" selected="selected">'+data[index].name+'</option>');
                         }
@@ -1462,7 +1462,7 @@
                                 "_token": "{{ csrf_token() }}",
                                 'type' : $(this).val()},
                                 success: function(data){
-                                    console.log(data);
+                                    // console.log(data);
                                     for (let index = 1; index <=data.length; index++) {
                                         $('.subjects_school').append('<option value="'+data[index].id+'" selected="selected">'+data[index].subject_name+'</option>');
                                     }
@@ -1493,7 +1493,7 @@
                                 "_token": "{{ csrf_token() }}",
                                 'type' : $(this).val()},
                                 success: function(data){
-                                    console.log(data);
+                                    // console.log(data);
                                     for (let index = 0; index < data.length; index++) {
                                         $('.subjects_school').append('<option value="'+data[index].id+'" selected="selected">'+data[index].subject_name+'</option>');
                                     }
@@ -1529,7 +1529,7 @@
                                 "_token": "{{ csrf_token() }}",
                                 'type' : $(this).val()},
                                 success: function(data){
-                                    console.log(data);
+                                    // console.log(data);
                                 for (let index = 0; index < data.length; index++) {
                                     $('.college_subjects').append('<option value="'+data[index].id+'" selected="selected">'+data[index].subject_name+'</option>');
                                 }
@@ -1559,7 +1559,7 @@
                                 "_token": "{{ csrf_token() }}",
                                 'type' : $(this).val()},
                                 success: function(data){
-                                    console.log(data);
+                                    // console.log(data);
                                 for (let index = 0; index < data.length; index++) {
                                     $('.college_subjects').append('<option value="'+data[index].id+'" selected="selected">'+data[index].subject_name+'</option>');
                                 }
@@ -1620,7 +1620,7 @@
                                 url: '{{route("getuniv")}}',
                                 async: false,
                                 success: function(data){
-                                console.log(data);
+                                // console.log(data);
                                 univ = data;
                                 },
                                 error: function(jqXHR, textStatus, errorThrown) { // What to do if we fail
@@ -1648,7 +1648,7 @@
                                 "_token": "{{ csrf_token() }}",
                                 'type' : 'masters'},
                                 success: function(data){
-                                console.log(data);
+                                // console.log(data);
                                 masterSubjects = data;
                                 },
                                 error: function(jqXHR, textStatus, errorThrown) { // What to do if we fail
@@ -1701,7 +1701,7 @@
                                 url: '{{route("getuniv")}}',
                                 async: false,
                                 success: function(data){
-                                console.log(data);
+                                // console.log(data);
                                 univ = data;
                                 },
                                 error: function(jqXHR, textStatus, errorThrown) { // What to do if we fail
@@ -1729,7 +1729,7 @@
                                 "_token": "{{ csrf_token() }}",
                                 'type' : 'phd'},
                                 success: function(data){
-                                console.log(data);
+                                // console.log(data);
                                 phdSubjects = data;
                                 },
                                 error: function(jqXHR, textStatus, errorThrown) { // What to do if we fail
@@ -1915,7 +1915,7 @@
                                 url: '{{route("getuniv")}}',
                                 async: false,
                                 success: function(data){
-                                console.log(data);
+                                // console.log(data);
                                 univ = data;
                                 },
                                 error: function(jqXHR, textStatus, errorThrown) { // What to do if we fail
@@ -1944,7 +1944,7 @@
                                 "_token": "{{ csrf_token() }}",
                                 'type' : 'bachelor'},
                                 success: function(data){
-                                console.log(data);
+                                // console.log(data);
                                 bachelorSubjects = data;
                                 },
                                 error: function(jqXHR, textStatus, errorThrown) { // What to do if we fail
@@ -1987,7 +1987,7 @@
                                 url: '{{route("getuniv")}}',
                                 async: false,
                                 success: function(data){
-                                console.log(data);
+                                // console.log(data);
                                 univ = data;
                                 },
                                 error: function(jqXHR, textStatus, errorThrown) { // What to do if we fail
@@ -2016,7 +2016,7 @@
                                 "_token": "{{ csrf_token() }}",
                                 'type' : 'bachelor'},
                                 success: function(data){
-                                console.log(data);
+                                // console.log(data);
                                 bachelorSubjects = data;
                                 },
                                 error: function(jqXHR, textStatus, errorThrown) { // What to do if we fail
@@ -2116,7 +2116,7 @@
             var result = (achieved_marks/total_marks)*100;
             result= result.toFixed(2);
             percntgInput.val(result);
-            console.log(result);
+            // console.log(result);
             if(result >=60 && result <=100)
             {
 
@@ -2160,20 +2160,19 @@
 
             if(result >=60 && result <=100)
             {
-                console.log('ddsdd');
                 $(e).parent().siblings('.division').children('input[name="division[]"]').val('First');
             }
-            else if(result >=36 && result <=59)
+            else if(result >=36 && result < 60)
             {
                 $(e).parent().siblings('.division').children('input[name="division[]"]').val('Second');
 
             }
-            else if(result >=33 && result <=35)
+            else if(result >=33 && result < 36)
             {
                 $(e).parent().siblings('.division').children('input[name="division[]"]').val('Third');
 
             }
-            else if(result >=0 && result <=32)
+            else if(result >=0 && result < 33)
             {
                 $(e).parent().siblings('.division').children('input[name="division[]"]').val('Fail');
 
@@ -2205,17 +2204,17 @@
 
                 $(e).parent().siblings('.division').children('input[name="division[]"]').val('First');
             }
-            else if(result >=45 && result <=59)
+            else if(result >=45 && result < 60)
             {
                 $(e).parent().siblings('.division').children('input[name="division[]"]').val('Second');
 
             }
-            else if(result >=33 && result <=44)
+            else if(result >=33 && result < 45)
             {
                 $(e).parent().siblings('.division').children('input[name="division[]"]').val('Third');
 
             }
-            else if(result >=0 && result <=32)
+            else if(result >=0 && result < 33)
             {
                 $(e).parent().siblings('.division').children('input[name="division[]"]').val('Fail');
 
