@@ -9,19 +9,16 @@
     {{csrf_field()}}
     <div class="row">
         <div class="col-md-12">
-            <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <ul class="nav nav-tabs" style="margin-top:50px;">
             <input type="hidden" name="person_id" value="{{$applicant->id}}">
-                {{-- <li class="nav-item">
-                    <a class="nav-link active cnicSection " style="color:black;!important" data-toggle="tab" href="#cnicSection" role="tab" aria-controls="home" aria-selected="true">CNIC</a>
-                </li> --}}
                 <li class="nav-item">
-                        <a class="nav-link active demographicsSection " style="color:black;!important" data-toggle="tab" href="#demographicsSection" role="tab" aria-controls="home" aria-selected="true">Demographics</a>
+                        <a class="nav-link active demographicsSection " style="color:black; !important" data-toggle="tab" href="#demographicsSection" role="tab" aria-controls="home" aria-selected="true">Demographics</a>
                     </li>
                 <li class="nav-item">
-                    <a class="nav-link educationSection" style="color:black;!important" id="profile-tab" data-toggle="tab" href="#experienceSection" role="tab" aria-controls="profile" aria-selected="false">Education</a>
+                    <a class="nav-link educationSection" style="color:black; !important" id="profile-tab" data-toggle="tab" href="#experienceSection" role="tab" aria-controls="profile" aria-selected="false">Education</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link experienceSection" style="color:black;!important" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Experience</a>
+                    <a class="nav-link experienceSection"style="color:black; !important" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Experience</a>
                 </li>
                 <li class="nav-item">
                         <a class="nav-link designationSection" style="color:black;!important" id="designation-tab" data-toggle="tab" href="#designationSection" role="tab" aria-controls="contact" aria-selected="false">Designation</a>
@@ -31,6 +28,7 @@
     </div>
 
     <section id="demographicsSection">
+       <div class="container-fluid">
         <div class="row">
             <h3  style="color:gray; text-align:center; font-weight:bold">
                 <b>Demographics Info</b>
@@ -53,7 +51,7 @@
                     </b>
                     <br>
                     @if($applicant->name!='' && $applicant->name!=NULL)
-                      <input type="text" value="<?= $applicant->name  ?>" disabled placeholder="Enter Your Full Name" class="form-control" >
+                      <input type="text" value="<?= $applicant->name  ?>" disabled placeholder="Enter Your Full Name" class="form-control" required >
                     @else
                       <input type="text" name="name" id="name" placeholder="Enter Your Full Name" class="form-control"    required>
                     @endif
@@ -112,7 +110,6 @@
                         @foreach($provinces as $province)
                             <option value="{{$province->id}}" >{{$province->name}}</option>
                         @endforeach
-
                     </select>
                   @endif
                 </div>
@@ -124,7 +121,6 @@
                     @else
                       <select class="form-control dom_district " name="dom_district">
                           <option value="">Select Districts</option>
-
                       </select>
                     @endif
                 </div>
@@ -194,10 +190,12 @@
         <hr />
 
         <button type="button" class="btn btn-lg btn-danger " style=" width: 252px;" id="go_cnic"> Back</button>
-        <button type="button" class="btn btn-lg btn-success pull-right" style="width: 252px;" id="education"> Next</button>
+        <button type="button" class="btn btn-lg btn-info pull-right" style="width: 252px;" id="education"> Next</button>
+       </div>
     </section>
 
     <section id="educationSection" style="display:none">
+        <div class="container-fluid">
         <h1 style="color:gray; text-align:center; "><b>Education</b> </h1>
 
         <table class="table " id="secondaryeducation" >
@@ -993,17 +991,19 @@
           @endforeach
         @endif
         <hr/>
-        <div class="row" style="margin-top:5px;">
+        <div class="row" style="margin-top:5px; margin-bottom:20px;">
 
                 <div class="col-md-1"></div>
                 <div class="col-md-3">
-                    <button type="button" class="btn btn-md btn-danger " style=" width: 252px;" id="go_demo"> Back</button>
+                    <button type="button" class="btn btn-lg btn-danger " style=" width: 252px;" id="go_demo"> Back</button>
                 </div>
                 <div class="col-md-4"></div>
                 <div class="col-md-3">
-                    <button type="button" class="btn btn-md btn-success pull-right" style="width: 252px;"id="experience"> Next</button>
+                    <button type="button" class="btn btn-lg btn-info pull-right" style="width: 252px;"id="experience"> Next</button>
                 </div>
                 <div class="col-md-1"></div>
+        </div>
+        
         </div>
     </section>
 
@@ -1049,11 +1049,11 @@
 
                 <div class="col-md-1"></div>
                 <div class="col-md-3">
-                    <button type="button" class="btn btn-md btn-danger " style=" width: 252px;" id="go_edu"> Back</button>
+                    <button type="button" class="btn btn-lg btn-danger " style=" width: 252px;" id="go_edu"> Back</button>
                 </div>
                 <div class="col-md-4"></div>
                 <div class="col-md-3">
-                    <button type="button" class="btn btn-md btn-success pull-right" style="width: 252px;" id="designation"> Next</button>
+                    <button type="button" class="btn btn-lg btn-info pull-right" style="width: 252px;" id="designation"> Next</button>
                 </div>
                 <div class="col-md-1"></div>
         </div>
@@ -1082,7 +1082,7 @@
                 @endforeach
             </table>
 
-              <h1 style="text-align:center; background-color:azure;">Upload Documents</h1>
+              <h1 style="text-align:center;">Upload Documents</h1>
             <table class="table table-bordered" id="attach_documents">
                     <tr >
                         <th style="text-align:center;">Upload Picture</th>
@@ -1095,11 +1095,11 @@
 
                     <div class="col-md-1"></div>
                     <div class="col-md-3">
-                        <button type="button" class="btn btn-md btn-danger " style=" width: 252px;" id="go_exp"> Back</button>
+                        <button type="button" class="btn btn-lg btn-danger " style=" width: 252px;" id="go_exp"> Back</button>
                     </div>
                     <div class="col-md-4"></div>
                     <div class="col-md-3">
-                        <button type="submit" class="btn btn-md btn-primary pull-right" style=" width: 252px;"
+                        <button type="submit" class="btn btn-lg btn-success pull-right" style=" width: 252px;"
                             id="submit"> Submit</button>
                     </div>
                     <div class="col-md-1"></div>

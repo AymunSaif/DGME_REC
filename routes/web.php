@@ -12,8 +12,18 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('/login');
 });
+
+
+Route::get('/dashboard', function () {
+    return view('layouts.dashboard');
+})->name('myhome');
+
+
+// Route::get('/d', function () {
+//     return view('recuritment.xcreate');
+// });
 
 Route::get('/new', function () {
     return view('newlogin');

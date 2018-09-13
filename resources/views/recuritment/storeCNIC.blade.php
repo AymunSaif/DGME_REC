@@ -1,22 +1,42 @@
-@extends('layouts.app')
+@extends('layouts.dashboard')
 @section('content')
-<form class="" action="{{route('storeCnic')}}" method="POST">
-  {{ csrf_field() }}
-  <section id="cnicSection" >
-      <div class="col-md-3"></div>
-      <div class="col-md-6" style="margin-top:20%;">
-          <div class="form-group">
-              <b style="font-size:20px;">Enter CNIC Number
-                  <span style="color:red;font-size:12px;"> (required)</span>
-              </b>
-              <br>
-              <input autocompleteoff type="text" id="cnic" maxlength="15" name="person_cnic" placeholder="xxxxx-xxxxxxx-x" class="form-control" required>
-          </div>
-      </div>
-      <div class="col-md-3"></div>
-      <button type="submit" class="btn btn-sm btn-success " style=" margin-left: 43%;width: 200px;font-size:1.5em;"id="basic_info">Next</button>
-  </section>
-</form>
+<div class="content" style="background-color:white;">
+    <div class="container-fluid">
+        <div class="container-fluid" style="margin-top:100px;">
+            <div class="row">
+                <div class="col-md-8 ml-auto mr-auto">
+                    <form class="" action="{{route('storeCnic')}}" method="POST">
+                            {{ csrf_field() }}
+                        <div class="card card-wizard" style="background-color:black;">
+                            <div class="card-header " style="background-color:black; ">
+                            <h3 class="card-title text-center" style="color:white; font-weight:bold; " >HIRING FORM</h3>
+                            </div>
+                            <div class="card-body ">
+                                <div class="tab-content">
+                                    <div class="tab-pane fade show active" id="tab1" role="tabpanel">
+                                        
+                                        <div class="row justify-content-center">
+                                            <div class="col-md-5 ">
+                                                <div class="form-group">
+                                                    <label class="control-label" style="color:white; font-weight:bold; font-size:14px; " >Enter Cnic</label>
+                                                    <input autocompleteoff type="text" id="cnic" maxlength="15" name="person_cnic" placeholder="xxxxx-xxxxxxx-x" class="form-control" required>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            <div class="card-footer text-center">
+                                    <button type="submit" class="btn btn-info btn-wd" id="basic_info">Next</button>
+                                <div class="clearfix"></div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 @endsection
 @section('scriptTags')
 <script type="text/javascript">

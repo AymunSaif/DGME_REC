@@ -1,7 +1,7 @@
-<nav class="navbar navbar-default navbar-static-top"  style="background:linear-gradient(to right,rgb(11, 43, 14), rgb(16, 91, 24),rgba(9, 170, 30, 0.466))">
+<nav class="navbar navbar-default navbar-static-top"  style="background:black;">
         <div class="container">
             <div class="navbar-header">
-              <button class="btn btn-warning " style="margin-top:5%;background-color: #f0ad4e;">VERSION 1.0</button>
+              {{-- <button class="btn btn-warning " style="margin-top:5%;background-color: #f0ad4e;">VERSION 1.0</button> --}}
 
                 <!-- Collapsed Hamburger -->
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse">
@@ -26,13 +26,10 @@
 
                 <ul class="nav navbar-nav" >
 
-
-                  <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><b>Recuritments</b> <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                          <li><a href="{{route('createCnic')}}">Add New Applicant</a></li>
-                          <li><a href="{{route('job_form.index') }}">View All Applicants</a></li>
-                        </ul>
+                <li><a href="{{route('myhome')}}"><b>HOME</b></a></li>
+                    <li><a href="{{route('createCnic')}}"><b>Add New Applicant</b></a></li>
+                    <li><a href="{{route('job_form.index')}}"><b>View All Applicants</b></a></li>
+                       
                   </li>
 
 
@@ -46,7 +43,7 @@
                     <ul class="nav navbar-nav navbar-right">
                     <li><a href="{{ route('logout') }}"
                     onclick="event.preventDefault();
-                             document.getElementById('logout-form').submit();">Sign out
+                             document.getElementById('logout-form').submit();"><b>Sign out</b>
                   </a></li>
                 </ul>
                   <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
