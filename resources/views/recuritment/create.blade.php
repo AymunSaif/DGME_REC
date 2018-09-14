@@ -387,6 +387,7 @@
                                 <option  value="other" style="background-color:peachpuff;">Other</option>
                                 <option style="background-color:plum;">IGCSE-Cambridge</option>
                                 <option >Federal BISE</option>
+                                <option>PBTE Punjab Board Of Technical Education</option>
                                 <option >Mirpur AJK BISE</option>
                                 <option >Faisalabad BISE</option>
                                 <option >Gujranwala BISE</option>
@@ -504,6 +505,7 @@
                             <option value ="other" style="background-color:peachpuff;">Other</option>
                             <option style="background-color:plum;">IGCSE-Cambridge</option>
                             <option>Federal BISE</option>
+                            <option>PBTE Punjab Board Of Technical Education</option>
                             <option>Mirpur AJK BISE</option>
                             <option>Faisalabad BISE</option>
                             <option>Gujranwala BISE</option>
