@@ -17,7 +17,7 @@
         </tr>
         @php
           // $i=1;
-          $i = $persons->perPage() * ($persons->currentPage() - 1)+1;
+          $i = $persons->perPage() * ($persons->lastPage() - 1)+1;
         @endphp
         @foreach ($persons as $person)
         <tr>
