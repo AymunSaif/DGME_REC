@@ -8,15 +8,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Applicant extends Model
 
 {
-    public function User(){
-<<<<<<< HEAD
+    public function User()
+    {
         return $this->belongsTo('App\User','created_by');
-      }
-      
-=======
-      return $this->belongsTo('App\User','created_by');
-    }
->>>>>>> eb80e78341fea4decb54e05ed1ddf337bbb9668d
+      }  
     public function ApplicantDetail()
     {
         return $this->hasOne('App\ApplicantDetail');

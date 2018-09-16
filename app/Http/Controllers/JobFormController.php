@@ -92,8 +92,8 @@ class JobFormController extends Controller
      */
     public function index()
      {
-      $persons=Applicant::orderBy('created_at','desc')->paginate(8);
-      $person_applied=ApplicantAppliedFor::orderBy('created_at','desc')->paginate(8);
+      $persons=Applicant::orderBy('created_at','desc')->paginate(10);
+      $person_applied=ApplicantAppliedFor::orderBy('created_at','desc')->paginate(10);
       return view('recuritment.index',['persons'=>$persons,'person_applied'=>$person_applied]);
     }
 
@@ -1301,11 +1301,13 @@ class JobFormController extends Controller
           if($request->researchType[$i]=="Journal")
           { $person_researchwork->researchtype=$rp;
               if(isset($request->app_jr[$jrCounter]))
-            $person_researchwork->name=$request->app_jr[$jrCounter];
+            $person_researchwork->conference=$request->app_jr[$jrCounter];
             if(isset($request->journal_yr[$jrCounter]))
             $person_researchwork->published_year=$request->journal_yr[$jrCounter];
             if(isset($request->journal_dt[$jrCounter]))
             $person_researchwork->date_published=$request->journal_dt[$jrCounter];
+            if(isset($request->app_jr[$jrCounter]))
+            $person_researchwork->name=$request->app_jr[$jrCounter];
             $jrCounter++;
           }
           else if($request->researchType[$i]=="Conference")

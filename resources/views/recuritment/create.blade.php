@@ -1,11 +1,12 @@
 @extends('layouts.app')
 @section('styletags')
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/css/bootstrap-select.min.css" />
 {{-- <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet"> --}}
       <link href="{{ asset('css/intlTelInput.css') }}" rel="stylesheet">
 @endsection
 @section('content')
-<form id="form" action="{{route('job_form.store')}}" name="form" method="post" enctype="multipart/form-data">
+<form id="form" action="{{route('job_form.store')}}" name="form" method="post" enctype="multipart/form-data" onsubmit=" return checkForm(this)">
     {{csrf_field()}}
     <div class="row">
         <div class="col-md-12">
@@ -53,7 +54,7 @@
                     @if($applicant->name!='' && $applicant->name!=NULL)
                       <input type="text" value="<?= $applicant->name  ?>" disabled placeholder="Enter Your Full Name" class="form-control" required >
                     @else
-                      <input type="text" name="name" id="name" placeholder="Enter Your Full Name" class="form-control"    required>
+                      <input type="text" name="name" id="name" placeholder="Enter Your Full Name"  class="form-control"    required>
                     @endif
                 </div>
                 <div class="form-group">
@@ -79,12 +80,12 @@
                 </div>
 
                 <div class="form-group">
-                    <b>Date Of Birth </b>
+                    <b>Date Of Birth (dd/mm/yyyy)</b>
                     <br>
                     @if ($applicant->dob!=NULL && $applicant->dob!='')
-                      <input type="date" name="dob" value="<?= $applicant->dob ? $applicant->dob : '' ?>" disabled class="form-control">
+                      <input type="text" placeholder="dd/mm/yyyy" value="<?= $applicant->dob ? $applicant->dob : '' ?>" disabled class=" js-date form-control">
                     @else
-                      <input type="date" name="dob" class="form-control">
+                      <input type="text" maxlength="10" placeholder="dd/mm/yyyy" onchange="checkDate(this)" name="dob" class=" js-date form-control" >
                     @endif
                 </div>
                 <div class="form-group">
@@ -190,7 +191,7 @@
         <hr />
 
         <button type="button" class="btn btn-lg btn-danger " style=" width: 252px;" id="go_cnic"> Back</button>
-        <button type="button" class="btn btn-lg btn-info pull-right" style="width: 252px;" id="education"> Next</button>
+        <button type="button" class="btn btn-lg btn-info pull-right" style="width: 252px;" id="education" onclick="checkname"> Next</button>
        </div>
     </section>
 
@@ -1039,8 +1040,8 @@
                     <option value="Donor Agencies">Donor Agencies</option>
                     </select>
                 </td>
-                <td> <input type="date" name="start_date[]" id="start_date" class="form-control"></td>
-                <td><input type="date" name="end_date[]" id="end_date" class="form-control"></td>
+                <td> <input type="text" name="start_date[]"  id="start_date" maxlength="10" placeholder="dd/mm/yyyy" onchange="checkDate(this)"  class=" js-date form-control"></td>
+                <td><input type="text" name="end_date[]" id="end_date" maxlength="10" placeholder="dd/mm/yyyy"   onchange="checkDate(this)"  class="js-date form-control"></td>
                 <td><input type="text" name="role_name[]" class="form-control"></td>
                 <td style="text-align:center;"><button type="button" id="remove_exp[]" onclick="remove_exp(this)" class="btn btn-danger btn-sm remove" ><span class=" glyphicon glyphicon-minus"></span></button></td>
               </tr>
@@ -1110,12 +1111,18 @@
 </form>
 @endsection
 @section('scriptTags')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     {{-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script> --}}
-    <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/js/bootstrap-select.min.js"></script>
+    {{-- <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/js/bootstrap-select.min.js"></script> --}}
     <script src="{{asset('js/intlTelInput.js')}}"></script>
-    <script>
+ <script>
+     
+    $(document).ready(function() {
+       
+    $('.b_Name').select2();
+});
     $(document).ready(function() {
 
       $(document).keypress(function(event){
@@ -1328,10 +1335,9 @@
         function add_newsub(e){
             if($(e).hasClass("subjects_school"))
             {
-                // console.log('sgdua');
+              
                 if($('.subjects_school :selected').text()=='Other')
                     {
-                        // console.log('shdgas');
                     $('.subjectsschool_other').show(1000);
                     }
                 else
@@ -1428,9 +1434,10 @@
         });
 
 
-
+       
         $('.dom_province').on('change', function () {
             //  $(this).val();
+            $('.dom_district').children().remove();
             $.ajax({
                         type: "POST",
                         url: '{{route("getDistrict")}}',
@@ -1438,7 +1445,7 @@
                         "_token": "{{ csrf_token() }}",
                         'province_id' : $(this).val()},
                         success: function(data){
-                            // console.log(data);
+                          
                         for (let index = 0; index < data.length; index++) {
                             $('.dom_district').append('<option value="'+data[index].id+'" selected="selected">'+data[index].name+'</option>');
                         }
@@ -1462,7 +1469,6 @@
                                 "_token": "{{ csrf_token() }}",
                                 'type' : $(this).val()},
                                 success: function(data){
-                                    // console.log(data);
                                     for (let index = 1; index <=data.length; index++) {
                                         $('.subjects_school').append('<option value="'+data[index].id+'" selected="selected">'+data[index].subject_name+'</option>');
                                     }
@@ -1674,7 +1680,7 @@
                             +'<div class="col-md-2 post_percentage">Percentage<input type="number" step="0.01" name="pg_percentage[]" id="pg_percentage" class="form-control pg_percentage"></div>'
                             +'<div class="col-md-2 division"> Division'
                             +'<input type="string" name="postgrad_division[]" value="" class="form-control postgrad_division"></div>'
-                            +'<div class="col-md-2 post_dmc">Final DMC Date<input type="date" name="pg_dmc_date[]" id="pg_dmc_date" class="form-control"></div>'
+                            +'<div class="col-md-2 post_dmc">Final DMC Date<input type="text" maxlength="10" placeholder="dd/mm/yyyy"   onchange="checkDate(this)" name="pg_dmc_date[]" id="pg_dmc_date" class="js-date form-control"></div>'
                             +'<div class="col-md-1 remove_grad_level"><button type="button" id="remove_grad_level[]"  class="pull-left btn btn-danger btn-sm add" style=" margin-top: 24px;" onclick="remove_data(this,1)" ><span class="glyphicon glyphicon-minus"></span></button></div></div></div></div>';
 
                     $('#postgradeducation').append(eduprogram+uniname_start+uniname_end+secndvar+thirdvar);
@@ -1745,7 +1751,7 @@
                             +'<input type="text"  name="phd_other_SubjectName[]" id="phd_other_SubjectName" class="form-control "/>'
                             +'</div></div>'
                             +'<div class="col-md-2 phd_thesis">Thesis Topic<input type="text" name="phd_thesis[]" id="phd_thesis" class="form-control">  </div>'
-                            +'<div class="col-md-2 phd_dg">Final DMC Date <input type="date" name="phd_date[]" id="phd_date" class="form-control"> </div>'
+                            +'<div class="col-md-2 phd_dg">Final DMC Date <input type="text" name="phd_date[]" id="phd_date" maxlength="10" placeholder="dd/mm/yyyy"  onchange="checkDate(this)"  class="js-date form-control"> </div>'
                             +'<div class="col-md-1 remove_phd_level"><button type="button" id="remove_phd_level[]"  class=" btn btn-danger btn-md remove_phd_level" style="margin-top:21px;" onclick="remove_data(this)" ><span class="glyphicon glyphicon-minus"></span></button></div></div></div>';
 
                 $('#phdeducation').append(eduprogram+uniname_start+uniname_end+secndvar+thirdvar);
@@ -1758,7 +1764,7 @@
                                 +'<input type="hidden" name="qualification_postdocuniv[]" value="post_doc">'
                                 +'<div class="col-md-2 pd_institute_name">Institution Name<input type="text" name="pd_Name[]" id="pd_Name[]" class="form-control"> </div>'
                                 +'<div class="col-md-2 postdoc_thesis">Thesis Topic<input type="text" name="pd_thesis[]" id="pd_thesis[]" class="form-control"> </div>'
-                                +'<div class="col-md-2 postdoc_dg">Date Of Graduation <input type="date" name="pd_date[]" id="pd_date[]" class="form-control"> </div>'
+                                +'<div class="col-md-2 postdoc_dg">Date Of Graduation <input type="text" maxlength="10" placeholder="dd/mm/yyyy"   onchange="checkDate(this)"  name="pd_date[]" id="pd_date[]" class="js-date form-control"> </div>'
                                 +'<div class="col-md-1 remove_graddoc_level"><button type="button" id="remove_graddoc_level[]"  class="btn btn-danger btn-md " style=" margin-top: 21px;" onclick="remove_data(this)" ><span class="glyphicon glyphicon-minus"></span></button></div></div></div>';
                     $('#postdoceducation').append(eduprogram);
             });
@@ -1770,7 +1776,7 @@
                         +'<div class="col-md-3"><b>Certification Name</b><input type="text" name="app_cer[]" id="app_cer[]" class="form-control"></div>'
                         +'<div class="col-md-2"><b>Certificate Number</b><input type="string" name="cer_num[]" id="cer_num[]" class="form-control"></div>'
                         +'<div class="col-md-2"><b>Issued By </b><br> <input type="text" name="certificate_i[]" id="certificate_i[]" class="form-control"></div>'
-                        +'<div class="col-md-2"><b>Date Of Issuance</b> <br><input type="date" name="i_date[]" id="i_date[]" class="form-control"></div>'
+                        +'<div class="col-md-2"><b>Date Of Issuance</b> <br><input type="text" name="i_date[]" id="i_date[]" maxlength="10" placeholder="dd/mm/yyyy"   onchange="checkDate(this)" class="js-date form-control"></div>'
                         +'<div class="col-md-1" style="margin-top: 21px;"><button type="button" id="remove_certification[]" onclick="remove_certification(this)" class="btn btn-danger btn-md "><span class="glyphicon glyphicon-minus"></span></button></div>'
                         +'</div></div>';
                     $('#certifications').append(certifications_app);
@@ -1813,7 +1819,7 @@
                         +'<div class="col-md-3"> <b>Name</b> <input type="text" name="app_pmname[]" id="app_pmname[]" class="form-control"></div>'
                         +'<div class="col-md-2"><b>Membership Level</b><br> <input type="text" name="m_level[]" id="m_level[]" class="form-control"></div>'
                         +'<div class="col-md-2"><b>Issued By</b><br><input type="string" name="issued_name[]" id="issued_name[]" class="form-control"></div>'
-                        +'<div class="col-md-2"><b>Issuance Date</b><br><input type="date" name="pm_doi[]" id="pm_doi[]" class="form-control"></div>'
+                        +'<div class="col-md-2"><b>Issuance Date</b><br><input type="text" name="pm_doi[]" id="pm_doi[]" maxlength="10" placeholder="dd/mm/yyyy"   onchange="checkDate(this)"  class=" js-date form-control"></div>'
                         +'<div class="col-md-2"><b>Registeration # </b><br><input type="string" name="pm_reg[]" id="pm_reg[]" class="form-control"></div>'
                         +'<div class="col-md-1 " style="margin-top: 21px;"><button type="button" name="remove_membership[]" id="remove_membership[]" onclick="remove_member(this)" class="btn btn-md btn-danger "><span class="glyphicon glyphicon-minus"></span></button></div>'
                         +'</div></div>';
@@ -1832,20 +1838,22 @@
                 {
                 research='<div class="col-md-2 J_name">Name Of Journal<input type="text" name="app_jr[]" id="app_jr[]" class="form-control"></div>'
                     +'<div class="col-md-2 J_pyear">Published Year<input type="number" name="journal_yr[]" id="app_yr[]" class="form-control"></div>'
-                    +'<div class="col-md-2 J_date">Date<input type="date" name="journal_dt[]" id="journal_dt" class="form-control"></div>'
-                    +'<div class="col-md-1 remove"><button type="button" id="remove[]"  class=" btn btn-danger btn-md " style=" margin-top: 21px;" onclick="remove_data(this)" ><span class="glyphicon glyphicon-minus"></span></button></div>';
+                    +'<div class="col-md-2 J_date">Date<input type="text" name="journal_dt[]" id="journal_dt" maxlength="10" placeholder="dd/mm/yyyy"   onchange="checkDate(this)"  class=" js-date form-control"></div>'
+                    +'<div class="col-md-2 paper_name">Paper Topic<input type="text" name="app_jr[]" id="app_jr" class="form-control"></div>'
+                   +'<div class="col-md-1 remove"><button type="button" id="remove[]"  class=" btn btn-danger btn-md " style=" margin-top: 21px;" onclick="remove_data(this)" ><span class="glyphicon glyphicon-minus"></span></button></div>';
 
                 }
                 else if(researchtype=='Conference')
                 {
                     research='<div class="col-md-2 research_paper">Name of Conference<input type="text" name="app_conf[]" id="app_conf" class="form-control"></div>'
                     +'<div class="col-md-2 conf_pyear">Published Year<input type="number" name="conf_yr[]" id="conf_yr" class="form-control"></div>'
-                    +'<div class="col-md-2 J_date">Date<input type="date" name="rp_dt[]" id="rp_dt" class="form-control"></div>'
+                    +'<div class="col-md-2 J_date">Date<input type="text" name="rp_dt[]" id="rp_dt" maxlength="10" placeholder="dd/mm/yyyy"   onchange="checkDate(this)"  class="js-date form-control"></div>'
                     +'<div class="col-md-2 conf_name">Paper Topic<input type="text" name="app_rp[]" id="app_rp" class="form-control"></div>'
                     +'<div class="col-md-1 remove"><button type="button" id="remove[]"  class=" btn btn-danger btn-md " style=" margin-top: 21px;" onclick="remove_data(this)" ><span class="glyphicon glyphicon-minus"></span></button></div>';
                 }
                 $(e).parent().parent().find('.remove').remove();
                 $(e).parent().parent().find('.J_name').remove();
+                $(e).parent().parent().find('.paper_name').remove();
                 $(e).parent().parent().find('.J_pyear').remove();
                 $(e).parent().parent().find('.J_date').remove();
                 $(e).parent().parent().find('.research_paper').remove();
@@ -1861,8 +1869,8 @@
                 exp_row += '<tr>';
                 exp_row += '<td><input type="text" name="org_Name[]" id="org_Name" placeholder="Enter Your Organization Name" class="form-control"></td>';
                 exp_row += '<td><select class="form-control" name="org_type[]"><option value="">Select Type:</option><option value="Private/NGO">Private/NGO</option><option value="Government">Government</option><option value="International/INGO">International/INGO</option><option value="Self-Employed">Self-Employed</option><option value="Donor Agencies">Donor Agencies</option></select></td>';
-                exp_row += '<td> <input type="date" name="start_date[]" id="start_date" class="form-control"></td>';
-                exp_row +='<td><input type="date" name="end_date[]" id="end_date" class="form-control"></td>'
+                exp_row += '<td> <input type="text" name="start_date[]" id="start_date"  maxlength="10" placeholder="dd/mm/yyyy" onchange="checkDate(this)"  class=" js-date form-control"></td>';
+                exp_row +='<td><input type="text" maxlength="10" placeholder="dd/mm/yyyy"   onchange="checkDate(this)"  name="end_date[]" id="end_date" class="js-date form-control"></td>'
                 exp_row +='<td><input type="text" name="role_name[]" class="form-control"></td>'
                 exp_row += '<td style="text-align:center;"><button type="button" id="remove_exp[]" onclick="remove_exp(this)" class="btn btn-danger btn-sm remove" ><span class=" glyphicon glyphicon-minus"></span></button></td></tr>';
                 $('#exp_table').append(exp_row);
@@ -1908,7 +1916,7 @@
                         +'<input type="hidden" name="qualification_univ[]" value="bachelor2year">'
                     +'<span class="twoyear_grad" id="twoyear_grad" >'
                 +'Institution Name<select class="form-control"  id="college_university_names" name="college_university_names[]" onchange="add_newUC(this)">'
-                            +'<option >Select Degree</option>'
+                            +'<option ></option>'
                             +'<option value="other" style="background-color:peachpuff;">Other</option>';
                             $.ajax({
                                 type: "get",
@@ -1952,7 +1960,7 @@
                                 console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
                                 }
                             });
-                            console.log(bachelorSubjects);//SSS
+                            // console.log(bachelorSubjects);//SSS
                             for (var i = 0; i < bachelorSubjects.length; ++i) {
                             secndvar=secndvar+'<option value="'+bachelorSubjects[i].id+'">'+bachelorSubjects[i].subject_name+'</option>';
                             }
@@ -2024,7 +2032,7 @@
                                 console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
                                 }
                             });
-                            console.log(bachelorSubjects);
+                            // console.log(bachelorSubjects);
                             for (var i = 0; i < bachelorSubjects.length; ++i) {
                             secndvar=secndvar+'<option value="'+bachelorSubjects[i].id+'">'+bachelorSubjects[i].subject_name+'</option>';
                             }
@@ -2034,7 +2042,7 @@
                         +'<input type="text"  name="other_univsubjects[]" class="form-control"/>'
                         +'</div> </span></div>'
                         +'<div class="row "><div class="col-md-12"><div class="col-md-1 cgpamarks">CGPA/4<input type="number" step="0.01" name="cgpa[]" id="cgpa" class="form-control"></div>'
-                        +'<div class="col-md-2 dmc">Final DMC Date<input type="date" name="dmc_date[]" id="dmc_date" class="form-control"></div>'
+                        +'<div class="col-md-2 dmc">Final DMC Date<input type="text"  name="dmc_date[]" maxlength="10" placeholder="dd/mm/yyyy"   onchange="checkDate(this)" id="dmc_date" class="js-date form-control"></div>'
                         +'<div class="col-md-2 marks">Total Marks<input type="number" name="foury_t_marks[]" class="form-control foury_t_marks"/></div>'
                         +'<div class="col-md-2 achievedmarks">Achieved  <input type="number" name="foury_a_marks[]" onkeyup="calculate4Percentage(this)"  class="form-control foury_a_marks"></div>'
                         +'<div class="col-md-1 Percentage">Percentage <input type="number"step="0.01" name="univ_per[]" value="" id="univ_per" class="form-control"></div>'
@@ -2064,24 +2072,16 @@
 
         function add_newUC(e)
         {
-            // if($(e).attr('name')=="pg_Name")
-            // {
-            //     $(e).next().next().next().show(1000);
-            // }
-            // else
-            // {
-            //     $(e).next().next().next().hide(1000);
-
-                if($(e).val()=="other")
-                {
-                    $(e).next().next().next().show(1000)
-                }
-                else
-                {
-                    $(e).next().next().next().hide(1000)
-                }
-            // }
+            if($(e).val()=="other")
+            {
+                $(e).next().next().next().show(1000)
+            }
+            else
+            {
+                $(e).next().next().next().hide(1000)
+            }
         }
+
         //add new degree
 
         function add_newdegree(e)
@@ -2222,25 +2222,6 @@
 
         }
 
-        //exp duration
-        $("#start_date").datepicker({ 	});
-        $("#end_date").datepicker({
-            onSelect: function () {
-                var  duration_of_exp= duration();
-                $('#expduration').val(duration_of_exp);
-                }
-            });
-
-        function duration(){
-            var start= $("#start_date").datepicker("getDate");
-            var end= $("#end_date").datepicker("getDate");
-            days = (end- start) / (1000 * 60 * 60 * 24);
-            months= days/31;
-            years= months/12;
-            return  Math.floor(days) + "days " + Math.floor(months) + "months " +    Math.floor(years) + "years";
-        }
-
-
         function remove_certification(e){
                 $(e).parent().parent().parent().remove();
         }
@@ -2282,22 +2263,95 @@
             $(e).closest('tr').remove();
         }
 
-        $('#cnic').keydown(function () {
-
-            //allow  backspace, tab, ctrl+A, escape, carriage return
-            if (event.keyCode == 8 || event.keyCode == 9 ||
-                event.keyCode == 27 || event.keyCode == 13 ||
-                (event.keyCode == 65 && event.ctrlKey === true))
-                return;
-            if ((event.keyCode < 48 || event.keyCode > 57))
-                event.preventDefault();
-
-            var length = $(this).val().length;
-
-            if (length == 5 || length == 13)
-                $(this).val($(this).val() + '-');
-        });
-
 
     </script>
+    
+<script type="text/javascript">
+    function checkDate(field)
+    {
+       
+        var allowBlank = true;
+        var minYear = 1902;
+        var maxYear = (new Date()).getFullYear();
+
+        var errorMsg = "";
+
+        // regular expression to match required date format
+        re = /^(\d{1,2})\/(\d{1,2})\/(\d{4})$/;
+
+        if(field.value != '') {
+            
+        if(regs = field.value.match(re)) 
+        {
+           
+            if(regs[1] < 1 || regs[1] > 31)
+            {
+             errorMsg = "Invalid value for day: " + regs[1];
+            } 
+            else if(regs[2] < 1 || regs[2] > 12) 
+            { 
+            errorMsg = "Invalid value for month: " + regs[2];
+            } 
+            else if(regs[3] < minYear || regs[3] > maxYear) 
+            {
+            errorMsg = "Invalid value for year: " + regs[3] + " - must be between " + minYear + " and " + maxYear;
+            }
+        } 
+        else {
+            
+            errorMsg = "Invalid date format: " + field.value;
+        }
+        }
+        else if(!allowBlank)
+        {
+        errorMsg = "Empty date not allowed!";
+        }
+
+        if(errorMsg != "") {
+        alert(errorMsg);
+        field.focus();
+        return false;
+        }
+        
+        return true;
+    }
+
+  var input = document.querySelectorAll('.js-date')[0];
+
+  var dateInputMask = function dateInputMask(elm) {
+  elm.addEventListener('keypress', function(e) {
+    if(e.keyCode < 47 || e.keyCode > 57) {
+      e.preventDefault();
+    }
+    
+    var len = elm.value.length;
+
+    if(len !== 1 || len !== 3) {
+      if(e.keyCode == 47) {
+        e.preventDefault();
+      }
+    }
+    
+    // If they don't add the slash, do it for them...
+    if(len === 2) {
+      elm.value += '/';
+    }
+
+    // If they don't add the slash, do it for them...
+    if(len === 5) {
+      elm.value += '/';
+    }
+  });
+};
+  
+dateInputMask(input);
+ function checkForm(e)
+ {
+     alert("Kindly check your Internet Connection Before submitting, Thanks Us Later!");
+     return false;
+ }
+
+  
+ </script>
+
 @endsection

@@ -14,6 +14,8 @@
         <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
         <link rel="stylesheet" href="{{asset('css/theme/font-awesome.min.css')}}" />
         <!-- CSS Files -->
+        <link href="{{asset('css/AdminLTE.min.css')}}" rel="stylesheet" />
+        <link href="{{asset('css/select2.min.css')}}" rel="stylesheet" />
         <link href="{{asset('css/sortcss/addons/datatables.min.css')}}" rel="stylesheet" />
         <link href="{{asset('css/theme/bootstrap.min.css')}}" rel="stylesheet" />
         <link href="{{asset('css/theme/light-bootstrap-dashboard790f.css?v=2.0.1')}}" rel="stylesheet" />
@@ -90,6 +92,9 @@
 <script src="{{asset('js/theme/js/light-bootstrap-dashboard790f.js?v=2.0.1')}}" type="text/javascript"></script>
 <!-- Light Dashboard DEMO methods, don't include it in your project! -->
 <script src="{{asset('js/theme/js/demo.js')}}"></script>
+<script src="{{asset('js/select2.min.js')}}"></script>
+<script src="{{asset('js/select2.full.min.js')}}"></script>
+<script src="{{asset('js/adminlte.min.js')}}"></script>
 @yield('scripttags')
 <script type="text/javascript">
     $(document).ready(function() {

@@ -1209,7 +1209,7 @@
             '<li class="page-first"><a href="javascript:void(0)">' + this.options.paginationFirstText + '</a></li>',
             '<li class="page-pre"><a href="javascript:void(0)">' + this.options.paginationPreText + '</a></li>');
 
-        if (this.totalPages < 5) {
+        if (this.totalPages < 8) {
             from = 1;
             to = this.totalPages;
         } else {
