@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('styletags')
-<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+{{-- <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" /> --}}
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/css/bootstrap-select.min.css" />
 {{-- <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet"> --}}
       <link href="{{ asset('css/intlTelInput.css') }}" rel="stylesheet">
@@ -381,7 +381,7 @@
                     <td>
                         <span class="sch_board" style="display:none;">Board
                          <div>
-                            <select class="form-control b_Name " name="b_Name" >
+                            <select class="form-control b_Name selectpicker" data-live-search="true" name="b_Name" >
                                 <option disabled selected="selected"> Select Board</option>
                                 <option  value="other" style="background-color:peachpuff;">Other</option>
                                 <option style="background-color:plum;">IGCSE-Cambridge</option>
@@ -419,7 +419,7 @@
 
                             </select><br>
                         {{-- <input type="hidden" id="real_college_university_names"/> --}}
-                        <div class="sch_otherboard" style=" margin-top: -20px; display:none;">
+                        <div class="sch_otherboard" style="  display:none;">
                         <input type="text"   name="sch_otherboard" id="sch_otherboard" class="form-control"/>
                         </div></div></span>
                     </td>
@@ -430,7 +430,7 @@
                                 <select class="form-control subjects_school" name="s_subjects" onchange="add_newsub(this)">
 
                                 </select><br>
-                                <div class="subjectsschool_other" style=" margin-top: -20px; display:none;">
+                                <div class="subjectsschool_other" style="  display:none;">
                                 <input type="text"   name="subjectsschool_other" id="subjectsschool_other" class="form-control"/>
                                 </div>
                             </div>
@@ -499,7 +499,7 @@
                     <td> <span class="col_name" style="display:none">College Name<br><input type="text" name="c_Name"
                                 id="c_Name" class="form-control"></span></td>
                     <td><span class="col_board" style="display:none"> <b> Board </b>
-                        <select class="form-control c_b_Name" name="c_b_Name">
+                        <select class="form-control selectpicker c_b_Name" data-live-search="true" name="c_b_Name">
                             <option disabled selected="selected"> Select Board</option>
                             <option value ="other" style="background-color:peachpuff;">Other</option>
                             <option style="background-color:plum;">IGCSE-Cambridge</option>
@@ -535,17 +535,17 @@
                             <option>Khuzdar BISE</option>
                             <option>Dera Murad Jamali BISE</option>
                             </select><br>
-                            <div class="college_otherboard" style=" margin-top: -20px; display:none;">
+                            <div class="college_otherboard" style="  display:none;">
                             <input type="text"   name="college_otherboard" id="college_otherboard" class="form-control"/>
                             </div></span>
                             </td>
                     <td>
                         <span class="col_subjects" style="display:none">
-                            <div>
+                            <div class="college_subjects">
                                 <b> Subjects </b>
-                                <select class="form-control college_subjects " name="c_subjects" onchange="add_newsub(this)">
+                                <select class="form-control college_subjects selectpicker " data-live-search="true" name="c_subjects" onchange="add_newsub(this)">
                                 </select><br>
-                                <div class="c_othersubjects" style=" margin-top: -20px; display:none;">
+                                <div class="c_othersubjects" style="  display:none;">
                                         <input type="text"   name="c_othersubjects" id="c_othersubjects" class="form-control"/>
                                 </div>
                             </div>
@@ -1006,7 +1006,7 @@
                 </div>
                 <div class="col-md-1"></div>
         </div>
-        
+
         </div>
     </section>
 
@@ -1113,19 +1113,16 @@
 </form>
 @endsection
 @section('scriptTags')
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
-    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/js/bootstrap-select.min.js"></script>
+
     {{-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script> --}}
     {{-- <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/js/bootstrap-select.min.js"></script> --}}
     <script src="{{asset('js/intlTelInput.js')}}"></script>
  <script>
-     
+
+
     $(document).ready(function() {
-       
-    $('.b_Name').select2();
-});
-    $(document).ready(function() {
+      $('.selectpicker').selectpicker();
 
       $(document).keypress(function(event){
 
@@ -1326,10 +1323,10 @@
                     if($('.b_Name').val()=="other")
                     {
                         $('.sch_otherboard').show(1000);
-                        }
+                    }
                     else{
                         $('.sch_otherboard').hide(1000);
-                        $('.b_Name').show(1000);
+                        // $('.b_Name').show(1000);
 
                 }
             });
@@ -1337,7 +1334,7 @@
         function add_newsub(e){
             if($(e).hasClass("subjects_school"))
             {
-              
+
                 if($('.subjects_school :selected').text()=='Other')
                     {
                     $('.subjectsschool_other').show(1000);
@@ -1357,7 +1354,7 @@
                 else
                 {
                     $('.c_othersubjects').hide(1000);
-                    $('.college_subjects').show(1000);
+                    // $('.college_subjects').show(1000);
                 }
 
             }
@@ -1370,7 +1367,7 @@
                 }
             else{
                 $('.college_otherboard').hide(1000);
-                $('.c_b_Name').show(1000);
+                // $('.c_b_Name').show(1000);
             }
 
         });
@@ -1436,7 +1433,7 @@
         });
 
 
-       
+
         $('.dom_province').on('change', function () {
             //  $(this).val();
             $('.dom_district').children().remove();
@@ -1447,7 +1444,7 @@
                         "_token": "{{ csrf_token() }}",
                         'province_id' : $(this).val()},
                         success: function(data){
-                          
+
                         for (let index = 0; index < data.length; index++) {
                             $('.dom_district').append('<option value="'+data[index].id+'" selected="selected">'+data[index].name+'</option>');
                         }
@@ -1528,8 +1525,8 @@
                     $('.col_grades').hide(1000);
 
                     $('input[name="college_qualification_type"]').val("Intermediate")
-                    $('.college_subjects').children().remove();
-                    $('.college_subjects').append('<option disabled selected="selected">Select Subject</option><option value="other" style="background-color:peachpuff;">Other</option>');
+                    $('select.college_subjects').children().remove();
+                    $('select.college_subjects').append('<option disabled selected="selected">Select Subject</option><option value="other" style="background-color:peachpuff;">Other</option>');
                     $.ajax({
                                 type: "POST",
                                 url: '{{route("getSecondaryCustomSubject")}}',
@@ -1539,8 +1536,9 @@
                                 success: function(data){
                                     // console.log(data);
                                 for (let index = 0; index < data.length; index++) {
-                                    $('.college_subjects').append('<option value="'+data[index].id+'" selected="selected">'+data[index].subject_name+'</option>');
+                                    $('select.college_subjects').append('<option value="'+data[index].id+'" selected="selected">'+data[index].subject_name+'</option>');
                                 }
+                                $('select.college_subjects').selectpicker('refresh');
                             },
                             error: function(jqXHR, textStatus, errorThrown) { // What to do if we fail
                                 console.log(JSON.stringify(jqXHR));
@@ -1558,8 +1556,8 @@
 
                 } else if ($('.college_level').val() == 'A-Level') {
                     $('input[name="college_qualification_type"]').val("A-Level")
-                    $('.college_subjects').children().remove();
-                    $('.college_subjects').append('<option disabled selected="selected"> Select Subject</option><option value="other" style="background-color:peachpuff;">Other</option>');
+                    $('select.college_subjects').children().remove();
+                    $('select.college_subjects').append('<option disabled selected="selected"> Select Subject</option><option value="other" style="background-color:peachpuff;">Other</option>');
                     $.ajax({
                                 type: "POST",
                                 url: '{{route("getSecondaryCustomSubject")}}',
@@ -1569,8 +1567,9 @@
                                 success: function(data){
                                     // console.log(data);
                                 for (let index = 0; index < data.length; index++) {
-                                    $('.college_subjects').append('<option value="'+data[index].id+'" selected="selected">'+data[index].subject_name+'</option>');
+                                    $('select.college_subjects').append('<option value="'+data[index].id+'" selected="selected">'+data[index].subject_name+'</option>');
                                 }
+                                $('select.college_subjects').selectpicker('refresh');
                             },
                             error: function(jqXHR, textStatus, errorThrown) { // What to do if we fail
                                 console.log(JSON.stringify(jqXHR));
@@ -1586,6 +1585,7 @@
                     $('.col_subjects').show(1000);
                     $('.col_div').show(1000);
                     $('.col_dist').show(1000);
+
                 }
             });
 
@@ -1620,7 +1620,7 @@
                             +'<div class="col-md-12" style="margin-bottom: 15px;margin-top: 15px;">'
                             +'<input type="hidden" name="qualification_postuniv[]" value="post_grad">'
                             +'<div class="col-md-4 institute_name">Institution Name'
-                            +'<select name="pg_Name[]" class="form-control" onchange="add_newUC(this)">'
+                            +'<select name="pg_Name[]" class="form-control selectpicker pg_Name" data-live-search="true" onchange="add_newUC(this)">'
                             +'<option value=""></option>'
                             +'<option value="other" style="background-color:peachpuff;">Other</option>';
                             $.ajax({
@@ -1641,11 +1641,11 @@
                             }
                             uniname_end='</select><br>'
                             +'<input type="hidden" id="university_n[]"/>'
-                            +'<div id="otherpost_univ" style=" margin-top: -20px; display:none;">'
-                            +'<input type="text"  name="otherpost_univ[]" id="otherpost_univ" class="form-control"/>'
+                            +'<div id="otherpost_univ" style="  display:none;">'
+                            +'<input type="text" placeholder="Other University" name="otherpost_univ[]" id="otherpost_univ" class="form-control"/>'
                             +'</div></div>'
                             +'<div class="col-md-4 postgrad_subjects">Degree'
-                            +'<select class="form-control" name="post_grad_subject[]" onchange="add_newdegree(this)">'
+                            +'<select class="form-control post_grad_subject selectpicker" data-live-search="true" name="post_grad_subject[]" onchange="add_newdegree(this)">'
                             +'<option disabled selected="selected">Select Degree</option>'
                             +'<option value="other" style="background-color:peachpuff;">Other</option>';
                             $.ajax({
@@ -1668,8 +1668,8 @@
                             secndvar=secndvar+'<option value="'+masterSubjects[i].id+'">'+masterSubjects[i].subject_name+'</option>';
                             }
                             thirdvar='</select></br>'
-                            +'<div  style=" margin-top: -20px; display:none;">'
-                            +'<input type="text"  name="other_postgradsubjects[]" id="other_postgradsubjects" class="form-control "/>'
+                            +'<div class="other_postgradsubjects" style="  display:none;">'
+                            +'<input type="text" placeholder="Other Subject"  name="other_postgradsubjects[]" id="other_postgradsubjects" class="form-control "/>'
                             +'</div></div>'
                             +'<div class="col-md-3 distinction">Distinction'
                             +'<select class="form-control" name="pg_distinction[]">'
@@ -1684,8 +1684,9 @@
                             +'<input type="string" name="postgrad_division[]" value="" class="form-control postgrad_division"></div>'
                             +'<div class="col-md-2 post_dmc">Final DMC Date<input type="text" maxlength="10" placeholder="dd/mm/yyyy"   onchange="checkDate(this)" name="pg_dmc_date[]" id="pg_dmc_date" class="js-date form-control"></div>'
                             +'<div class="col-md-1 remove_grad_level"><button type="button" id="remove_grad_level[]"  class="pull-left btn btn-danger btn-sm add" style=" margin-top: 24px;" onclick="remove_data(this,1)" ><span class="glyphicon glyphicon-minus"></span></button></div></div></div></div>';
-
                     $('#postgradeducation').append(eduprogram+uniname_start+uniname_end+secndvar+thirdvar);
+                    $('#postgradeducation').find('.pg_Name').selectpicker('render');
+                    $('#postgradeducation').find('.post_grad_subject').selectpicker('render');
             });
 
 
@@ -1701,7 +1702,7 @@
                             +'<div class="col-md-12" style="margin-bottom: 15px;margin-top: 15px;">'
                             +'<input type="hidden" name="qualification_phduniv[]" value="phd">'
                             +'<div class="col-md-3 institute_name">Institution Name'
-                            +'<select name="phd_Name[]" class="form-control" onchange="add_newUC(this)">'
+                            +'<select name="phd_Name[]" class="form-control phd_Name selectpicker" data-live-search="true" onchange="add_newUC(this)">'
                             +'<option value=""></option>'
                             +'<option value="other" style="background-color:peachpuff;">Other</option>';
                             $.ajax({
@@ -1722,11 +1723,11 @@
                             }
                             uniname_end='</select><br>'
                             +'<input type="hidden" id="university_n[]"/>'
-                            +'<div id="otherphd_univ" style=" margin-top: -20px; display:none;">'
-                            +'<input type="text"  name="otherphd_univ[]" id="otherphd_univ" class="form-control"/>'
+                            +'<div id="otherphd_univ" style="  display:none;">'
+                            +'<input type="text" placeholder="Other University"  name="otherphd_univ[]" id="otherphd_univ" class="form-control"/>'
                             +'</div></div>'
                             +'<div class="col-md-3 phd_SubjectName">Subject Name'
-                            +'<select class="form-control" name="phd_SubjectName[]" onchange="add_newdegree(this)">'
+                            +'<select class="form-control phd_SubjectName selectpicker" data-live-search="true" name="phd_SubjectName[]" onchange="add_newdegree(this)">'
                             +'<option disabled selected="selected">Select Degree</option>'
                             +'<option value="other" style="background-color:peachpuff;">Other</option>';
                             $.ajax({
@@ -1749,14 +1750,15 @@
                             secndvar=secndvar+'<option value="'+phdSubjects[i].id+'">'+phdSubjects[i].subject_name+'</option>';
                             }
                             thirdvar='</select></br>'
-                            +'<div  style=" margin-top: -20px; display:none;">'
-                            +'<input type="text"  name="phd_other_SubjectName[]" id="phd_other_SubjectName" class="form-control "/>'
+                            +'<div  style="  display:none;">'
+                            +'<input type="text" placeholder="Other Subject"  name="phd_other_SubjectName[]" id="phd_other_SubjectName" class="form-control "/>'
                             +'</div></div>'
                             +'<div class="col-md-2 phd_thesis">Thesis Topic<input type="text" name="phd_thesis[]" id="phd_thesis" class="form-control">  </div>'
                             +'<div class="col-md-2 phd_dg">Final DMC Date <input type="text" name="phd_date[]" id="phd_date" maxlength="10" placeholder="dd/mm/yyyy"  onchange="checkDate(this)"  class="js-date form-control"> </div>'
                             +'<div class="col-md-1 remove_phd_level"><button type="button" id="remove_phd_level[]"  class=" btn btn-danger btn-md remove_phd_level" style="margin-top:21px;" onclick="remove_data(this)" ><span class="glyphicon glyphicon-minus"></span></button></div></div></div>';
-
                 $('#phdeducation').append(eduprogram+uniname_start+uniname_end+secndvar+thirdvar);
+                $('#phdeducation').find('.phd_Name').selectpicker('render');
+                $('#phdeducation').find('.phd_SubjectName').selectpicker('render');
         });
 
 
@@ -1885,9 +1887,11 @@
                 var designation_row = '';
                 designation_row += '<tr>';
                 designation_row += '<td style="text-align:center;">'+ ++i +' </td>';
-                designation_row += '<td><select class="form-control" name="app_designation[]"><option value="">Select Designation:</option><option >Deputy Director (Admin/HR)</option><option >Deputy Director (Finance & Accounts)</option><option >Deputy Director (IT)</option><option >Communication Specialist</option><option >Assistant Director IT</option><option >Assistant Director (Programming)</option><option >Assistant Director (Database)</option><option >Admin/Hr Officer </option><option >Finance Officer</option><option >Audit Officer</option><option >Research Associates</option><option >M & E Expert</option><option >Socio Economic Development Specialist</option><option >Evaluation Specialist </option><option >Project Management Specialist</option><option >Financial Management Specialist</option><option >Procurement Specialist</option></select></td>';
+                designation_row += '<td><select class="form-control selectpicker app_designation" data-live-search="true" name="app_designation[]"><option value="">Select Designation:</option><option >Deputy Director (Admin/HR)</option><option >Deputy Director (Finance & Accounts)</option><option >Deputy Director (IT)</option><option >Communication Specialist</option><option >Assistant Director IT</option><option >Assistant Director (Programming)</option><option >Assistant Director (Database)</option><option >Admin/Hr Officer </option><option >Finance Officer</option><option >Audit Officer</option><option >Research Associates</option><option >M & E Expert</option><option >Socio Economic Development Specialist</option><option >Evaluation Specialist </option><option >Project Management Specialist</option><option >Financial Management Specialist</option><option >Procurement Specialist</option></select></td>';
                 designation_row += '<td style="text-align:center;"><button type="button" id="remove_designation[]" onclick="remove_designation(this)" class="btn btn-danger btn-sm remove" style="text-align:center;"><span class=" glyphicon glyphicon-minus"></span></button></td></tr>';
                 $('#designation_table').append(designation_row);
+                $('#designation_table').find('.app_designation').selectpicker('render');
+
             });
 
             //documents
@@ -1917,7 +1921,7 @@
                     add_year_fields='<div class="col-md-4 years">'
                         +'<input type="hidden" name="qualification_univ[]" value="bachelor2year">'
                     +'<span class="twoyear_grad" id="twoyear_grad" >'
-                +'Institution Name<select class="form-control"  id="college_university_names" name="college_university_names[]" onchange="add_newUC(this)">'
+                +'Institution Name<select class="form-control selecpicker college_university_names" data-live-search="true" name="college_university_names[]" onchange="add_newUC(this)">'
                             +'<option ></option>'
                             +'<option value="other" style="background-color:peachpuff;">Other</option>';
                             $.ajax({
@@ -1938,12 +1942,12 @@
                             }
                             uniname_end='</select> <br>'
                             +'<input type="hidden" id="real_college_university_names"/>'
-                            +'<div id="other_college_univ" style=" margin-top: -20px; display:none;">'
-                            +'<input type="text"   name="other_collegebox[]" id="other_collegebox[]" class="form-control"/>'
+                            +'<div class="other_college_univ" style="  display:none;">'
+                            +'<input type="text"  placeholder="Other University"  name="other_collegebox[]" id="other_collegebox[]" class="form-control"/>'
                             +' </div></span></div>'
                             +'<div class="col-md-4 colsubjects">'
                             +'<span >'
-                            +'Degree<select class="form-control u_collegesubjects" name="u_collegesubjects[]" onchange="add_newdegree(this)">'
+                            +'Degree<select class="form-control u_collegesubjects selectpicker" data-live-search="true" name="u_collegesubjects[]" onchange="add_newdegree(this)">'
                             +'<option disabled selected="selected">Select Degree</option>'
                             +'<option value="other" style="background-color:peachpuff;">Other</option>';
                             $.ajax({
@@ -1967,8 +1971,8 @@
                             secndvar=secndvar+'<option value="'+bachelorSubjects[i].id+'">'+bachelorSubjects[i].subject_name+'</option>';
                             }
                             thirdvar='</select></br>'
-                            +'<div  style=" margin-top: -20px; display:none;">'
-                            +'<input type="text"  name="other_univ_colsubjects[]" id="other_univ_colsubjects" class="form-control "/>'
+                            +'<div  style="  display:none;">'
+                            +'<input type="text"  name="other_univ_colsubjects[]" id="other_univ_colsubjects" placeholder="Other Subject" class="form-control "/>'
                             +'</div> </span></div>'
                             +'<div class="row "><div class="col-md-12"><div class="col-md-2 marks">'
                             +'Total Marks<input type="number" name="twoyear_t_marks[]"  class="form-control twoyear_t_marks"/></div>'
@@ -1989,7 +1993,7 @@
                         add_year_fields='<div class="col-md-4 years">'
                     +'<input type="hidden" name="qualification_univ[]" value="bachelor4year">'
                         +'<span class=" fouryear_grad" id="fouryear_grad" >'
-                        +'Institute <select class="form-control"  id="university_names[]" name="university_names[]" onchange="add_newUC(this)">'
+                        +'Institute <select class="form-control university_names selectpicker" data-live-search="true" name="university_names[]" onchange="add_newUC(this)">'
                         +'<option value=""></option>'
                         +'<option value="other" style="background-color:peachpuff;">Other</option>';
                         $.ajax({
@@ -2010,12 +2014,12 @@
                             }
                             uniname_end='</select> <br>'
                         +'<input type="hidden" id="real_university_names[]"/>'
-                        +'<div id="other_univ" style=" margin-top: -20px; display:none;">'
-                        +'<input type="text"  name="other_univbox[]" id="other_univbox[]" class="form-control"/>'
+                        +'<div class="other_univ" style="  display:none;">'
+                        +'<input type="text" placeholder="Other University"  name="other_univbox[]" id="other_univbox[]" class="form-control"/>'
                         +'</div> </span></div>'
                         +'<div class="col-md-4 univsubjects">'
                         +'<span>'
-                        +'Degree<select class="form-control u_subjects" name="u_subjects[]" onchange="add_newdegree(this)">'
+                        +'Degree<select class="form-control u_subjects selectpicker" data-live-search="true" name="u_subjects[]" onchange="add_newdegree(this)">'
                         +'<option disabled selected="selected">Select Degree</option>'
                         +'<option value="other" style="background-color:peachpuff;">Other</option>'
                         $.ajax({
@@ -2040,8 +2044,8 @@
                             }
 
                         thirdvar='</select> <br>'
-                        +'<div class="other_univsubjects" style=" margin-top: -20px; display:none;">'
-                        +'<input type="text"  name="other_univsubjects[]" class="form-control"/>'
+                        +'<div class="other_univsubjects" style="  display:none;">'
+                        +'<input type="text" placeholder="Other Subject"  name="other_univsubjects[]" class="form-control"/>'
                         +'</div> </span></div>'
                         +'<div class="row "><div class="col-md-12"><div class="col-md-1 cgpamarks">CGPA/4<input type="number" step="0.01" name="cgpa[]" id="cgpa" class="form-control"></div>'
                         +'<div class="col-md-2 dmc">Final DMC Date<input type="text"  name="dmc_date[]" maxlength="10" placeholder="dd/mm/yyyy"   onchange="checkDate(this)" id="dmc_date" class="js-date form-control"></div>'
@@ -2054,6 +2058,7 @@
                         +'<option value=""></option><option value="Yes">Yes</option><option value="No">No</option></select></div>'
                         +'<div class="col-md-1 remove"><button type="button" id="remove[]"  class="pull-left btn btn-danger btn-md add" style=" margin-top: 19px;" onclick="remove_data(this,2)" ><span class="glyphicon glyphicon-minus"></span></button></div></div></div>';
                 }
+
                 $(e).parent().parent().find('.remove').remove();
                 $(e).parent().parent().find('.Percentage').remove();
                 $(e).parent().parent().find('.years').remove();
@@ -2068,6 +2073,14 @@
                 $(e).parent().parent().find('.dmc').remove();
                 $(e).parent().parent().find('.distinction').remove();
                 $(e).parent().parent().append(add_year_fields+uniname_start+uniname_end+secndvar+thirdvar);
+                $(e).parent().parent().find('.university_names').selectpicker('render');
+                $(e).parent().parent().find('.university_names').selectpicker('refresh');
+                $(e).parent().parent().find('.college_university_names').selectpicker('render');
+                $(e).parent().parent().find('.college_university_names').selectpicker('refresh');
+                $(e).parent().parent().find('.u_collegesubjects').selectpicker('render');
+                $(e).parent().parent().find('.u_collegesubjects').selectpicker('refresh');
+                $(e).parent().parent().find('.u_subjects').selectpicker('render');
+                $(e).parent().parent().find('.u_subjects').selectpicker('refresh');
 
 
         }
@@ -2076,11 +2089,11 @@
         {
             if($(e).val()=="other")
             {
-                $(e).next().next().next().show(1000)
+                $(e).next().next().next().next().show(1000)
             }
             else
             {
-                $(e).next().next().next().hide(1000)
+                $(e).next().next().next().next().hide(1000)
             }
         }
 
@@ -2092,11 +2105,11 @@
              if($(e).val()=="other")
             {
 
-                $(e).next().next().show(1000)
+                $(e).next().next().next().show(1000)
             }
             else
             {
-                $(e).next().next().hide(1000)
+                $(e).next().next().next().hide(1000)
             }
         }
 
@@ -2267,11 +2280,11 @@
 
 
     </script>
-    
+
 <script type="text/javascript">
     function checkDate(field)
     {
-       
+
         var allowBlank = true;
         var minYear = 1902;
         var maxYear = (new Date()).getFullYear();
@@ -2282,25 +2295,25 @@
         re = /^(\d{1,2})\/(\d{1,2})\/(\d{4})$/;
 
         if(field.value != '') {
-            
-        if(regs = field.value.match(re)) 
+
+        if(regs = field.value.match(re))
         {
-           
+
             if(regs[1] < 1 || regs[1] > 31)
             {
              errorMsg = "Invalid value for day: " + regs[1];
-            } 
-            else if(regs[2] < 1 || regs[2] > 12) 
-            { 
+            }
+            else if(regs[2] < 1 || regs[2] > 12)
+            {
             errorMsg = "Invalid value for month: " + regs[2];
-            } 
-            else if(regs[3] < minYear || regs[3] > maxYear) 
+            }
+            else if(regs[3] < minYear || regs[3] > maxYear)
             {
             errorMsg = "Invalid value for year: " + regs[3] + " - must be between " + minYear + " and " + maxYear;
             }
-        } 
+        }
         else {
-            
+
             errorMsg = "Invalid date format: " + field.value;
         }
         }
@@ -2314,7 +2327,7 @@
         field.focus();
         return false;
         }
-        
+
         return true;
     }
 
@@ -2325,7 +2338,7 @@
     if(e.keyCode < 47 || e.keyCode > 57) {
       e.preventDefault();
     }
-    
+
     var len = elm.value.length;
 
     if(len !== 1 || len !== 3) {
@@ -2333,7 +2346,7 @@
         e.preventDefault();
       }
     }
-    
+
     // If they don't add the slash, do it for them...
     if(len === 2) {
       elm.value += '/';
@@ -2345,7 +2358,7 @@
     }
   });
 };
-  
+
 dateInputMask(input);
  function checkForm(e)
  {
@@ -2353,7 +2366,7 @@ dateInputMask(input);
      return false;
  }
 
-  
+
  </script>
 
 @endsection
