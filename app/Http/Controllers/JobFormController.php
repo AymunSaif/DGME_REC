@@ -134,6 +134,7 @@ class JobFormController extends Controller
      */
   private function storeLog(Request $request)
   {
+    // dd($request->all());
       $person= new ApplicantLog();
       // Applicant Details
      $person->applicant_id=$request->person_id;
@@ -582,8 +583,8 @@ class JobFormController extends Controller
       if(isset($request->phd_thesis[$i]))
       $person_higherEdu_phd->thesis_topic=$request->phd_thesis[$i];
 
-      if(isset($request->phd_date[$i]))
-      $person_higherEdu_phd->final_dmc_date=$request->phd_date[$i];
+      // if(isset($request->phd_date[$i]))
+      // $person_higherEdu_phd->final_dmc_date=$request->phd_date[$i];
 
       $person_higherEdu_phd->save();
 

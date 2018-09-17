@@ -6,7 +6,7 @@
       <link href="{{ asset('css/intlTelInput.css') }}" rel="stylesheet">
 @endsection
 @section('content')
-<form id="form" action="{{route('job_form.store')}}" name="form" method="post" enctype="multipart/form-data" onsubmit=" return checkForm(this)">
+<form id="form" action="{{route('job_form.store')}}" name="form" method="post" enctype="multipart/form-data">
     {{csrf_field()}}
     <div class="row">
         <div class="col-md-12">
@@ -83,9 +83,9 @@
                     <b>Date Of Birth (dd/mm/yyyy)</b>
                     <br>
                     @if ($applicant->dob!=NULL && $applicant->dob!='')
-                      <input type="text" placeholder="dd/mm/yyyy" value="<?= $applicant->dob ? $applicant->dob : '' ?>" disabled class=" js-date form-control">
+                      <input type="text"  value="<?= $applicant->dob ? $applicant->dob : '' ?>" disabled class=" js-date form-control">
                     @else
-                      <input type="text" maxlength="10" placeholder="dd/mm/yyyy" onchange="checkDate(this)" name="dob" class=" js-date form-control" >
+                      <input type="date" max="9999-12-31"  name="dob" class=" js-date form-control" >
                     @endif
                 </div>
                 <div class="form-group">
@@ -231,7 +231,7 @@
                         </td>
                         <td>
                           <span class=""> Subject
-                              <br>
+                             
                               @if (isset($secondary_edu->SecondarySubject->subject_name))
                                 <input type="text" value="{{$secondary_edu->SecondarySubject->subject_name}}" disabled class="form-control">
                               @endif
@@ -429,7 +429,7 @@
                                 <b> Subjects </b>
                                 <select class="form-control subjects_school" name="s_subjects" onchange="add_newsub(this)">
 
-                                </select><br>
+                                </select>
                                 <div class="subjectsschool_other" style="  display:none;">
                                 <input type="text"   name="subjectsschool_other" id="subjectsschool_other" class="form-control"/>
                                 </div>
@@ -1042,9 +1042,9 @@
                     <option value="Donor Agencies">Donor Agencies</option>
                     </select>
                 </td>
-                <td> <input type="text" name="start_date[]"  id="start_date" maxlength="10" placeholder="dd/mm/yyyy" onchange="checkDate(this)"  class=" js-date form-control"></td>
-                <td><input type="text" name="end_date[]" id="end_date" maxlength="10" placeholder="dd/mm/yyyy"   onchange="checkDate(this)"  class="js-date form-control"></td>
-                <td><input type="text" name="role_name[]" class="form-control"></td>
+                <td> <input type="date" name="start_date[]"  id="start_date" maxlength="10"  max="9999-12-31" class=" js-date form-control"></td>
+                <td><input type="date" name="end_date[]" id="end_date" maxlength="10" max="9999-12-31" class="js-date form-control"></td>
+                <td><input type="date" name="role_name[]" class="form-control"></td>
                 <td style="text-align:center;"><button type="button" id="remove_exp[]" onclick="remove_exp(this)" class="btn btn-danger btn-sm remove" ><span class=" glyphicon glyphicon-minus"></span></button></td>
               </tr>
         </table>
@@ -1682,7 +1682,7 @@
                             +'<div class="col-md-2 post_percentage">Percentage<input type="number" step="0.01" name="pg_percentage[]" id="pg_percentage" class="form-control pg_percentage"></div>'
                             +'<div class="col-md-2 division"> Division'
                             +'<input type="string" name="postgrad_division[]" value="" class="form-control postgrad_division"></div>'
-                            +'<div class="col-md-2 post_dmc">Final DMC Date<input type="text" maxlength="10" placeholder="dd/mm/yyyy"   onchange="checkDate(this)" name="pg_dmc_date[]" id="pg_dmc_date" class="js-date form-control"></div>'
+                            +'<div class="col-md-2 post_dmc">Final DMC Date<input type="date" max="9999-12-31" name="pg_dmc_date[]" id="pg_dmc_date" class="js-date form-control"></div>'
                             +'<div class="col-md-1 remove_grad_level"><button type="button" id="remove_grad_level[]"  class="pull-left btn btn-danger btn-sm add" style=" margin-top: 24px;" onclick="remove_data(this,1)" ><span class="glyphicon glyphicon-minus"></span></button></div></div></div></div>';
                     $('#postgradeducation').append(eduprogram+uniname_start+uniname_end+secndvar+thirdvar);
                     $('#postgradeducation').find('.pg_Name').selectpicker('render');
@@ -1754,7 +1754,7 @@
                             +'<input type="text" placeholder="Other Subject"  name="phd_other_SubjectName[]" id="phd_other_SubjectName" class="form-control "/>'
                             +'</div></div>'
                             +'<div class="col-md-2 phd_thesis">Thesis Topic<input type="text" name="phd_thesis[]" id="phd_thesis" class="form-control">  </div>'
-                            +'<div class="col-md-2 phd_dg">Final DMC Date <input type="text" name="phd_date[]" id="phd_date" maxlength="10" placeholder="dd/mm/yyyy"  onchange="checkDate(this)"  class="js-date form-control"> </div>'
+                            +'<div class="col-md-2 phd_dg">Final DMC Date <input type="date" name="phd_date[]" id="phd_date" max="9999-12-31"  class="js-date form-control"> </div>'
                             +'<div class="col-md-1 remove_phd_level"><button type="button" id="remove_phd_level[]"  class=" btn btn-danger btn-md remove_phd_level" style="margin-top:21px;" onclick="remove_data(this)" ><span class="glyphicon glyphicon-minus"></span></button></div></div></div>';
                 $('#phdeducation').append(eduprogram+uniname_start+uniname_end+secndvar+thirdvar);
                 $('#phdeducation').find('.phd_Name').selectpicker('render');
@@ -1768,7 +1768,7 @@
                                 +'<input type="hidden" name="qualification_postdocuniv[]" value="post_doc">'
                                 +'<div class="col-md-2 pd_institute_name">Institution Name<input type="text" name="pd_Name[]" id="pd_Name[]" class="form-control"> </div>'
                                 +'<div class="col-md-2 postdoc_thesis">Thesis Topic<input type="text" name="pd_thesis[]" id="pd_thesis[]" class="form-control"> </div>'
-                                +'<div class="col-md-2 postdoc_dg">Date Of Graduation <input type="text" maxlength="10" placeholder="dd/mm/yyyy"   onchange="checkDate(this)"  name="pd_date[]" id="pd_date[]" class="js-date form-control"> </div>'
+                                +'<div class="col-md-2 postdoc_dg">Date Of Graduation <input type="date" maxlength="10"   name="pd_date[]" id="pd_date[]" class="js-date form-control"> </div>'
                                 +'<div class="col-md-1 remove_graddoc_level"><button type="button" id="remove_graddoc_level[]"  class="btn btn-danger btn-md " style=" margin-top: 21px;" onclick="remove_data(this)" ><span class="glyphicon glyphicon-minus"></span></button></div></div></div>';
                     $('#postdoceducation').append(eduprogram);
             });
@@ -1780,7 +1780,7 @@
                         +'<div class="col-md-3"><b>Certification Name</b><input type="text" name="app_cer[]" id="app_cer[]" class="form-control"></div>'
                         +'<div class="col-md-2"><b>Certificate Number</b><input type="string" name="cer_num[]" id="cer_num[]" class="form-control"></div>'
                         +'<div class="col-md-2"><b>Issued By </b><br> <input type="text" name="certificate_i[]" id="certificate_i[]" class="form-control"></div>'
-                        +'<div class="col-md-2"><b>Date Of Issuance</b> <br><input type="text" name="i_date[]" id="i_date[]" maxlength="10" placeholder="dd/mm/yyyy"   onchange="checkDate(this)" class="js-date form-control"></div>'
+                        +'<div class="col-md-2"><b>Date Of Issuance</b> <br><input type="date" name="i_date[]" id="i_date[]" max="9999-12-31" class="js-date form-control"></div>'
                         +'<div class="col-md-1" style="margin-top: 21px;"><button type="button" id="remove_certification[]" onclick="remove_certification(this)" class="btn btn-danger btn-md "><span class="glyphicon glyphicon-minus"></span></button></div>'
                         +'</div></div>';
                     $('#certifications').append(certifications_app);
@@ -1823,7 +1823,7 @@
                         +'<div class="col-md-3"> <b>Name</b> <input type="text" name="app_pmname[]" id="app_pmname[]" class="form-control"></div>'
                         +'<div class="col-md-2"><b>Membership Level</b><br> <input type="text" name="m_level[]" id="m_level[]" class="form-control"></div>'
                         +'<div class="col-md-2"><b>Issued By</b><br><input type="string" name="issued_name[]" id="issued_name[]" class="form-control"></div>'
-                        +'<div class="col-md-2"><b>Issuance Date</b><br><input type="text" name="pm_doi[]" id="pm_doi[]" maxlength="10" placeholder="dd/mm/yyyy"   onchange="checkDate(this)"  class=" js-date form-control"></div>'
+                        +'<div class="col-md-2"><b>Issuance Date</b><br><input type="date" name="pm_doi[]" id="pm_doi[]" max="9999-12-31" class=" js-date form-control"></div>'
                         +'<div class="col-md-2"><b>Registeration # </b><br><input type="string" name="pm_reg[]" id="pm_reg[]" class="form-control"></div>'
                         +'<div class="col-md-1 " style="margin-top: 21px;"><button type="button" name="remove_membership[]" id="remove_membership[]" onclick="remove_member(this)" class="btn btn-md btn-danger "><span class="glyphicon glyphicon-minus"></span></button></div>'
                         +'</div></div>';
@@ -1842,7 +1842,7 @@
                 {
                 research='<div class="col-md-2 J_name">Name Of Journal<input type="text" name="app_jr[]" id="app_jr[]" class="form-control"></div>'
                     +'<div class="col-md-2 J_pyear">Published Year<input type="number" name="journal_yr[]" id="app_yr[]" class="form-control"></div>'
-                    +'<div class="col-md-2 J_date">Date<input type="text" name="journal_dt[]" id="journal_dt" maxlength="10" placeholder="dd/mm/yyyy"   onchange="checkDate(this)"  class=" js-date form-control"></div>'
+                    +'<div class="col-md-2 J_date">Date<input type="date" name="journal_dt[]" id="journal_dt" max="9999-12-31"  class="form-control"></div>'
                     +'<div class="col-md-2 paper_name">Paper Topic<input type="text" name="app_jr[]" id="app_jr" class="form-control"></div>'
                    +'<div class="col-md-1 remove"><button type="button" id="remove[]"  class=" btn btn-danger btn-md " style=" margin-top: 21px;" onclick="remove_data(this)" ><span class="glyphicon glyphicon-minus"></span></button></div>';
 
@@ -1851,7 +1851,7 @@
                 {
                     research='<div class="col-md-2 research_paper">Name of Conference<input type="text" name="app_conf[]" id="app_conf" class="form-control"></div>'
                     +'<div class="col-md-2 conf_pyear">Published Year<input type="number" name="conf_yr[]" id="conf_yr" class="form-control"></div>'
-                    +'<div class="col-md-2 J_date">Date<input type="text" name="rp_dt[]" id="rp_dt" maxlength="10" placeholder="dd/mm/yyyy"   onchange="checkDate(this)"  class="js-date form-control"></div>'
+                    +'<div class="col-md-2 J_date">Date<input type="date" name="rp_dt[]" id="rp_dt" max="9999-12-31" class="form-control"></div>'
                     +'<div class="col-md-2 conf_name">Paper Topic<input type="text" name="app_rp[]" id="app_rp" class="form-control"></div>'
                     +'<div class="col-md-1 remove"><button type="button" id="remove[]"  class=" btn btn-danger btn-md " style=" margin-top: 21px;" onclick="remove_data(this)" ><span class="glyphicon glyphicon-minus"></span></button></div>';
                 }
@@ -1873,8 +1873,8 @@
                 exp_row += '<tr>';
                 exp_row += '<td><input type="text" name="org_Name[]" id="org_Name" placeholder="Enter Your Organization Name" class="form-control"></td>';
                 exp_row += '<td><select class="form-control" name="org_type[]"><option value="">Select Type:</option><option value="Private/NGO">Private/NGO</option><option value="Government">Government</option><option value="International/INGO">International/INGO</option><option value="Self-Employed">Self-Employed</option><option value="Donor Agencies">Donor Agencies</option></select></td>';
-                exp_row += '<td> <input type="text" name="start_date[]" id="start_date"  maxlength="10" placeholder="dd/mm/yyyy" onchange="checkDate(this)"  class=" js-date form-control"></td>';
-                exp_row +='<td><input type="text" maxlength="10" placeholder="dd/mm/yyyy"   onchange="checkDate(this)"  name="end_date[]" id="end_date" class="js-date form-control"></td>'
+                exp_row += '<td> <input type="date" name="start_date[]" id="start_date" max="9999-12-31" class="form-control"></td>';
+                exp_row +='<td><input type="date" max="9999-12-31" name="end_date[]" id="end_date" class="form-control"></td>'
                 exp_row +='<td><input type="text" name="role_name[]" class="form-control"></td>'
                 exp_row += '<td style="text-align:center;"><button type="button" id="remove_exp[]" onclick="remove_exp(this)" class="btn btn-danger btn-sm remove" ><span class=" glyphicon glyphicon-minus"></span></button></td></tr>';
                 $('#exp_table').append(exp_row);
@@ -2048,7 +2048,7 @@
                         +'<input type="text" placeholder="Other Subject"  name="other_univsubjects[]" class="form-control"/>'
                         +'</div> </span></div>'
                         +'<div class="row "><div class="col-md-12"><div class="col-md-1 cgpamarks">CGPA/4<input type="number" step="0.01" name="cgpa[]" id="cgpa" class="form-control"></div>'
-                        +'<div class="col-md-2 dmc">Final DMC Date<input type="text"  name="dmc_date[]" maxlength="10" placeholder="dd/mm/yyyy"   onchange="checkDate(this)" id="dmc_date" class="js-date form-control"></div>'
+                        +'<div class="col-md-2 dmc">Final DMC Date<input type="date"  name="dmc_date[]" max="9999-12-31" id="dmc_date" class="js-date form-control"></div>'
                         +'<div class="col-md-2 marks">Total Marks<input type="number" name="foury_t_marks[]" class="form-control foury_t_marks"/></div>'
                         +'<div class="col-md-2 achievedmarks">Achieved  <input type="number" name="foury_a_marks[]" onkeyup="calculate4Percentage(this)"  class="form-control foury_a_marks"></div>'
                         +'<div class="col-md-1 Percentage">Percentage <input type="number"step="0.01" name="univ_per[]" value="" id="univ_per" class="form-control"></div>'
@@ -2331,7 +2331,7 @@
         return true;
     }
 
-  var input = document.querySelectorAll('.js-date')[0];
+  var input = document.querySelectorAll('.js-date')[0]  ;
 
   var dateInputMask = function dateInputMask(elm) {
   elm.addEventListener('keypress', function(e) {
@@ -2360,11 +2360,6 @@
 };
 
 dateInputMask(input);
- function checkForm(e)
- {
-     alert("Kindly check your Internet Connection Before submitting, Thanks Us Later!");
-     return false;
- }
 
 
  </script>

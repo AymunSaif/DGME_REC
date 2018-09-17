@@ -42,12 +42,12 @@ Tip 2: you can also add an image using data-image tag
             </div>
         </div>
         <ul class="nav">
-            <li class="nav-item ">
+            {{-- <li class="nav-item ">
                 <a class="nav-link" href="#">
                     <i class="nc-icon nc-chart-pie-35"></i>
                     <p>Dashboard</p>
                 </a>
-            </li>
+            </li> --}}
             {{-- <li class="nav-item">
                 <a class="nav-link" data-toggle="collapse" href="#componentsExamples">
                     <i class="nc-icon nc-app"></i>

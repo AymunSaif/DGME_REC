@@ -39,6 +39,7 @@
         @include('inc.sidebar')
         <div class="main-panel">
             @include('inc.uppernav')
+            @include('inc.msgs')
             @yield('content')
             @include('inc.fixedplugin')
         </div>
