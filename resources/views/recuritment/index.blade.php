@@ -33,7 +33,7 @@
                                         <td><a href="{{route('job_form.show',$person->id)}}">{{$person->name}}</a></td>
                                         <td>{{$person->cnic}}</td>
                                         <td>{{$person->gender}}</td>
-                                        <td> 
+                                        <td>
                                             <ol>
                                                 @foreach ($person->ApplicantAppliedFor as $pa)
                                                 <li><b style="color:red;"> {{$pa->position_name}} </b> <br></li>
@@ -41,13 +41,12 @@
                                                 </ol>
                                             </td>
                                             <td>{{$person->User->name}}</td>
-                                     
+
                                     </tr>
                                     @endforeach
                                 </tbody>
                             </table>
-                            <span class="pull-right">{{$persons->links()}}
-                                </span>
+                            
                         </div>
                     </div>
                 </div>
