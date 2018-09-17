@@ -1,18 +1,18 @@
-<div class="sidebar" data-color="orange" data-image="{{asset('img/theme/img/sidebar-5.jpg')}}">
+<div class="sidebar" data-color="green" data-image="{{asset('img/theme/img/sidebar-4.jpg')}}">
     <!--
 Tip 1: You can change the color of the sidebar using: data-color="purple | blue | green | orange | red"
 
 Tip 2: you can also add an image using data-image tag
 -->
     <div class="sidebar-wrapper">
-       
+
         <div class="user">
             <div class="photo">
-                <img src="{{asset('img/theme/img/default-avatar.png')}}" />
+                <img src="{{asset('img/theme/img/sidebar-5.jpg')}}" />
             </div>
             <div class="info ">
                 <a data-toggle="collapse" href="#collapseExample" class="collapsed">
-                    <span> 
+                    <span>
                         {{ucfirst(Auth::user()->name)}}
                         {{-- <b class="caret"></b> --}}
                     </span>
