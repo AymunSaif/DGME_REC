@@ -8,7 +8,7 @@ Tip 2: you can also add an image using data-image tag
 
         <div class="user">
             <div class="photo">
-                <img src="{{asset('img/theme/img/sidebar-5.jpg')}}" />
+                  <img src="{{asset('img/theme/img/logo2.png')}}" /><br>
             </div>
             <div class="info ">
                 <a data-toggle="collapse" href="#collapseExample" class="collapsed">

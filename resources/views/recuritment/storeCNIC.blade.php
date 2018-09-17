@@ -7,9 +7,9 @@
                 <div class="col-md-8 ml-auto mr-auto">
                     <form class="" action="{{route('storeCnic')}}" method="POST">
                             {{ csrf_field() }}
-                        <div class="card card-wizard" style="background-color:black;">
-                            <div class="card-header " style="background-color:black; ">
-                            <h3 class="card-title text-center" style="color:white; font-weight:bold; " >HIRING FORM</h3>
+                        <div class="card card-wizard">
+                            <div class="card-header">
+                            <h3 class="card-title text-center" style="color:black; font-weight:bold; " >HIRING FORM</h3>
                             </div>
                             <div class="card-body ">
                                 <div class="tab-content">
@@ -17,7 +17,7 @@
                                         <div class="row justify-content-center">
                                             <div class="col-md-5 ">
                                                 <div class="form-group">
-                                                    <label class="control-label" style="color:white; font-weight:bold; font-size:14px; " >Enter Cnic</label>
+                                                    <label class="control-label" style="color:grey; font-weight:bold; font-size:14px; " >Enter Cnic</label>
                                                     <input autocompleteoff type="text" id="cnic" maxlength="15" name="person_cnic" placeholder="xxxxx-xxxxxxx-x" class="form-control" required>
                                                 </div>
                                             </div>
