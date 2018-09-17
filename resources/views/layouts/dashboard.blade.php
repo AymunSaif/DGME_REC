@@ -30,10 +30,10 @@
         <!-- End Google Tag Manager -->
         </head>
 
-        <body>
+        <body class="sidebar-mini">
             <!-- Google Tag Manager (noscript) -->
-          <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NKDMSK6"
-          height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+            {{-- <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NKDMSK6"
+          height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript> --}}
           <!-- End Google Tag Manager (noscript) -->
     <div class="wrapper">
         @include('inc.sidebar')
@@ -107,6 +107,5 @@
 
     });
 </script>
- 
+
 </html>
-          

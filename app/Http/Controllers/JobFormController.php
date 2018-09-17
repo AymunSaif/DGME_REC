@@ -92,7 +92,7 @@ class JobFormController extends Controller
      */
     public function index()
      {
-      $persons=Applicant::orderBy('created_at','desc')->paginate(10);
+      $persons=Applicant::orderBy('created_at','desc')->get();
       $person_applied=ApplicantAppliedFor::orderBy('created_at','desc')->paginate(10);
       return view('recuritment.index',['persons'=>$persons,'person_applied'=>$person_applied]);
     }
