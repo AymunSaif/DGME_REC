@@ -20,14 +20,15 @@ Route::get('/dashboard', function () {
     return view('recuritment.mainpage');
 })->name('myhome');
 
-
-// Route::get('/d', function () {
-//     return view('recuritment.xcreate');
-// });
-
 Route::get('/new', function () {
     return view('newlogin');
 });
+// ADMIN
+Route::group(['middleware' => ['role:admin','auth']], function () {
+
+});
+
+// DATAENTRY
 Route::group(['middleware' => ['role:dataentry','auth']], function () {
 Route::get('createCnic','JobFormController@createCnic')->name('createCnic');
 Route::post('storecnic','JobFormController@storeCnic')->name('storeCnic');

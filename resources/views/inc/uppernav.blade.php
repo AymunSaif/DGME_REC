@@ -2,7 +2,7 @@
 <nav class="navbar navbar-expand-lg ">
         <div class="container-fluid">
             <div class="navbar-wrapper">
-                <a class="navbar-brand" href="#"> MY DASHBOARD</a>
+                    <i class="nc-icon nc-align-center icon-bold" style="margin-right    :5px;"></i> <a class="navbar-brand" href="#"> MY DASHBOARD </a>
             </div>
             <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-bar burger-lines"></span>
