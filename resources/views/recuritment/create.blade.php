@@ -231,7 +231,7 @@
                         </td>
                         <td>
                           <span class=""> Subject
-                             
+
                               @if (isset($secondary_edu->SecondarySubject->subject_name))
                                 <input type="text" value="{{$secondary_edu->SecondarySubject->subject_name}}" disabled class="form-control">
                               @endif
@@ -1044,7 +1044,7 @@
                 </td>
                 <td> <input type="date" name="start_date[]"  id="start_date" maxlength="10"  max="9999-12-31" class=" js-date form-control"></td>
                 <td><input type="date" name="end_date[]" id="end_date" maxlength="10" max="9999-12-31" class="js-date form-control"></td>
-                <td><input type="date" name="role_name[]" class="form-control"></td>
+                <td><input type="text" name="role_name[]" class="form-control"></td>
                 <td style="text-align:center;"><button type="button" id="remove_exp[]" onclick="remove_exp(this)" class="btn btn-danger btn-sm remove" ><span class=" glyphicon glyphicon-minus"></span></button></td>
               </tr>
         </table>

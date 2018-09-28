@@ -700,7 +700,7 @@ class JobFormController extends Controller
           if(isset($request->rp_dt[$i]))
           $person_researchwork->date_published=$request->rp_dt[$i];
           if(isset($request->app_rp[$i]))
-          $person_researchwork->name=$app_rp[$i];
+          $person_researchwork->name=$request->app_rp[$i];
 
         }
         $person_researchwork->save();
