@@ -32,6 +32,7 @@ Route::group(['middleware' => ['role:admin','auth']], function () {
 Route::group(['middleware' => ['role:dataentry','auth']], function () {
 Route::get('createCnic','JobFormController@createCnic')->name('createCnic');
 Route::post('storecnic','JobFormController@storeCnic')->name('storeCnic');
+Route::get('/DmcFilter','JobFormController@getDMCWise')->name('getDMCWise');
 Route::get('/summary','JobFormController@showsummary')->name('summary');
 Route::get('/job_form_create/{cnic}','JobFormController@create')->name('job_form_create');
 Route::resource('job_form','JobFormController',['except' =>['create']])->middleware('auth');
