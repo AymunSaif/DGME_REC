@@ -43,6 +43,12 @@ Tip 2: you can also add an image using data-image tag
                                 <span class="sidebar-normal">VIEW APPLICANTS</span>
                             </a>
                         </li>
+                        <li class="nav-item ">
+                            <a class="nav-link" href="{{route('getDMCWise')}}">
+                                <span class="sidebar-mini">VA</span>
+                                <span class="sidebar-normal">VIEW APPLICANTS<br>(Without DMC Date)</span>
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </li>
