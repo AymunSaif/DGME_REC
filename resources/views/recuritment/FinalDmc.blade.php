@@ -16,8 +16,10 @@
                                         <th>Sr.#</th>
                                         <th>Diary Number</th>
                                         <th>Applicant Name</th>
+                                        <th>Father Name</th>
                                         <th>CNIC</th>
-                                        <th>Gender</th>
+                                        <th>Email</th>
+                                        <th>Phone</th>
                                         <th>Position Applied</th>
                                         <th>Entered By</th>
                                     </tr>
@@ -31,8 +33,10 @@
                                         <td><?php print_r($i++); ?></td>
                                         <td>{{$person->diary_num }}</td>
                                         <td><a href="{{route('job_form.show',$person->id)}}">{{$person->name}}</a></td>
+                                        <td>{{$person->ApplicantDetail->father_name}}</td>
                                         <td>{{$person->cnic}}</td>
-                                        <td>{{$person->gender}}</td>
+                                        <td>{{$person->email}}</td>
+                                        <td>{{$person->ApplicantDetail->cell_num}}</td>
                                         <td>
                                             <ol>
                                                 @foreach ($person->ApplicantAppliedFor as $pa)
