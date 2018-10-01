@@ -1458,6 +1458,16 @@ class JobFormController extends Controller
       return view('recuritment.show',['applicant'=>$applicant,'age'=>$age]);
     }
 
+    public function getDMCWise(){
+      // dd(Applicant::all()->count());
+      $applicants=Applicant::select('applicants.*')
+      ->rightJoin('applicant_higher_education','applicant_higher_education.applicant_id','applicants.id')
+      ->whereNull('applicant_higher_education.final_dmc_date')
+      ->get();
+      // dd($applicants->count());
+      return view('recuritment.FinalDmc',['persons'=>$applicants]);
+    }
+
     /**
      * Show the form for editing the specified resource.
      *
