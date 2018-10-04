@@ -6,13 +6,13 @@
         border-collapse: collapse;
         width: 100%;
     }
-    
+
     td, th {
         border: 1px solid #dddddd;
         text-align: left;
         padding: 8px;
     }
-    
+
     tr:nth-child(even) {
         background-color: #white;
     }
@@ -51,7 +51,7 @@
                                     <div class="row justify-content-center">
                                         <div class="col-md-10 text-center">
                                             <label class="control-label " style="color:black; font-size:18px; font-weight:bold;">DEMOGRAPHICS</label>
-                                        </div> 
+                                        </div>
                                     </div>
                                     <hr/>
                                     <div class="row justify-content-center">
@@ -62,11 +62,11 @@
                                         <div class="col-md-2">
                                             <label class="control-label" style="color:black; font-weight:bold;">Name :</label>
                                             <span style="font-size:11px;">{{$applicant->name}}</span>
-                                        </div> 
+                                        </div>
                                         <div class="col-md-3">
                                             <label class="control-label" style="color:black; font-weight:bold;">Father Name:</label>
                                             <span style="font-size:11px;">{{$applicant->ApplicantDetail->father_name}}</span>
-                                        </div> 
+                                        </div>
                                         <div class="col-md-3">
                                             <label class="control-label" style="color:black; font-weight:bold;">Religion :</label>
                                             <span style="font-size:11px;">
@@ -76,13 +76,13 @@
                                                 {{$applicant->religion}}
                                                 @endif
                                             </span>
-                                        </div>  
+                                        </div>
                                     </div>
                                     <div class="row justify-content-center">
                                         <div class="col-md-2">
                                             <label class="control-label" style="color:black; font-weight:bold;">Age :</label>
                                             <span style="font-size:11px;">{{$age}} Years Old</span>
-                                        </div> 
+                                        </div>
                                         <div class="col-md-2">
                                             <label class="control-label" style="color:black; font-weight:bold;">Gender :</label>
                                             <span style="font-size:11px;">{{$applicant->gender}}</span>
@@ -100,11 +100,11 @@
                                                 {{$applicant->email}}
                                                 @endif
                                             </span>
-                                        </div>      
+                                        </div>
                                     </div>
                                     <div class="row justify-content-center">
                                         <div class="col-md-2">
-                                            <label class="control-label" style="color:black; font-weight:bold;">Province :</label>
+                                            <label class="control-label" style="color:black; font-weight:bold;text-align:left;">Domicile<br>Province :</label>
                                             <span style="font-size:11px;">
                                                 @if(isset($applicant->ApplicantDetail->Province->name))
                                                 {{$applicant->ApplicantDetail->Province->name}}
@@ -112,13 +112,13 @@
                                             </span>
                                         </div>
                                         <div class="col-md-2">
-                                            <label class="control-label" style="color:black; font-weight:bold;">District :</label>
+                                            <label class="control-label" style="color:black; font-weight:bold;text-align:left;">Domicile<br>District :</label>
                                             <span style="font-size:11px;">
                                                 @if(isset($applicant->ApplicantDetail->District->name))
                                                 {{$applicant->ApplicantDetail->District->name}}
                                                 @else<b style="color:red;">Not Available</b> @endif
                                             </span>
-                                        </div> 
+                                        </div>
                                         <div class="col-md-6">
                                             <label class="control-label" style="color:black; font-weight:bold;">Postal Address :</label>
                                             <span style="font-size:11px;">
@@ -126,9 +126,9 @@
                                                 {{$applicant->ApplicantDetail->postal_add}}
                                                 @else <b style="color:red;">Not Available</b> @endif
                                             </span>
-                                        </div> 
-                                        
-                                    </div>    
+                                        </div>
+
+                                    </div>
                                     <div class="row justify-content-center">
                                         <div class="col-md-2">
                                             <label class="control-label" style="color:black; font-weight:bold;">City:</label>
@@ -137,7 +137,7 @@
                                                     {{$applicant->ApplicantDetail->city}}
                                                     @else <b style="color:red;">Not Available</b> @endif
                                             </span>
-                                        </div> 
+                                        </div>
                                         <div class="col-md-2">
                                             <label class="control-label" style="color:black; font-weight:bold;">Cell #:</label>
                                             <span style="font-size:11px;">
@@ -145,9 +145,9 @@
                                                 <b style="color:red;">Not Available</b>
                                                 @else
                                                 {{$applicant->ApplicantDetail->cell_num}}
-                                                @endif  
+                                                @endif
                                             </span>
-                                        </div> 
+                                        </div>
                                         <div class="col-md-3">
                                             <label class="control-label" style="color:black; font-weight:bold;">Cell # 2:</label>
                                             <span style="font-size:11px;">
@@ -155,7 +155,7 @@
                                                 <b style="color:red;">Not Available</b>
                                                 @else
                                                 {{$applicant->ApplicantDetail->cellnum_2}}
-                                                @endif      
+                                                @endif
                                             </span>
                                         </div>
                                         <div class="col-md-3">
@@ -165,18 +165,18 @@
                                                 <b style="color:red;">Not Available</b>
                                                 @else
                                                 {{$applicant->ApplicantDetail->phone_num}}
-                                            @endif 
+                                            @endif
                                             </span>
-                                        </div> 
+                                        </div>
                                     </div>
                                     {{-- secondary education --}}
                                     <hr/>
                                     <div class="row justify-content-center">
                                         <div class="col-md-10 text-center">
                                             <label class="control-label " style="color:black; font-size:18px; font-weight:bold;">SECONDARY EDUCATION</label>
-                                        </div> 
+                                        </div>
                                     </div>
-                                  
+
                                     <div class="row justify-content-center">
                                         <div class="col-md-12 text-center">
                                             <div class="card bootstrap-table">
@@ -192,7 +192,7 @@
                                                             <th  style="text-align:center;">Achieved Marks</th>
                                                             <th  style="text-align:center;">Percentage</th>
                                                             <th  style="text-align:center;">Division</th>
-                                                            <th  style="text-align:center;">Grades</th> 
+                                                            <th  style="text-align:center;">Grades</th>
                                                         </tr>
                                                         @foreach($applicant->ApplicantSecondaryEducation as $applicant_secondaryEdu)
                                                         <tr>
@@ -215,21 +215,21 @@
                                                                 @else
                                                                 {{$applicant_secondaryEdu->grades}}
                                                                 @endif
-                                                            </td>  
+                                                            </td>
                                                         </tr>
-                                                        @endforeach                          
+                                                        @endforeach
                                                     </table>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>  
+                                    </div>
 
                                     {{-- higher education --}}
-                                   
+
                                     <div class="row justify-content-center">
                                         <div class="col-md-10 text-center">
                                             <label class="control-label " style="color:black; font-size:18px; font-weight:bold;">HIGHER EDUCATION</label>
-                                        </div> 
+                                        </div>
                                     </div>
 
                                     <div class="row justify-content-center">
@@ -255,7 +255,7 @@
                                                                         {{$applicant_higherEdu->University->name}}
                                                                         @else<b style="color:red;">Not Available</b> @endif
                                                                     </td>
-                                            
+
                                                                     <td>@if(isset($applicant_higherEdu->higherSubject->subject_name))
                                                                         {{$applicant_higherEdu->higherSubject->subject_name}}
                                                                         @else <b style="color:red;">Not Available</b> @endif
@@ -306,7 +306,7 @@
                                                                         {{$applicant_higherEdu->higherSubject->subject_name}}
                                                                         @else <b style="color:red;">Not Available</b> @endif
                                                                     </td>
-                                                                
+
                                                                     <td>
                                                                         @if($applicant_higherEdu->cgpa==NULL)
                                                                         <b style="color:red;">Not Available</b>
@@ -344,7 +344,7 @@
                                                                     {{$applicant_higherEdu->division}}@endif</td>
 
                                                                     <td>{{$applicant_higherEdu->distinction}}</td>
- 
+
                                                                 </tr>
                                                             @endif
                                                             @if($applicant_higherEdu->qualification_type=='post_grad')
@@ -360,7 +360,7 @@
                                                                     <th style="text-align:center;">Division</th>
                                                                     <th style="text-align:center;">Distinction</th>
                                                                 </tr>
-                                            
+
                                                                 <tr>
                                                                 <td>
                                                                         @if($applicant_higherEdu->qualification_type==NULL || $applicant_higherEdu->qualification_type=='NA')
@@ -417,7 +417,7 @@
                                                                         {{$applicant_higherEdu->final_dmc_date}}
                                                                         @endif
                                                                     </td>
-                                            
+
                                                                     <td>
                                                                         @if( $applicant_higherEdu->division==NULL || $applicant_higherEdu->division=='NA')
                                                                         <b style="color:red;">Not Available</b>
@@ -441,9 +441,9 @@
                                                                       <th  style="text-align:center;">Degree</th>
                                                                       <th colspan="4" style="text-align:center;">Thesis Topic</th>
                                                                       <th colspan="2" style="text-align:center;">Final DMC Date</th>
-                                                                      
+
                                                                   </tr>
-                                              
+
                                                                   <tr>
                                                                       <td>
                                                                           @if(isset($applicant_higherEdu->qualification_type))
@@ -452,7 +452,7 @@
                                                                           <b style="color:red;">Not Available</b>
                                                                           @endif
                                                                       </td>
-                                              
+
                                                                       <td colspan="2">
                                                                           @if(isset($applicant_higherEdu->University->name))
                                                                           {{$applicant_higherEdu->University->name}}
@@ -492,9 +492,9 @@
                                                                             <th  style="text-align:center;">Degree</th>
                                                                             <th colspan="4" style="text-align:center;">Thesis Topic</th>
                                                                             <th colspan="2" style="text-align:center;">Final DMC Date</th>
-                                                    
+
                                                                     </tr>
-                                                    
+
                                                                     <tr>
                                                                         <td>
                                                                             @if($applicant_higherEdu->qualification_type==NULL || $applicant_higherEdu->qualification_type=='NA')
@@ -503,7 +503,7 @@
                                                                             POST DOCTRAL
                                                                             @endif
                                                                         </td>
-                                                    
+
                                                                         <td colspan="2">
                                                                             @if(isset($applicant_higherEdu->University->name))
                                                                             {{$applicant_higherEdu->University->name}}
@@ -534,7 +534,7 @@
                                                                         </td>
                                                                     </tr>
                                                                 @endif
-                                                        @endforeach                          
+                                                        @endforeach
                                                     </table>
                                                 </div>
                                             </div>
@@ -542,11 +542,11 @@
                                     </div>
                                     {{-- Certifications --}}
                                     @if(isset($applicant->ApplicantCertification[0]) && $applicant->ApplicantCertification!=null)
-                                    
+
                                         <div class="row justify-content-center">
                                             <div class="col-md-10 text-center">
                                                 <label class="control-label " style="color:black; font-size:18px; font-weight:bold;">CERTIFICATIONS</label>
-                                            </div> 
+                                            </div>
                                         </div>
 
                                         <div class="row justify-content-center">
@@ -584,7 +584,7 @@
                                                                     {{$ApplicantCertification->date_of_issuance}}@endif</td>
                                                                 </tr>
                                                             @endforeach
-                                                                                        
+
                                                         </table>
                                                     </div>
                                                 </div>
@@ -597,7 +597,7 @@
                                         <div class="row justify-content-center">
                                             <div class="col-md-10 text-center">
                                                 <label class="control-label " style="color:black; font-size:18px; font-weight:bold;">TRAININGS</label>
-                                            </div> 
+                                            </div>
                                         </div>
                                         <div class="row justify-content-center">
                                             <div class="col-md-12 text-center">
@@ -630,7 +630,7 @@
                                                                     {{$ApplicantTraining->duration}}@endif
                                                                     </td>
                                                                 </tr>
-                                                        @endforeach                                                                                     
+                                                        @endforeach
                                                         </table>
                                                     </div>
                                                 </div>
@@ -643,7 +643,7 @@
                                         <div class="row justify-content-center">
                                             <div class="col-md-10 text-center">
                                                 <label class="control-label " style="color:black; font-size:18px; font-weight:bold;">RESEARCH WORK</label>
-                                            </div> 
+                                            </div>
                                         </div>
                                         <div class="row justify-content-center">
                                             <div class="col-md-12 text-center">
@@ -664,7 +664,7 @@
                                                                         <td>{{$research->published_year}}</td>
                                                                         <td>{{$research->date_published}}</td>
                                                                         <td></td>
-                                                                    </tr> 
+                                                                    </tr>
                                                                     @elseif($research->researchtype=="Conference")
                                                                     <tr>
                                                                         <td> <b>RESEARCH :</b> {{$research->name}}</td>
@@ -673,7 +673,7 @@
                                                                         <td>{{$research->date_published}}</td>
                                                                     </tr>
                                                                     @endif
-                                                                @endforeach                                                          
+                                                                @endforeach
                                                         </table>
                                                     </div>
                                                 </div>
@@ -688,7 +688,7 @@
                                         <div class="row justify-content-center">
                                             <div class="col-md-10 text-center">
                                                 <label class="control-label " style="color:black; font-size:18px; font-weight:bold;">PROFESSIONAL MEMBERSHIP</label>
-                                            </div> 
+                                            </div>
                                         </div>
                                         <div class="row justify-content-center">
                                             <div class="col-md-12 text-center">
@@ -726,7 +726,7 @@
                                                                             @else
                                                                         {{$ProfessionalCertificationMember->registeration}}@endif</td>
                                                                     </tr>
-                                                                @endforeach                                                          
+                                                                @endforeach
                                                         </table>
                                                     </div>
                                                 </div>
@@ -739,7 +739,7 @@
                                         <div class="row justify-content-center">
                                             <div class="col-md-10 text-center">
                                                 <label class="control-label " style="color:black; font-size:18px; font-weight:bold;">EXPERIENCE</label>
-                                            </div> 
+                                            </div>
                                         </div>
                                         <div class="row justify-content-center">
                                             <div class="col-md-12 text-center">
@@ -765,7 +765,7 @@
                                                                             {{$duration->y}} Years {{$duration->m}} Months {{$duration->d}} Days</td>
                                                                         <td>{{$ApplicantExperience->role}}</td>
                                                                     </tr>
-                                                                @endforeach                                    
+                                                                @endforeach
                                                         </table>
                                                     </div>
                                                 </div>
@@ -779,7 +779,7 @@
                                     <div class="row justify-content-center">
                                         <div class="col-md-10 text-center">
                                             <label class="control-label " style="color:black; font-size:18px; font-weight:bold;">POSITION APPLIED FOR</label>
-                                        </div> 
+                                        </div>
                                     </div>
                                     <div class="row justify-content-center">
                                         <div class="col-md-12 text-center">
@@ -793,7 +793,7 @@
                                                                 @endforeach
                                                                 </ol>
                                                         </tr>
-                                                                                   
+
                                                     </table>
                                                 </div>
                                             </div>

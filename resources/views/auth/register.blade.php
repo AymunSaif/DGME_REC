@@ -6,7 +6,8 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-8 ml-auto mr-auto">
-                    <form id="wizardForm" method="" action="#">
+                    <form id="wizardForm" method="POST" action="{{ route('register') }}" aria-label="{{ __('Register') }}">
+                      {{ csrf_field() }}
                         <div class="card card-wizard">
                             <div class="card-header">
                                 <h3 class="card-title text-center">Registeration Form</h3>
@@ -21,13 +22,13 @@
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $errors->first('name') }}</strong>
                                             </span>
-                                        @endif 
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="col-md-5 ">
                                     <div class="form-group">
                                         <label  for="email" class="control-label">{{ __('E-Mail Address') }}</label>
-                                        <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required>        
+                                        <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required>
                                         @if ($errors->has('email'))
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $errors->first('email') }}</strong>
@@ -59,7 +60,7 @@
                         <div class="card-footer ml-auto mr-auto">
                             <button type="submit" class="btn btn-md btn-success">
                                     {{ __('Register') }}
-                                </button> 
+                                </button>
                             {{-- <button type="submit" class="btn btn-warning btn-wd">Login</button> --}}
                         </div>
                         </div>
