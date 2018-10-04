@@ -33,6 +33,8 @@ Route::group(['middleware' => ['role:dataentry','auth']], function () {
 Route::get('createCnic','JobFormController@createCnic')->name('createCnic');
 Route::post('storecnic','JobFormController@storeCnic')->name('storeCnic');
 Route::get('/DmcFilter','JobFormController@getDMCWise')->name('getDMCWise');
+Route::get('/EditDMC/{dmc}','JobFormController@EditDMC')->name('EditDMC');
+Route::post('/AddDMC','JobFormController@addDMC')->name('addDmc');
 Route::get('/summary','JobFormController@showsummary')->name('summary');
 Route::get('/job_form_create/{cnic}','JobFormController@create')->name('job_form_create');
 Route::resource('job_form','JobFormController',['except' =>['create']])->middleware('auth');

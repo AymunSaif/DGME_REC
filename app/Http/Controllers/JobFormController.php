@@ -13,6 +13,11 @@ use App\ApplicantCertificationLog;
 use App\City;
 use App\District;
 use Auth;
+// EXCEL
+use App\Exports\ApplicantsExport;
+use App\Exports\HigherSubjectExport;
+use Maatwebsite\Excel\Facades\Excel;
+
 use App\ApplicantExperienceLog;
 use App\ApplicantExperience;
 use App\ApplicantHigherEducationLog;
@@ -135,13 +140,16 @@ class JobFormController extends Controller
   private function storeLog(Request $request)
   {
     // dd($request->all());
+    $personcnic=Applicant::where('id',$request->person_id)->first();
       $person= new ApplicantLog();
+
       // Applicant Details
      $person->applicant_id=$request->person_id;
      $person->diary_num=$request->d_num;
      $person->name= $request->name;
      $person->gender= $request->gender;
      $person->dob= $request->dob;
+     $person->cnic=$personcnic->cnic;
      $person->religion=$request->religion;
      $person->email= $request->emailaddress;
      $person->created_by=Auth::id();
@@ -1457,15 +1465,73 @@ class JobFormController extends Controller
 
       return view('recuritment.show',['applicant'=>$applicant,'age'=>$age]);
     }
+    public function EditDMC($applicant_id){
+      // dd($applicant_id);
+      $applicant=Applicant::find($applicant_id);
+      return view('recuritment.EditDMC',compact('applicant'));
+    }
+    public function addDMC(Request $request){
+      // dd($request->all());
+      $person=ApplicantHigherEducation::find($request->applicant_higher_id);
+      if(isset($request->final_dmc )&& $request->final_dmc )
+        $person->final_dmc_date=$request->final_dmc;
+      if(isset($request->date_grad )&& $request->date_grad )
+        $person->date_of_grad=$request->date_grad;
 
+      if($person->save())
+        return 'Saved';
+      else {
+        return 'Error';
+      }
+      // return redirect()->back();
+    }
     public function getDMCWise(){
-      // dd(Applicant::all()->count());
+      // $ApplicantHigherSubject=ApplicantHigherEducation::all();
+      // foreach (ApplicantHigherEducation::all() as $outersubject) {
+      //   if(isset($outersubject->HigherSubject->subject_name) && $outersubject->HigherSubject->subject_name){
+      //   $ah=HigherSubject::where('subject_name',$outersubject->HigherSubject->subject_name)->get();
+      //   // dump($ah);
+      //     foreach ($ApplicantHigherSubject as $applicant_higher) {
+      //       // dd($applicant_higher->HigherSubject);
+      //       if($ah->count()>1)
+      //       {
+      //         $i=0;
+      //         foreach ($ah as $a) { //888
+      //
+      //           if(isset($applicant_higher->HigherSubject->subject_name) && $applicant_higher->HigherSubject->subject_name){
+      //           if($applicant_higher->HigherSubject->id==$a->id && $a->type==$ah[0]->type){
+      //             dd($ah);
+      //             // dd($applicant_higher);
+      //             $applicant_higher->highersubject_id=$ah[0]->id;
+      //             $applicant_higher->save();
+      //           }
+      //         }
+      //         }
+      //           // $collection->push($applicant_higher);
+      //       }
+      //       }
+      //       $i=0;
+      //     foreach ($ah as $lols) {
+      //       $i++;
+      //       if($i!=1){
+      //         $lols->delete();
+      //       }
+      //     }
+      // }
+        // ->where('type',$higher_sub->type)
+        // ->
+      //}
+      // return Excel::download(new HigherSubjectExport, 'users.xlsx');
       $applicants=Applicant::select('applicants.*')
       ->rightJoin('applicant_higher_education','applicant_higher_education.applicant_id','applicants.id')
       ->whereNull('applicant_higher_education.final_dmc_date')
+      ->whereNull('applicant_higher_education.date_of_grad')
+      ->distinct()
       ->get();
+      $subjects=HigherSubject::orderBy('subject_name')->get();
+      // dd('s');
       // dd($applicants->count());
-      return view('recuritment.FinalDmc',['persons'=>$applicants]);
+      return view('recuritment.FinalDmc',['persons'=>$applicants,'subjects'=>$subjects]);
     }
 
     /**
