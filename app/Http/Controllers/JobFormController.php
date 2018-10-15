@@ -1479,7 +1479,16 @@ class JobFormController extends Controller
         $person->date_of_grad=$request->date_grad;
 
       if($person->save())
-        return 'Saved';
+      {
+          $applicantLog=new ApplicantLog();
+          if(isset($request->final_dmc )&& $request->final_dmc)
+            $applicantLog->final_dmc_date=$request->final_dmc;
+          if(isset($request->date_grad )&& $request->date_grad )
+            $applicantLog->date_of_grad=$request->date_grad;
+          $applicantLog->created_by=Auth::id();
+          $applicantLog->save();
+          return 'Saved';
+      }
       else {
         return 'Error';
       }
