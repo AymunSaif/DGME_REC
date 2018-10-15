@@ -28,7 +28,7 @@
                                         <th>Phone</th>
                                         <th>Position Applied</th>
                                         <th>Entered By</th>
-                                        <td>Action</td>
+                                        {{-- <td>Action</td> --}}
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -52,7 +52,7 @@
                                                 </ol>
                                         </td>
                                         <td>{{$person->User->name}}</td>
-                                        <td><button type="button"  class="btn btn-default modalopen" data-id="{{$person->id}}" data-toggle="modal" data-target="#myModal">Add DMC</button></td>
+                                        {{-- <td><button type="button"  class="btn btn-default modalopen" data-id="{{$person->id}}" data-toggle="modal" data-target="#myModal">Add DMC</button></td> --}}
                                     </tr>
                                     @endforeach
                                 </tbody>
